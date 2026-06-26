@@ -1,1 +1,16 @@
+ame: Il mio primo Workflow
 
+# 1. Quando deve attivarsi? Quando faccio un "push" (caricamento) di codice
+on: [push]
+
+# 2. Cosa deve fare?
+jobs:
+  dire-ciao:
+    runs-on: ubuntu-latest # Usa un server Linux virtuale gratuito di GitHub
+
+    steps:
+    - name: Primo passaggio stamperà un testo
+      run: echo "Ciao! La CI/CD di GitHub sta funzionando correttamente."
+
+    - name: Secondo passaggio stamperà la data di oggi
+      run: date
