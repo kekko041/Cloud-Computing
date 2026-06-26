@@ -1,0 +1,55 @@
+// 1. Select first and last name of all users
+
+MATCH (u:USER)
+RETURN u.name, u.last_name
+
+// 2. Select all nodes representing ‘Drill’ tracks
+
+MATCH (t:TRACK {genre: 'Drill'})
+RETURN t
+
+// 3. Select the title of tracks lasting at least 90 seconds
+
+MATCH (t:TRACK)
+WHERE t.duration >= 90
+RETURN t.title, t.duration
+
+// 4. Select first and last name of all users that appreciated a given track 
+
+MATCH (u:USER)-[:LIKES]->(t:TRACK)
+WHERE id(t) = 61
+RETURN u.name, u.last_name
+
+// 5. Select the title of all tracks appearing at first or second position in at least one playlist
+
+MATCH (p:PLAYLIST)-[r:HAS_TRACK]->(t:TRACK)
+WHERE r.order IN [1, 2]
+RETURN t.title
+
+// 6. Select the title of all tracks appearing at first or second position in at least one playlist or one album
+
+MATCH (t:TRACK)
+WHERE EXISTS {
+  MATCH (:PLAYLIST)-[r1:HAS_TRACK]->(t)
+  WHERE r1.order IN [1, 2]
+}
+OR EXISTS {
+  MATCH (:ALBUM)-[r2:INCLUDES]->(t)
+  WHERE r2.position IN [1, 2]
+}
+RETURN t.title
+
+// 7. Given the id of a user, return the list of titles of tracks liked by her immediate friends
+
+MATCH (u:USER)-[:FRIEND]-(friend:USER)-[:LIKES]->(t:TRACK)
+WHERE id(u) = 69
+RETURN t.title
+
+// 8. Given the id of a user, return the list of titles of tracks liked by her friends and by their friends 
+
+MATCH (u:USER)-[:FRIEND*..2]-(friend:USER)-[:LIKES]->(t:TRACK)
+WHERE id(u) = 69
+RETURN t.title
+
+
+
