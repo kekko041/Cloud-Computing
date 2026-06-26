@@ -1,3 +1,5 @@
+prova prova
+
 // 1. Select first and last name of all users
 
 MATCH (u:USER)
