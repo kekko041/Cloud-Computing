@@ -1,0 +1,38 @@
+# Cyber Threat Intelligence e Attribuzione
+*(Focus per il concorso Esperto ICT - Banca d'Italia)*
+
+Per un'istituzione come la Banca d'Italia (obiettivo di attacchi *State-Sponsored* o *Advanced Persistent Threats - APT*), un approccio difensivo puramente reattivo (basato su antivirus e firewall) è insufficiente. Si rende necessaria un'intelligence proattiva sulle minacce: la **Cyber Threat Intelligence (CTI)**.
+
+---
+
+## 1. La Piramide del Dolore (Pyramid of Pain)
+Un concetto fondamentale nella CTI che classifica gli indicatori di compromissione (IoC) in base a quanto "dolore" causano all'attaccante se il difensore li neutralizza:
+1.  **Hash dei file / Indirizzi IP (Basso dolore):** Facilissimi da cambiare per un attaccante. Bloccare un IP è utile ma l'attaccante ne userà un altro in un secondo.
+2.  **Nomi di Dominio / Artefatti di rete (Medio dolore):** Richiede all'attaccante di registrare nuovi domini o riconfigurare l'infrastruttura.
+3.  **Strumenti (Tools) (Alto dolore):** Se i difensori imparano a riconoscere i tool specifici dell'attaccante (es. una versione modificata di Mimikatz), l'attaccante deve scriverne di nuovi.
+4.  **Tattiche, Tecniche e Procedure - TTPs (Dolore massimo):** Rappresentano il *comportamento* e la metodologia dell'attaccante. Costringere un gruppo hacker a cambiare le proprie TTPs significa costringerli a re-imparare il mestiere.
+
+---
+
+## 2. Il Framework MITRE ATT&CK
+Per mappare e scambiarsi informazioni sulle TTPs (il vertice della piramide), il settore utilizza lo standard globale **MITRE ATT&CK** (Adversarial Tactics, Techniques, and Common Knowledge).
+È una matrice che descrive:
+*   **Tattiche (Il "Perché"):** L'obiettivo tattico dell'attaccante (es. *Initial Access*, *Privilege Escalation*, *Lateral Movement*, *Exfiltration*).
+*   **Tecniche (Il "Come"):** Il metodo specifico usato (es. *Phishing*, *Pass the Hash*).
+
+**Caso d'uso in Banca d'Italia:** I team di difesa (Blue Team/SOC) usano il MITRE ATT&CK per verificare se le regole dei propri SIEM o EDR sono in grado di rilevare le tecniche specifiche utilizzate dai gruppi finanziari noti (es. i gruppi FIN o Lazarus).
+
+---
+
+## 3. Threat Hunting (Caccia alle Minacce)
+Il *Threat Hunting* è l'assunzione consapevole che **i sistemi siano già stati compromessi** e che gli strumenti di sicurezza automatici non se ne siano accorti.
+*   **Approccio Proattivo:** Analisti esperti (Threat Hunters) formulano ipotesi basate sulla CTI (es. "Un nuovo gruppo hacker usa PowerShell per muoversi lateralmente") e cercano attivamente nel network (analizzando log, traffico di rete ed endpoint) comportamenti anomali che confermino l'ipotesi.
+*   L'obiettivo è ridurre il *Dwell Time* (il tempo di permanenza nascosta di un attaccante nella rete, che può durare mesi).
+
+---
+
+## 4. L'Attribuzione degli Attacchi
+Capire *chi* ha sferrato l'attacco è una delle sfide più complesse nella cybersecurity.
+*   **La difficoltà:** Gli attaccanti utilizzano *False Flags* (false bandiere), inserendo nel codice malware stringhe in cirillico o instradando gli attacchi tramite server situati in paesi avversari per depistare le indagini.
+*   **Come si effettua:** L'attribuzione non si fa con un singolo indicatore, ma unendo l'analisi tecnica (le TTPs ricorrenti nel codice, gli orari di compilazione, le infrastrutture riutilizzate) con l'analisi geopolitica ed economica. 
+*   In ambito istituzionale, l'attribuzione è spesso delegata ai servizi di intelligence nazionale o a partnership europee (es. ENISA).
