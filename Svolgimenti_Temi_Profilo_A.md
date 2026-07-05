@@ -1,0 +1,171 @@
+# Svolgimenti — Prova scritta Profilo A (Esperto ICT)
+### Risposte-modello ai sei temi · Banca d'Italia 2026
+
+> Ogni svolgimento segue la struttura attesa dalla Commissione: **impostazione del problema → sviluppo tecnico con specifiche concrete → esempi calati nel contesto Banca d'Italia/Eurosistema → conclusione con rischi residui**, secondo il metodo PEEL. I temi 🇬🇧 sono redatti in inglese, come si farebbe all'esame per l'elaborato in lingua.
+
+---
+---
+
+# AMBITO 1 — Computazione, software, sistemi
+
+## Svolgimento Tema 1.1 — Architettura di un sistema di pagamento ad alta disponibilità
+
+**Impostazione.** Un sistema di regolamento lordo in tempo reale (RTGS) per pagamenti interbancari di importo elevato è un'infrastruttura *systemic*: l'errore non è un disservizio, è un rischio per la stabilità finanziaria. Tre principi guidano quindi ogni scelta: **finalità e consistenza forte del regolamento** (un pagamento regolato è definitivo e irrevocabile), **continuità operativa quasi-continua**, **resilienza dimostrabile** ai sensi del Regolamento DORA. Questi requisiti orientano i trade-off in direzione opposta a quella di una tipica applicazione web: qui la *consistenza* prevale sulla *disponibilità eventuale*.
+
+**(a) Architettura applicativa.** Scarto il monolite puro (non scala e ostacola il rilascio indipendente) e diffido del microservizio "estremo" per il cuore di regolamento, dove la coerenza transazionale è critica. Propongo un'architettura **a microservizi orientati agli eventi (event-driven)** con un nucleo conservativo:
+
+- un **gateway di messaggistica** standard ISO 20022 che riceve, valida sintatticamente e autentica i messaggi di pagamento;
+- servizi di **controllo (anti-duplicazione, controlli di liquidità, sanzioni/embarghi)** disaccoppiati tramite un *event backbone* (es. Apache Kafka), con messaggi **idempotenti** e ordinamento garantito per chiave;
+- un **motore di regolamento** che mantiene il *ledger* come unica fonte di verità, con scritture **ACID** e finalità transazione-per-transazione;
+- servizi di **reportistica e interrogazione** alimentati da repliche in sola lettura.
+
+L'event-driven offre disaccoppiamento, scalabilità orizzontale dei controlli e tracciabilità (event sourcing), mantenendo però il regolamento centralizzato e fortemente consistente. Pattern utili: **CQRS** (separazione scrittura/lettura), **Saga** per i flussi multi-step con compensazione, **outbox transazionale** per pubblicare eventi senza perdere atomicità.
+
+**(b) Consistenza nel sistema distribuito.** Il teorema **CAP** impone, in presenza di partizione di rete, di scegliere tra consistenza e disponibilità. Per il ledger di regolamento la scelta è netta: **CP** (consistenza + tolleranza alle partizioni). Le proprietà **ACID** garantiscono che non esistano due stati di regolamento in conflitto — condizione non negoziabile per la finalità giuridica del pagamento. I modelli **BASE** (consistenza eventuale) sono accettabili solo nei domini periferici: cruscotti, reportistica, repliche di lettura, dove un ritardo di propagazione di pochi secondi non genera rischio.
+
+**(c) Alta disponibilità e disaster recovery.** Progetto su **due region geograficamente separate** con un terzo sito di salvaguardia, schema coerente con i requisiti di resilienza estrema (l'euro digitale, ad esempio, prevede infrastruttura distribuita su almeno tre region). Per il ledger: **active-passive con replica sincrona** sul sito secondario in zona vicina (RPO≈0) e replica asincrona sul sito remoto (protezione da disastro regionale). Per i servizi *stateless* di controllo: **active-active** multi-zona con bilanciamento. Obiettivi: **RTO** dell'ordine dei minuti, **RPO** prossimo a zero per i dati di regolamento. Procedure di *failover* testate periodicamente e *switchover* pianificati.
+
+**(d) Osservabilità e gestione incidenti.** *Logging* strutturato e immutabile (audit trail), *distributed tracing* (OpenTelemetry) per seguire un pagamento end-to-end attraverso i microservizi, *metriche* su throughput, latenza di regolamento e tassi di errore con **SLO** espliciti. La gestione degli incidenti segue le 6 fasi del NIST IR (preparazione, identificazione, contenimento, eradicazione, recupero, lezioni apprese) e i pilastri DORA: governance del rischio ICT, *incident reporting*, *testing* della resilienza (compreso il *threat-led penetration testing*), gestione del **rischio di terze parti** (provider cloud).
+
+**Esempio nel contesto.** L'ambiente TARGET dell'Eurosistema, di cui la Banca d'Italia è uno dei gestori tecnici, elabora quotidianamente pagamenti per controvalori enormi: un'indisponibilità prolungata avrebbe effetti sistemici. Le scelte sopra (CP sul ledger, multi-region, RPO≈0) riflettono proprio questa criticità.
+
+**Rischi residui.** (1) **Guasti correlati**: in active-active un bug software o una configurazione errata si propaga simultaneamente — mitigazione con *canary release* e *feature flag*. (2) **Outage di region**: dipendenza da un singolo fornitore cloud → **rischio di concentrazione** che DORA impone di governare (strategie multi-cloud o exit plan). (3) **Cyber**: il sistema è bersaglio ad alto valore → difesa in profondità e Zero Trust. (4) **Rischio di liquidità intraday** se i controlli rallentano la coda di regolamento.
+
+---
+
+## Model Answer 1.2 — Supervisory data platform: relational vs NoSQL 🇬🇧
+
+**Framing.** A supervisory analytics platform must ingest highly heterogeneous data — structured balance-sheet returns, time series, transaction logs, free-text documents — and serve statistical analysis, data-quality controls and risk models. No single storage paradigm fits all of this, so the core design decision is *polyglot persistence* governed by a unified architecture, not a single "best" database.
+
+**(a) End-to-end architecture.** I propose a **Lakehouse** design, which combines the low-cost, schema-flexible storage of a Data Lake with the transactional guarantees and performance of a Warehouse. A pure Data Warehouse is too rigid for unstructured inputs; a raw Data Lake risks becoming a "data swamp" without governance. The Lakehouse, built on an object store with an open table format (e.g. Delta Lake or Apache Iceberg), resolves this tension. Pipeline layers:
+
+- **Ingestion** — streaming via Apache Kafka for transaction logs, batch loaders for periodic returns;
+- **Storage** — a *medallion* layout: *bronze* (raw), *silver* (cleansed/validated), *gold* (curated, analysis-ready);
+- **Processing** — Apache Spark (and Flink for streaming) for transformation and feature computation, orchestrated with Airflow/dbt;
+- **Serving** — a columnar warehouse engine for analytical queries, plus specialised stores for non-tabular data.
+
+On the **Lambda vs Kappa** choice: Lambda maintains separate batch and speed layers (robust but duplicates logic); **Kappa** treats everything as a stream and is simpler to maintain. For supervision, where most analysis is periodic and reproducibility matters, a **batch-dominant Lambda** approach is pragmatic, with a streaming path only for near-real-time controls.
+
+**(b) Relational vs NoSQL by data type.** The decision follows the data's shape and access pattern, guided by the **CAP theorem**:
+
+- *Balance-sheet and regulatory returns* → **relational / columnar warehouse**. Strong schema, integrity constraints, complex joins and aggregations; here ACID and consistency (CP) dominate.
+- *Time series* (rates, market data) → **columnar or time-series store**, optimised for range scans and compression.
+- *Transaction logs* (high volume, append-only) → **wide-column / key-value** store for write throughput; eventual consistency (AP) is acceptable.
+- *Documents* (reports, correspondence) → **document store** plus a search/index engine.
+- *Ownership and exposure networks* → **graph database**. Traversing relationships (beneficial ownership, intra-group exposures) is where graphs outperform relational joins — directly relevant to **AML and systemic-risk** analysis.
+
+On modelling: the warehouse uses **denormalised star schemas** for read-heavy analytics, whereas the operational layer stays **normalised** to avoid update anomalies. Denormalisation trades storage and write-complexity for query speed.
+
+**(c) Query optimisation and data quality.** Performance levers: **partitioning** (e.g. by reporting date), **indexing**, **predicate/column pushdown**, **materialised views** for recurring aggregations, and statistics-driven cost-based optimisation. Data quality is enforced through **validation rules** at the silver layer, **deduplication**, reconciliation against control totals, and end-to-end **data lineage** so every figure is traceable to its source — essential for a supervisor that must defend its numbers.
+
+**(d) Non-functional requirements.** Horizontal scalability via the decoupled storage/compute model; security through encryption at rest and in transit, fine-grained access control and audit logging; **GDPR compliance** through data minimisation, purpose limitation and pseudonymisation of personal data; governance via a data catalogue and stewardship.
+
+**Context.** A central bank such as the Banca d'Italia is, in large part, a vast system of evolving and queryable databases; supervisory and statistical functions depend on exactly this kind of governed, multi-model platform.
+
+**Residual risks.** (1) **Data-swamp drift** without disciplined governance. (2) **Schema/contract drift** between source systems and the platform. (3) **Cost** of storage/compute at scale. (4) **Reconciliation gaps** across paradigms, which can undermine trust in figures. (5) **Re-identification risk** if pseudonymisation is weak.
+
+---
+---
+
+# AMBITO 2 — Crittografia, DLT, privacy
+
+## Model Answer 2.1 — Post-quantum migration of institutional cryptography 🇬🇧
+
+**Framing.** The "harvest now, decrypt later" threat means an adversary can capture today's encrypted traffic and decrypt it once a cryptographically relevant quantum computer exists. For an institution that holds **long-lived confidential data** — supervisory communications, sensitive statistics, signing/PKI infrastructure — migration planning cannot wait for "Q-Day"; it must start now.
+
+**(a) Why current public-key cryptography fails.** **Shor's algorithm** solves integer factorisation and the discrete-logarithm problem in polynomial time on a quantum computer, breaking **RSA** and **elliptic-curve** schemes (ECDH, ECDSA) that underpin virtually every TLS handshake, signed update and certificate. **Symmetric** cryptography is only *weakened*: **Grover's algorithm** gives a quadratic speed-up, so AES-256 retains roughly 128-bit effective security — still strong. Hash functions similarly need larger outputs (SHA-384/512). The asymmetric layer is therefore the urgent problem.
+
+**(b) The NIST standards.** Finalised in August 2024:
+
+- **FIPS 203 — ML-KEM** (lattice-based, from CRYSTALS-Kyber): a **key-encapsulation mechanism** replacing RSA/ECDH for establishing shared secrets. ML-KEM-768 is the enterprise default.
+- **FIPS 204 — ML-DSA** (lattice-based, from CRYSTALS-Dilithium): the **primary digital-signature** algorithm, replacing RSA-PSS, ECDSA and EdDSA. NIST recommends adopting it first.
+- **FIPS 205 — SLH-DSA** (hash-based, from SPHINCS+): a **conservative backup signature** scheme whose security rests only on hash-function properties — a different mathematical foundation, so it survives a break of the lattice assumptions.
+
+A fourth signature, **FN-DSA** (Falcon), is in progress as FIPS 206; it yields compact signatures but is hard to implement without side-channel leakage.
+
+**(c) Migration roadmap.** A disciplined programme, not a single update:
+
+1. **Cryptographic inventory (CBOM)** — discover every use of public-key crypto across applications, protocols, HSMs, certificates and code-signing.
+2. **Risk-based prioritisation** — migrate first the data with long-term confidentiality (HNDL-exposed) and the most critical signing roots.
+3. **Hybrid mode** — combine a classical algorithm (e.g. X25519) with a PQC algorithm (ML-KEM) in one handshake, so the channel is safe if *either* holds; this also preserves FIPS 140-3 compliance during transition.
+4. **PKI migration** — issue hybrid/PQC X.509 certificates; plan for **longer certificate chains** and larger keys; verify CA, intermediaries and CDN edges accept the bigger sizes.
+5. **Crypto-agility** — architect systems so algorithms can be swapped quickly; this is the durable goal, since hybrid mode is a transition, not a destination.
+6. **Timeline** — align to NIST guidance: deprecate classical asymmetric algorithms around **2030**, disallow them by **2035**.
+
+**(d) Protocol and infrastructure impact.** **TLS 1.3** gains hybrid key exchange; **IPsec/IKEv2** and **SSH** key agreement must follow; **HSMs** need vendor firmware supporting the new primitives. Larger keys and signatures increase handshake size, certificate-chain size and, potentially, fragmentation (MTU) and performance — all of which must be tested.
+
+**Context.** Because the Banca d'Italia protects information whose confidentiality must hold for decades and operates signing infrastructure of systemic importance, the HNDL threat is directly material; crypto-agility is also a natural fit with DORA's operational-resilience expectations.
+
+**Residual risks.** (1) **Implementation side-channels**, especially in Gaussian sampling (FN-DSA) — use vetted libraries. (2) **Immature ecosystem** and uneven HSM support. (3) **Long hardware replacement cycles** for network appliances and embedded devices. (4) **A future break** of a chosen scheme — mitigated precisely by agility plus the hash-based SLH-DSA backup.
+
+---
+
+## Svolgimento Tema 2.2 — DLT e Privacy-Enhancing Technologies per la finanza tokenizzata
+
+**Impostazione.** Una piattaforma DLT per il regolamento di asset finanziari tokenizzati tra intermediari deve conciliare quattro esigenze in tensione: **finalità e definitività del regolamento**, **riservatezza** delle transazioni, **scalabilità** e **conformità normativa** (GDPR in primis). Le scelte tecnologiche vanno guidate dal fatto che si opera in un contesto **regolamentato e a soggetti noti**, non in una rete pubblica anonima.
+
+**(a) Architettura DLT e consenso.** Una rete **permissionless** (validatori anonimi, PoW/PoS) è inadatta: finalità solo probabilistica, possibilità di *fork*, throughput e costi energetici problematici, e impossibilità di soddisfare KYC/AML. Propongo una rete **permissioned** con un algoritmo di **consenso BFT** (es. PBFT/IBFT): validatori identificati e autorizzati, **finalità immediata e deterministica** (nessun fork, requisito essenziale per la definitività giuridica del regolamento), throughput elevato e bassa impronta energetica. Il PoW si scarta per costo e finalità probabilistica; il PoS riduce i consumi ma resta orientato a reti aperte.
+
+**(b) Smart contract: modello di esecuzione e rischi.** Gli smart contract automatizzano la logica di regolamento (es. *delivery-versus-payment* atomico tra token di asset e token di contante). Il modello di esecuzione deve essere **deterministico** (stesso input → stesso stato su tutti i nodi). Linguaggi: Solidity su macchina EVM, oppure linguaggi pensati per la finanza con maggiori garanzie (es. modelli a risorse come Move, o DAML). **Rischi**: *reentrancy*, overflow, errori logici, manipolazione degli **oracoli** (la fonte dei dati esterni è un *single point of failure*), costi/gas e blocchi. **Contromisure**: audit di sicurezza, **verifica formale**, test estensivi, pattern *checks-effects-interactions*, oracoli ridondanti e affidabili.
+
+**(c) Scalabilità e interoperabilità.** Soluzioni di scalabilità: **layer-2** e **rollup** (optimistic o ZK) che spostano l'esecuzione fuori dalla catena principale mantenendone le garanzie; **sharding** per partizionare il carico; canali per micro-regolamenti. L'**interoperabilità** tra piattaforme eterogenee (diverse DLT, o DLT e sistemi tradizionali) si affronta con *bridge*, schemi *notary*, *hash time-locked contract* (HTLC) per scambi atomici cross-chain e protocolli di messaggistica standardizzati. È un punto critico per evitare la frammentazione in "isole" non comunicanti.
+
+**(d) Privacy e tensione con il GDPR.** Le **Privacy-Enhancing Technologies** consentono riservatezza senza rinunciare alla verificabilità: le **zero-knowledge proof** (zk-SNARK/zk-STARK) provano la validità di una transazione (es. "il saldo è sufficiente") senza rivelarne i dettagli; la **crittografia omomorfica** permette calcoli su dati cifrati; la **secure multiparty computation** consente analisi congiunte senza condividere i dati grezzi. La tensione di fondo è tra **immutabilità della DLT** e **diritto alla cancellazione (GDPR art. 17)**: poiché ciò che è scritto on-chain non si cancella, i **dati personali vanno tenuti off-chain**, registrando on-chain solo *hash*, *commitment* o puntatori; la cancellazione del dato off-chain (o la distruzione della chiave, *crypto-shredding*) rende il riferimento on-chain inintelligibile. Si applicano inoltre minimizzazione e *privacy by design*.
+
+**Esempio nel contesto.** L'Eurosistema sta sviluppando soluzioni per il regolamento all'ingrosso in moneta di banca centrale (wholesale CBDC) e per la finanza tokenizzata, con la Banca d'Italia attiva sul tema; la scelta di reti permissioned con consenso BFT e PET riflette i requisiti di un regolamento sicuro, riservato e definitivo tra intermediari.
+
+**Rischi residui.** (1) **Oracoli** come punto debole. (2) **Gestione delle chiavi** dei validatori e degli intermediari. (3) **Governance** della rete permissioned (chi ammette/revoca i validatori). (4) **Certezza giuridica** della finalità on-chain rispetto al diritto vigente. (5) **Frammentazione** da interoperabilità immatura e rischio nei *bridge* cross-chain.
+
+---
+---
+
+# AMBITO 3 — Intelligenza artificiale, machine learning, data science
+
+## Svolgimento Tema 3.1 — Pipeline ML per fraud detection/AML e governance sotto l'AI Act
+
+**Impostazione.** Un sistema di rilevamento frodi e antiriciclaggio basato su ML è, ai sensi dell'**AI Act**, un sistema **ad alto rischio**: ciò condiziona non solo l'architettura tecnica ma anche gli obblighi di governance. Il problema ha inoltre una caratteristica statistica dominante — le frodi sono **eventi rari** — che orienta scelte di modello e metriche.
+
+**(a) Pipeline ML end-to-end.** *Raccolta dati*: transazioni, dati KYC, relazioni di rete tra soggetti. *Preprocessing*: pulizia, gestione dei valori mancanti, encoding. **Feature engineering** (spesso più decisiva della scelta del modello): variabili di *velocity* (frequenza/importo in finestre temporali), aggregazioni per conto/cliente, *feature* di grafo (centralità, comunità — utili per il riciclaggio strutturato), feature temporali. *Scelta dei modelli*:
+
+- **supervisionato** su frodi note: regressione logistica come *baseline* interpretabile, poi **random forest** e **gradient boosting (XGBoost)** per le prestazioni;
+- **non supervisionato** per frodi nuove e non etichettate: **anomaly detection** (isolation forest, autoencoder);
+- **semi-supervisionato** per sfruttare i pochi casi etichettati insieme alla grande massa non etichettata.
+
+**(b) Sbilanciamento delle classi e metriche.** Con frodi che sono una frazione minima dei casi, l'**accuratezza è fuorviante** (un modello che predice "mai frode" è accuratissimo e inutile). Si usano **precision, recall, F1** e soprattutto l'**AUC-PR** (curva precision-recall, più informativa dell'AUC-ROC in forte sbilanciamento). Tecniche: **resampling** (oversampling/SMOTE, undersampling), **class weighting**, **tuning della soglia** decisionale. Il vero trade-off è tra **recall** (non perdere frodi, costo del falso negativo molto alto in AML) e **precision** (limitare i falsi positivi, che generano *alert fatigue* per gli analisti e attrito per i clienti): la soglia va calibrata sui costi reali, non su un valore astratto.
+
+**(c) Spiegabilità, bias, robustezza.** La spiegabilità non è un optional ma un **requisito di vigilanza**: tecniche come **SHAP** o LIME consentono di motivare perché una transazione è stata segnalata. Vanno valutati **bias e fairness** (assenza di impatto discriminatorio su gruppi protetti) e la **robustezza** del modello. Tutto ciò richiede *monitoring* continuo in produzione (MLOps): le frodi evolvono e il modello soffre di **concept drift**.
+
+**(d) AI Act e model risk management.** Per i sistemi ad alto rischio l'AI Act impone, tra l'altro: **sistema di gestione del rischio**, **governance e qualità dei dati**, **documentazione tecnica**, **logging/tracciabilità**, **sorveglianza umana** (un analista deve poter intervenire), **accuratezza, robustezza e cybersicurezza**, e **valutazione di conformità**. Sul piano interno serve un **model risk management** strutturato: validazione indipendente, monitoraggio delle prestazioni, ricalibrazione e *retraining* periodici.
+
+**Esempio nel contesto.** L'AI Act classifica esplicitamente come ad alto rischio i sistemi di *scoring* creditizio, AML e *fraud detection* oggi in uso nelle banche. Per la Banca d'Italia, autorità di vigilanza, "capire l'IA" significa saperla **governare** — verificare che le banche vigilate usino questi modelli in modo conforme e controllabile — non solo conoscerne le tecniche.
+
+**Rischi residui.** (1) **Concept drift** e **adattamento adversariale** dei frodatori. (2) **Costo operativo dei falsi positivi**. (3) **Qualità del dato** in ingresso. (4) **Trade-off spiegabilità/prestazioni** (i modelli più potenti sono i meno trasparenti). (5) **Rischio di conformità** se la documentazione e la sorveglianza umana sono carenti.
+
+---
+
+## Model Answer 3.2 — LLMs and RAG inside the institution: architecture and governance 🇬🇧
+
+**Framing.** The institution wants to use Large Language Models to help staff analyse regulatory and supervisory documentation, under two hard constraints: **no exposure of confidential data** and **verifiable, traceable answers**. These constraints, more than raw model capability, dictate the architecture — which is why **Retrieval-Augmented Generation (RAG)**, not fine-tuning, is the right backbone.
+
+**(a) Transformers and the options.** Transformers rest on **self-attention**, which lets the model weigh the relevance of every token to every other, plus **embeddings** (dense vector representations of meaning) and positional encoding. A **foundation model** is pre-trained on broad data and then adapted. Three adaptation routes: **prompting** (no change to the model), **fine-tuning** (retrain weights on domain data — costly, static, and it risks baking confidential data into the model), and **RAG** (keep the model fixed but feed it retrieved, authoritative context at query time).
+
+**(b) A secure RAG architecture.**
+
+1. **Ingestion** — internal documents are chunked and converted to embeddings, stored in a **vector database** (e.g. pgvector/FAISS-class engines) inside the controlled perimeter.
+2. **Retrieval** — a user query is embedded, the top-k most similar chunks are retrieved; **hybrid search** (dense + keyword/BM25) and a **re-ranking** step improve precision.
+3. **Generation** — retrieved passages augment the prompt; the LLM answers **with citations to the source passages**, so every claim is traceable.
+
+RAG is preferable to fine-tuning here because knowledge is **dynamic** (regulation changes) and **confidential**: documents stay in a governed store, answers are grounded and attributable, updates require no retraining, and hallucination is reduced because the model reasons over supplied evidence rather than memory.
+
+**(c) Generative-AI-specific risks and mitigations.** **Hallucination** → grounding in retrieval, citation, and refusal when evidence is absent. **Data leakage** → avoid sending confidential data to external APIs; prefer **on-premise or sovereign-cloud** deployment, with PII filtering and strict access controls. **Prompt injection** (malicious instructions hidden in retrieved or user content) → input/output guardrails, separation of instructions from data, least-privilege tool access. **Vendor lock-in and sovereignty** → favour open/sovereign models for sensitive use and design for portability. **Evaluation** must be explicit: *groundedness/faithfulness*, answer relevance and retrieval precision, measured continuously.
+
+**(d) AI Act and governance.** General-purpose AI models carry transparency and technical-documentation obligations, with stricter rules for the largest "systemic" models; the deployment must ensure **human oversight** (the analyst validates, the model assists) and security of data. Governance, traceability and the ability to explain outputs are not add-ons but conditions of use for a public institution.
+
+**Context.** For the Banca d'Italia, the value of an LLM assistant lies in fast access to its own knowledge base, but its admissibility depends on **verifiability and confidentiality** — precisely what a citation-grounded, internally hosted RAG system delivers, and what an opaque external model would not.
+
+**Residual risks.** (1) **Residual hallucination** even with grounding. (2) **Retrieval gaps** (the answer is only as good as what is retrieved). (3) **Evolving prompt-injection** techniques. (4) **Operational dependency** and model/version drift. (5) **Over-reliance** by users who treat outputs as authoritative without verification.
+
+---
+---
+
+> **Nota d'uso.** Questi svolgimenti sono *risposte-modello* di riferimento: all'esame conta riprodurne l'**impianto** (impostazione → sviluppo tecnico con specifiche → esempio nel contesto BdI → rischi residui), non memorizzarne il testo. Allena la scrittura *a mano e a tempo* (≈2h per quesito) e verifica di saper produrre in autonomia almeno uno dei tre svolgimenti in inglese.

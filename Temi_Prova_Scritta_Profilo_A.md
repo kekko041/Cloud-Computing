@@ -1,0 +1,124 @@
+# Prova scritta — Profilo A (Esperto ICT)
+### Sei temi d'esame su tre ambiti tematici · Banca d'Italia 2026
+
+> **Come funziona la prova reale.** La Commissione propone **sei quesiti** (due per ciascuno dei tre ambiti del programma di pag. 9 del bando). Tu ne scegli **due, su due ambiti differenti**, da svolgere in **5 ore**. **Almeno uno** dei due va redatto in **lingua inglese** (o l'intero quesito è formulato in inglese).
+>
+> **Metodo di risposta consigliato (PEEL).** *Point* (tesi/impostazione) → *Evidence* (dati, concetti, standard) → *Explanation* (analisi delle scelte e dei trade-off) → *Link* (collegamento al contesto Banca d'Italia / sistema finanziario). La Commissione valuta: correttezza tecnica, organizzazione logica, lessico specialistico, padronanza dell'inglese.
+>
+> I quesiti contrassegnati con 🇬🇧 sono i candidati ideali per allenare l'elaborato in inglese.
+
+---
+
+## Ambito 1 — Computazione, software, sistemi
+*Riferimento manuale: Capitolo 2 (§2.1–§2.6). Programma bando: algoritmi e complessità, architetture e sistemi operativi, paradigmi e linguaggi, ingegneria e sicurezza del software, basi di dati relazionali e NoSQL, reti, sistemi distribuiti / cloud / software-defined, architetture applicative.*
+
+### Tema 1.1 — Architettura di un sistema di pagamento ad alta disponibilità
+
+> La Banca d'Italia gestisce, in qualità di banca centrale dell'Eurosistema, componenti dell'infrastruttura di regolamento dei pagamenti all'ingrosso (es. ambiente TARGET). Si supponga di dover progettare l'architettura applicativa di un sistema di elaborazione di disposizioni di pagamento interbancarie ad alta criticità, con requisiti di **continuità operativa stringenti**, **migliaia di transazioni al secondo** e **vincoli regolamentari di resilienza (DORA)**.
+>
+> Il candidato:
+> - (a) proponga un'architettura applicativa (monolite modulare vs microservizi vs event-driven) motivando la scelta;
+> - (b) discuta la gestione della **consistenza dei dati** nel sistema distribuito, richiamando il teorema CAP, le proprietà ACID e i modelli BASE, e indicando dove ciascun approccio è appropriato;
+> - (c) descriva le strategie di **alta disponibilità e disaster recovery** (ridondanza multi-sito, RPO/RTO, active-active vs active-passive);
+> - (d) tratti **osservabilità e gestione degli incidenti** (logging, tracing distribuito, metriche, SLO).
+>
+> Si motivino le scelte progettuali e si identifichino i principali rischi residui.
+
+**Punti chiave da trattare.** Trade-off latenza/consistenza in un sistema RTGS (qui la consistenza forte tipicamente prevale sulla disponibilità eventuale); pattern come Saga/event sourcing/CQRS e idempotenza dei messaggi; ridondanza geografica su più region (richiamo: l'euro digitale prevede infrastruttura distribuita su almeno tre region); RPO≈0 / RTO ridotto per sistemi critici; circuit breaker, back-pressure, graceful degradation; tracciamento end-to-end (OpenTelemetry); collegamento DORA (5 pilastri, resilienza operativa, test di continuità).
+
+---
+
+### Tema 1.2 — Piattaforma dati per la supervisione: relazionale vs NoSQL 🇬🇧
+
+> Un dipartimento della Banca d'Italia deve realizzare una **piattaforma dati per l'analisi di vigilanza** che ingerisce flussi segnaletici eterogenei (dati strutturati di bilancio, serie storiche, log di transazioni, documenti testuali) per alimentare analisi statistiche, controlli di qualità e modelli di rischio.
+>
+> Il candidato:
+> - (a) definisca un'architettura dati end-to-end (ingestion, storage, processing, serving), confrontando paradigmi **Data Warehouse, Data Lake e Lakehouse** e architetture **Lambda vs Kappa**;
+> - (b) motivi, per ciascun tipo di dato, la scelta tra **basi di dati relazionali e NoSQL** (documentali, colonnari, key-value, a grafo), richiamando normalizzazione, indici, sharding e i criteri del **teorema CAP**;
+> - (c) descriva le tecniche di **ottimizzazione delle query** e di garanzia della **qualità del dato** (data lineage, validazione, deduplicazione);
+> - (d) discuta i requisiti **non funzionali** (scalabilità, sicurezza, governance, conformità GDPR sui dati personali).
+>
+> Il candidato giustifichi i trade-off e indichi rischi e limiti dell'impostazione proposta.
+
+**Punti chiave da trattare.** Modello relazionale e forme normali vs denormalizzazione per le letture analitiche; quando NoSQL conviene (volume/varietà/velocità — le 5V dei Big Data); CAP applicato a casi concreti (CP vs AP); colonnare (es. per OLAP) vs documentale (per dati semi-strutturati) vs grafo (per analisi di relazioni/reti societarie, utile in AML); stack tipico (Kafka per ingestion, Spark/Flink per processing, orchestrazione Airflow/dbt); data governance e minimizzazione dei dati. *Quesito adatto all'inglese per il lessico tecnico molto standardizzato.*
+
+---
+
+## Ambito 2 — Crittografia, DLT, privacy
+*Riferimento manuale: Capitolo 3 (crittografia) e Capitolo 5 (sicurezza). Programma bando: cifratura simmetrica/asimmetrica, firma digitale, integrità e autenticazione; architetture e algoritmi di consenso DLT; smart contract; scalabilità DLT; Privacy-Enhancing Technologies; interoperabilità; crittografia post-quantum.*
+
+### Tema 2.1 — Strategia di migrazione post-quantum della crittografia istituzionale 🇬🇧
+
+> La minaccia "harvest now, decrypt later" rende urgente pianificare la transizione alla crittografia resistente ai computer quantistici. La Banca d'Italia gestisce dati a **riservatezza di lungo periodo** (comunicazioni di vigilanza, dati statistici sensibili, infrastrutture di firma e PKI).
+>
+> Il candidato:
+> - (a) spieghi perché gli algoritmi a chiave pubblica attuali (RSA, ECC/ECDSA) sono vulnerabili all'algoritmo di Shor, mentre la crittografia simmetrica (AES) e le funzioni hash sono solo indebolite (Grover);
+> - (b) presenti gli standard **NIST FIPS 203 (ML-KEM)**, **204 (ML-DSA)** e **205 (SLH-DSA)**, indicando primitiva, uso e differenze di fondamento matematico (lattice vs hash-based);
+> - (c) definisca una **roadmap di migrazione** per l'istituzione: inventario crittografico, approccio **ibrido** (classico + PQC), gestione della PKI e dei certificati X.509, **crypto-agility**, tempistiche (deprecazione ~2030, dismissione ~2035);
+> - (d) discuta l'impatto su protocolli e infrastrutture (TLS 1.3, IPsec, HSM, dimensioni di chiavi/firme).
+>
+> Si identifichino i principali rischi residui e le dipendenze critiche.
+
+**Punti chiave da trattare.** Distinzione confidenzialità (KEM) vs autenticazione/integrità (firma); ML-KEM-768 come default enterprise; modalità ibrida per mantenere conformità FIPS 140-3 durante la transizione; aumento dimensioni chiavi/firme e impatto su catene di certificati e MTU; crypto-agility come requisito architetturale (poter sostituire l'algoritmo rapidamente); collegamento alla resilienza richiesta da DORA. *Tema tecnico-attuale e molto adatto all'inglese.*
+
+---
+
+### Tema 2.2 — DLT e Privacy-Enhancing Technologies per la finanza tokenizzata
+
+> Nel contesto dei lavori dell'Eurosistema sulla finanza tokenizzata e sul regolamento in moneta di banca centrale (wholesale CBDC) e in vista dell'euro digitale, si chiede di progettare l'impianto tecnologico di una **piattaforma DLT per il regolamento di asset finanziari tokenizzati** tra intermediari.
+>
+> Il candidato:
+> - (a) confronti **architetture DLT** permissioned vs permissionless e i relativi **algoritmi di consenso** (PoW, PoS, BFT/PBFT), motivando la scelta per un contesto bancario;
+> - (b) descriva il modello di esecuzione degli **smart contract** e i relativi rischi (bug, reentrancy, oracoli, gas/determinismo), con cenni alle pratiche di sicurezza;
+> - (c) affronti le **soluzioni di scalabilità** (layer-2, sharding, rollup) e l'**interoperabilità** tra piattaforme eterogenee;
+> - (d) tratti le **Privacy-Enhancing Technologies** (zero-knowledge proof, crittografia omomorfica, secure multiparty computation) e la tensione tra **immutabilità della DLT e diritto all'oblio (GDPR)**.
+>
+> Si motivino le scelte e si discutano i rischi residui e i limiti normativi.
+
+**Punti chiave da trattare.** Perché in finanza si preferiscono reti permissioned con consenso BFT (finalità immediata, no fork, identità note); modelli account vs UTXO; oracoli come single point of failure; trade-off del "trilemma" (sicurezza/scalabilità/decentralizzazione); ZKP per riservatezza delle transazioni mantenendo verificabilità; GDPR: dati personali off-chain con hash/puntatori on-chain per conciliare immutabilità e cancellazione; collegamento ai progetti BCE/Banca d'Italia (regolamento wholesale, interoperabilità, standard aperti).
+
+---
+
+## Ambito 3 — Intelligenza artificiale, machine learning, data science
+*Riferimento manuale: Capitolo 4 (§4.1–§4.4). Programma bando: IA deduttiva/induttiva/generativa; rappresentazione della conoscenza e ragionamento automatico; agenti e sistemi multiagente; classificazione/predizione/clustering; ML supervisionato/semi/non/rinforzo; reti neurali, deep learning, embeddings, transformer; foundation model e LLM; big data; data mining, visualization, dati sintetici.*
+
+### Tema 3.1 — Pipeline ML per fraud detection/AML e governance sotto l'AI Act
+
+> Una banca vuole rafforzare i sistemi di **rilevamento frodi e antiriciclaggio (AML)** tramite machine learning. Tali sistemi rientrano tra quelli classificati ad **alto rischio** dall'AI Act dell'Unione europea.
+>
+> Il candidato:
+> - (a) progetti la **pipeline ML end-to-end**: raccolta e preparazione dati, **feature engineering**, scelta dei modelli (es. regressione logistica, random forest, gradient boosting per il supervisionato; tecniche non supervisionate per l'anomaly detection);
+> - (b) discuta il problema dello **sbilanciamento delle classi** (frodi rare) e la scelta delle **metriche** appropriate (precision, recall, F1, AUC-ROC vs AUC-PR), spiegando perché l'accuratezza è fuorviante;
+> - (c) affronti **spiegabilità (XAI)**, **bias/fairness** e robustezza del modello (es. SHAP, fairness metrics);
+> - (d) inquadri gli obblighi dell'**AI Act** per i sistemi ad alto rischio (gestione del rischio, qualità dei dati, documentazione tecnica, sorveglianza umana, log) e il **model risk management**.
+>
+> Si motivino le scelte e si identifichino i rischi residui (es. concept drift, falsi positivi, costi operativi).
+
+**Punti chiave da trattare.** Perché in AML conta più il *recall* (non perdere frodi) bilanciato col costo dei falsi positivi; tecniche per lo sbilanciamento (resampling, SMOTE, class weighting, soglie); supervisionato vs non supervisionato (le frodi nuove non sono etichettate → anomaly detection); explainability come requisito di vigilanza, non opzionale; concept drift e monitoraggio continuo in produzione (MLOps); collegamento al ruolo della Banca d'Italia come autorità di vigilanza che deve poter "governare" l'IA, non solo usarla.
+
+---
+
+### Tema 3.2 — LLM e IA generativa nell'istituzione: architettura RAG e governance 🇬🇧
+
+> La Banca d'Italia valuta l'adozione di **Large Language Models** per assistere il personale nell'analisi di documentazione normativa e di vigilanza, con il vincolo di **non esporre dati riservati** e di garantire risposte **verificabili e tracciabili**.
+>
+> Il candidato:
+> - (a) spieghi il funzionamento di base dei **transformer** (attention, embeddings) e la differenza tra **foundation model**, fine-tuning e **RAG (Retrieval-Augmented Generation)**;
+> - (b) progetti un'**architettura RAG** sicura (vector database, embedding dei documenti interni, retrieval, generazione con citazione delle fonti), motivando perché RAG è preferibile al fine-tuning per conoscenza dinamica e riservata;
+> - (c) analizzi i **rischi specifici dell'IA generativa** (allucinazioni, data leakage, prompt injection, dipendenza dal fornitore) e le contromisure;
+> - (d) inquadri gli obblighi dell'**AI Act** per i modelli di IA per finalità generali (GPAI) e i principi di governance (sorveglianza umana, trasparenza, sicurezza del dato).
+>
+> Si discutano limiti, rischi residui e implicazioni di sovranità tecnologica.
+
+**Punti chiave da trattare.** RAG riduce allucinazioni e consente aggiornamento senza riaddestrare; importanza della citazione delle fonti per la verificabilità (requisito istituzionale); prompt injection e isolamento dei dati riservati; deployment on-premise / cloud sovrano vs API esterne (riservatezza); valutazione (groundedness, faithfulness); collegamento all'AI Act (GPAI, trasparenza) e alla resilienza/sicurezza. *Tema "caldo" e ottimo candidato per l'elaborato in inglese, dove il lessico è altamente standardizzato.*
+
+---
+
+## Come usare questi temi nelle prossime settimane
+
+- **Settimana 1.** Svolgi *in condizioni reali* (1 quesito = ~2h, carta o testo, senza consultare) il **Tema 1.1** e il **Tema 3.1** — i due ambiti più "larghi" del programma. Poi confronta con i punti chiave e con il Capitolo 2 e 4 del manuale.
+- **Settimana 2.** Allena la crittografia/DLT (**2.1** in inglese, **2.2** in italiano): è l'ambito più tecnico-verticale, dove il lessico va fissato. Studia Cap. 3 e §5.x.
+- **Settimana 3.** Ripeti scegliendo **due ambiti diversi** in 5 ore consecutive, come all'esame, redigendo *uno dei due in inglese* (consigliati 2.1 o 3.2).
+- **Settimana 4.** Revisione mirata sugli errori ricorrenti + ripasso normativo trasversale (DORA, AI Act, post-quantum, euro digitale) che ritorna in tutti gli ambiti.
+
+> **Riferimenti attuali utili (gennaio–aprile 2026).** Standard PQC NIST FIPS 203/204/205 finalizzati ago. 2024; migrazione raccomandata entro 2030–2035. Euro digitale: fase preparativi da nov. 2025, pilota da metà 2027, possibile prima emissione 2029 se la normativa UE è adottata nel 2026. AI Act UE in vigore da lug. 2024, con applicazione progressiva degli obblighi.

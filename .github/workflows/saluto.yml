@@ -1,0 +1,13 @@
+name: Il mio primo Workflow
+
+on: [push]
+
+jobs:
+  dire-ciao:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Primo passaggio stamperà un testo
+        run: echo "Ciao! La CI/CD di GitHub sta funzionando correttamente."
+
+      - name: Secondo passaggio stamperà la data di oggi
+        run: date
