@@ -1,0 +1,39 @@
+# Soluzione Modello - Traccia d'Esame: Sistema AI per la Vigilanza
+*(Simulazione Concorso Esperto ICT - Banca d'Italia)*
+
+## Premessa Architetturale
+Il progetto di modernizzazione dei sistemi di supporto alla Vigilanza richiede un'architettura che bilanci l'innovazione tecnologica dell'Intelligenza Artificiale Generativa con i requisiti stringenti di **Data Sovereignty**, **Security by Design** e **Resilienza Operativa**, tipici di una Banca Centrale. 
+
+Di seguito si delinea l'architettura proposta, suddivisa per i tre domini richiesti.
+
+---
+
+## 1. Strategia Cloud, Data Sovereignty e Prevenzione Lock-in
+
+Dato il livello di criticità e riservatezza dei dati di Vigilanza Bancaria, l'adozione di un Cloud Pubblico "puro" presenta rischi inaccettabili in termini di sovranità del dato. Pertanto, si propone un'architettura **Cloud Ibrida**.
+
+*   **Architettura Ibrida (Hybrid Cloud):** I dati finanziari riservati e i database core (RDBMS relazionali ACID) rimarranno ospitati *on-premise* nei Data Center della Banca d'Italia (o in un Private Cloud segregato). Le componenti computazionali ad alta intensità, come i cluster per l'interferenza e l'addestramento dei modelli LLM, saranno invece ospitati sul Cloud Pubblico (IaaS/PaaS).
+*   **Crittografia e BYOK (Bring Your Own Key):** Per garantire la privacy, i documenti verranno inviati al Cloud Pubblico cifrati. L'architettura adotterà il modello BYOK: le chiavi crittografiche rimarranno confinate negli Hardware Security Module (HSM) on-premise della Banca, precludendo al fornitore cloud l'accesso in chiaro ai dati.
+*   **Agnosticismo e Portabilità (Exit Strategy):** Per mitigare il rischio di *Vendor Lock-in*, l'intera componente applicativa sarà sviluppata secondo standard **Cloud-Native**. Le applicazioni saranno containerizzate (Docker/OCI) e orchestrate tramite **Kubernetes**. L'infrastruttura sarà definita in modo dichiarativo tramite strumenti di *Infrastructure as Code* (es. Terraform), permettendo di migrare rapidamente (Exit Plan) verso un Cloud Service Provider differente in caso di necessità.
+
+---
+
+## 2. Architettura AI: Prevenzione Allucinazioni e Sicurezza
+
+L'uso di LLM "commerciali" standard è prono ad allucinazioni e non garantisce la segregazione. La soluzione proposta si basa sull'architettura **RAG (Retrieval-Augmented Generation)** unita a un solido strato di sicurezza.
+
+*   **Architettura RAG per la precisione:** Invece di addestrare un modello sui dati della Banca, l'applicativo interrogherà prima un Database Vettoriale interno contenente la *Knowledge Base* normata della Vigilanza. L'IA utilizzerà esclusivamente i paragrafi estratti da questo database per generare la risposta, citando le fonti esatte. Questo azzera quasi del tutto il rischio di "allucinazioni" (invenzioni del modello).
+*   **AI Security Gateway:** Tutte le interazioni tra gli ispettori (utenti) e l'LLM transiteranno per un Gateway di Sicurezza. Questo componente avrà due funzioni:
+    1.  *Input Sanitization:* Bloccherà tentativi di *Prompt Injection* volti a manipolare il modello.
+    2.  *Data Masking (DLP):* Identificherà e pseudonimizzerà automaticamente i Dati Personali (PII) o le informazioni classificate prima che il prompt raggiunga l'LLM, garantendo la conformità al GDPR.
+*   **Human-in-the-Loop:** In conformità all'approccio basato sul rischio dell'**AI Act** per i sistemi ad alto rischio, l'output dell'IA non prenderà mai decisioni sanzionatorie o di vigilanza automatiche. L'IA opererà come "Augmented Intelligence", segnalando le anomalie, ma la decisione finale e la responsabilità spetteranno sempre all'ispettore umano.
+
+---
+
+## 3. Resilienza Operativa e Compliance DORA
+
+Il Regolamento DORA impone che i sistemi finanziari critici siano altamente resilienti agli incidenti cyber e ai guasti infrastrutturali.
+
+*   **Disaster Recovery e Alta Affidabilità (HA):** L'infrastruttura Cloud sfrutterà una topologia Multi-AZ (Availability Zone). I servizi critici opereranno in modalità *Active-Active* su due zone distinte, bilanciati dinamicamente. Verrà implementata una replica dei dati *asincrona* su una "Region" geograficamente distante (es. Milano e Francoforte) per garantire la Business Continuity in caso di disastro regionale.
+*   **Microsegmentazione (Zero Trust):** La rete sarà disegnata secondo i principi *Zero Trust Network Access (ZTNA)*. L'applicativo IA, il database vettoriale e le interfacce utente saranno isolati in micro-segmenti di rete differenti, impedendo i movimenti laterali di un eventuale malware.
+*   **Continuous Testing (TLPT):** Come richiesto da DORA, il sistema non sarà solo monitorato H24 da un SOC/SIEM avanzato, ma sarà sottoposto a test di resilienza continui e a simulazioni d'attacco avanzate (*Threat-Led Penetration Testing - TIBER-EU*), per valutare costantemente la robustezza delle difese in un ambiente di produzione.

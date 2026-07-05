@@ -1,0 +1,58 @@
+# Reti e Database Distribuiti: Architetture per il Settore Bancario
+*(Focus per il concorso Esperto ICT - Banca d'Italia)*
+
+Nella progettazione di infrastrutture per una Banca Centrale, i concetti di rete e di gestione del dato distribuito devono rispondere a requisiti estremi di **resilienza**, **sicurezza** (Zero Trust) e **coerenza transazionale** (prevenzione di anomalie finanziarie).
+
+---
+
+## PARTE 1: Architetture di Rete Avanzate
+
+Le reti tradizionali basate su un perimetro statico sono ormai obsolete. L'approccio moderno, necessario per supportare cloud ibridi e filiali distribuite, si basa sulla separazione tra l'intelligenza di routing e l'hardware fisico.
+
+### 1. SDN (Software-Defined Networking) e SD-WAN
+* **Disaccoppiamento:** Il piano di controllo (*Control Plane*, che decide dove inviare il traffico) viene separato dal piano dati (*Data Plane*, l'hardware che inoltra fisicamente i pacchetti). Il controllo è centralizzato via software.
+* **Vantaggi in ambito bancario:** Permette di riprogrammare dinamicamente la rete in caso di attacco DDoS o di guasto a un nodo, garantendo la continuità operativa in modo automatizzato. La SD-WAN (Software-Defined Wide Area Network) ottimizza il traffico tra la sede centrale, le filiali e i provider cloud, cifrando nativamente ogni connessione.
+
+### 2. Microsegmentazione e Zero Trust Network Access (ZTNA)
+* **Contenimento delle minacce:** Invece di avere una rete interna "piatta" (dove un malware, una volta entrato, può muoversi liberamente), la rete viene divisa in micro-segmenti, isolando anche i singoli workload (es. il server applicativo non può parlare direttamente con Internet, ma solo col database e tramite porte specifiche).
+* **Prevenzione dei movimenti laterali:** È il cuore tecnico per contrastare attacchi avanzati (APT) o ransomware. Se un terminale viene compromesso, il danno resta confinato a quel micro-segmento.
+
+### 3. Protocolli di Sicurezza e Resilienza
+* **BGP (Border Gateway Protocol) Anycast:** Utilizzato per instradare il traffico in modo resiliente. In caso di attacco DDoS, il traffico viene distribuito su più nodi geografici (scrubbing center) per mitigare l'impatto.
+* **QoS (Quality of Service):** Regole rigide per dare priorità assoluta al traffico critico (es. transazioni del sistema TARGET2) rispetto al traffico bulk (es. backup o navigazione web aziendale).
+* **Cifratura End-to-End:** Adozione obbligatoria di standard come TLS 1.3 e IPSec, unita a VPN post-quantum ready (in previsione delle minacce crittografiche quantistiche di cui parla il bando).
+
+---
+
+## PARTE 2: Database Distribuiti e Gestione del Dato
+
+Il dato è l'asset principale. Nei sistemi distribuiti (multi-datacenter o multi-cloud), mantenere i dati coerenti e sempre disponibili rappresenta una sfida ingegneristica complessa.
+
+### 1. Il Teorema CAP (Brewer) in ambito Finanziario
+Il Teorema CAP stabilisce che in un sistema distribuito è impossibile garantire simultaneamente:
+* **C (Consistency - Coerenza):** Tutti i nodi vedono lo stesso dato nello stesso momento.
+* **A (Availability - Disponibilità):** Ogni richiesta riceve una risposta (non di errore).
+* **P (Partition Tolerance - Tolleranza alle partizioni):** Il sistema continua a funzionare anche se la rete tra i nodi si interrompe.
+
+**L'approccio della Banca Centrale (Sistemi Transazionali CP):**
+In presenza di una partizione di rete (P), i sistemi di pagamento core o i ledger bancari sacrificano generalmente la Disponibilità assoluta (A) a favore della **Coerenza (C)**. È preferibile rifiutare temporaneamente una transazione piuttosto che elaborare un bonifico doppio (double-spending) o mostrare un saldo errato.
+
+### 2. Transazioni ACID vs. Sistemi BASE
+* **Modello ACID (Relazionali / SQL):** Garantisce Atomicità, Coerenza, Isolamento e Durabilità. È il requisito fondamentale per i core banking systems e i sistemi di clearing/settlement. L'adozione del *Two-Phase Commit (2PC)* nei database distribuiti assicura che una transazione trans-nodo avvenga o fallisca globalmente.
+* **Modello BASE (NoSQL):** *Basically Available, Soft state, Eventual consistency*. Utilizzato per dati non transazionali ad altissimo volume (es. log di sicurezza dei SIEM, tracciamento della navigazione, analytics sui big data). La coerenza viene raggiunta "eventualmente", privilegiando scalabilità e velocità.
+
+### 3. Replicazione e Disaster Recovery (RTO e RPO)
+Per garantire la continuità dei database:
+* **Replicazione Sincrona:** Scrive il dato simultaneamente nel Data Center primario e in quello secondario. Garantisce **RPO = 0** (nessuna perdita di dati), ma introduce latenza. È utilizzata in configurazioni *Active-Active* su distanze metropolitane (entro i 50-100 km).
+* **Replicazione Asincrona:** Il primario scrive il dato e risponde subito all'utente, poi invia la replica al sito di Disaster Recovery (geograficamente distante, es. Roma-Milano). C'è un lieve disallineamento temporale (RPO > 0), ma non impatta le performance locali ed è essenziale per disastri regionali.
+
+### 4. Distributed Ledger Technology (DLT) e Blockchain
+Menzionate nel programma d'esame, le architetture DLT sono fondamentali per l'esplorazione delle CBDC (*Central Bank Digital Currency*, come l'**Euro Digitale**).
+* A differenza dei database distribuiti tradizionali (dove un ente centrale fida i nodi), le DLT utilizzano algoritmi di **consenso distribuito** (es. *Practical Byzantine Fault Tolerance - PBFT*) per validare le transazioni in un network in cui i partecipanti potrebbero non fidarsi ciecamente l'uno dell'altro.
+* Garantiscono **immutabilità crittografica** e tracciabilità assoluta, caratteristiche ideali per i registri finanziari supervisionati dalla Banca Centrale.
+
+---
+
+> [!TIP]
+> **Consiglio per il Tema d'Esame:**
+> Se ti viene chiesto di progettare un'infrastruttura per un nuovo sistema di vigilanza o pagamento, proponi una rete **Software-Defined** con **microsegmentazione** per la sicurezza. Per lo strato dati, giustifica l'uso di **database relazionali distribuiti con replica sincrona** tra due Data Center vicini (per Alta Affidabilità e RPO=0) e **replica asincrona** su un terzo sito remoto (per Disaster Recovery). Aggiungi che eventuali log e dati non strutturati saranno gestiti su cluster **NoSQL** per ottimizzare costi e performance.
