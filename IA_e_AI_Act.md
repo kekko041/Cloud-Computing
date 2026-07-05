@@ -27,6 +27,17 @@ La **Legge 23 settembre 2025, n. 132** ha recepito l'art. 70 dell'AI Act designa
 
 Le autorità di vigilanza settoriali **mantengono le proprie competenze specifiche** e operano in raccordo con AgID/ACN: **Banca d'Italia** e **CONSOB** restano competenti sui sistemi IA ad alto rischio nel settore finanziario/creditizio (es. credit scoring), mentre il **Garante Privacy** resta competente sui profili di trattamento dati personali (GDPR). A livello UE, il coordinamento complessivo è affidato all'**AI Office** della Commissione Europea.
 
+### 4. NIST AI RMF (AI Risk Management Framework)
+Framework pubblicato dal NIST (USA, versione **AI RMF 1.0**, gennaio 2023), **volontario e non certificabile** — a differenza dell'AI Act (vincolante) e di ISO/IEC 42001 (certificabile da terze parti). Rappresenta il livello di **Risk-Management Operating Model**: la metodologia interna per identificare, misurare e trattare i rischi IA lungo tutto il ciclo di vita del sistema.
+
+Si articola in 4 funzioni core:
+* **Govern:** cultura, policy e responsabilità per la gestione del rischio IA (trasversale alle altre tre funzioni).
+* **Map:** contestualizza il sistema IA, individuandone scopo, requisiti e impatti previsti nello specifico contesto d'uso (es. sotto-funzione **Map 1.1**, "caratterizzazione del sistema").
+* **Measure:** misura e monitora i rischi identificati con metriche quantitative/qualitative (bias, robustezza, sicurezza).
+* **Manage:** alloca le risorse per trattare i rischi (mitigazione, trasferimento, accettazione) con piani di miglioramento continuo.
+
+**Strategia "Single Spine of Controls":** un unico controllo tecnico ben progettato (es. "Documentazione Tecnica del Modello") può soddisfare contemporaneamente più framework — es. **AI Act Annex IV** (trasparenza), **ISO 42001 Annex A.6** (ciclo di vita AIMS) e **NIST AI RMF Map 1.1** (caratterizzazione del sistema) — riducendo la ridondanza di compliance.
+
 ---
 
 ## PARTE 2: Vulnerabilità Tecniche dell'IA Generativa e Agentica
