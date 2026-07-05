@@ -20,6 +20,13 @@ Se la Banca d'Italia sviluppa o implementa internamente ("Deployer" o "Provider"
 * **Data Governance e Assenza di Bias:** I set di dati di addestramento (Training Data) devono essere pertinenti, rappresentativi ed esenti da errori o bias discriminatori.
 * **Tracciabilità (Logging) e Trasparenza:** Ogni output deve essere ripercorribile per dimostrare come il sistema sia giunto a una determinata conclusione (Explainable AI - XAI), fondamentale in caso di audit di vigilanza.
 
+### 3. Le Autorità di Sorveglianza in Italia
+La **Legge 23 settembre 2025, n. 132** ha recepito l'art. 70 dell'AI Act designando un modello **duale** di autorità nazionali competenti:
+* **AgID (Agenzia per l'Italia Digitale):** autorità di notifica e autorità di vigilanza del mercato per la generalità dei sistemi IA.
+* **ACN (Agenzia per la Cybersicurezza Nazionale):** autorità di vigilanza del mercato per i sistemi IA impiegati in ambiti di sicurezza nazionale e cybersicurezza.
+
+Le autorità di vigilanza settoriali **mantengono le proprie competenze specifiche** e operano in raccordo con AgID/ACN: **Banca d'Italia** e **CONSOB** restano competenti sui sistemi IA ad alto rischio nel settore finanziario/creditizio (es. credit scoring), mentre il **Garante Privacy** resta competente sui profili di trattamento dati personali (GDPR). A livello UE, il coordinamento complessivo è affidato all'**AI Office** della Commissione Europea.
+
 ---
 
 ## PARTE 2: Vulnerabilità Tecniche dell'IA Generativa e Agentica
