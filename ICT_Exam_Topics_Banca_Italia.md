@@ -1,0 +1,201 @@
+# Concorso Banca d'Italia - Esperti ICT
+## Guida alla Preparazione della Prova Scritta: Temi e Soluzioni Architetturali
+
+Questa guida è stata elaborata analizzando le fonti presenti nella cartella `fonti`, che comprendono il manuale ufficiale di preparazione (edizione 2026), i whitepaper di settore e gli standard internazionali. I temi proposti riflettono la natura delle prove scritte della Banca d'Italia, caratterizzate da domande aperte che richiedono la progettazione di architetture sicure, scalabili e conformi alle severe normative del settore finanziario europeo.
+
+---
+
+## 📋 Quadro delle Fonti Utilizzate
+Le soluzioni ai temi proposti integrano i concetti chiave estratti dai seguenti documenti di studio:
+1. **Regolamentazione e Resilienza**: Regolamento **DORA** (Digital Operational Resilience Act), Direttiva **NIS2**, Regolamento **EU AI Act**, Regolamento **GDPR** e standard **ISO 22301** (Business Continuity) e **ISO/IEC 27001**.
+2. **Architetture e Sicurezza**: Modello **Zero Trust** (NIST SP 800-207), architetture distributed ledger (Blockchain), crittografia avanzata e post-quantum (NIST PQC, Shor/Grover, QKD).
+3. **Intelligenza Artificiale**: **SANS AI Security Maturity Model (AI-SMM) 2026**, vulnerabilità avversarie (Prompt Injection, Confused Deputy) e linee guida AgID.
+
+---
+
+## 📝 Tema 1: Transizione a un'Architettura Zero Trust e resilienza contro minacce avanzate (LOTL e Threat Shifting)
+
+### ❓ Traccia
+> L'evoluzione delle minacce cyber evidenzia una crescente diffusione di attacchi "Living Off the Land" (LOTL) e fenomeni di "Threat Shifting", che mettono in crisi i tradizionali modelli di difesa perimetrale. Al contempo, il lavoro agile richiede l'accesso sicuro e ubiquo alle risorse. 
+> 
+> Il candidato delinei una strategia di transizione a un'architettura **Zero Trust** per un'istituzione finanziaria in linea con le linee guida **NIST SP 800-207**, descrivendo i pilastri tecnologici e organizzativi necessari. Evidenzi inoltre l'impatto di LOTL sul monitoraggio degli incidenti richiesto da DORA e descriva l'architettura logica mediante un diagramma architetturale.
+
+---
+
+### 💡 Soluzione Proposta
+
+#### 1. Inquadramento del Problema: LOTL e Threat Shifting
+*   **Living Off the Land (LOTL)**: Gli attaccanti non introducono malware esterno (facilmente rilevabile dagli antivirus tradizionali), ma utilizzano strumenti legittimi già presenti nel sistema operativo (es. PowerShell, WMI, vssadmin). Questo riduce drasticamente gli indicatori di compromissione (IoC) tradizionali.
+*   **Threat Shifting**: La capacità degli attori di minaccia di mutare il proprio comportamento e le risorse utilizzate in risposta alle contromisure dei difensori (es. spostamento degli attacchi da endpoint protetti ad API non monitorate).
+*   **Impatto su DORA**: Il Regolamento DORA impone il rilevamento tempestivo degli incidenti. Le tecniche LOTL aumentano notevolmente il *dwell time* (il tempo di permanenza silente dell'attaccante). Risulta quindi necessario passare da un monitoraggio basato su firme a un'analisi comportamentale e a test continui (come i *Threat Led Penetration Test* - TLPT / TIBER-EU).
+
+#### 2. Principi di Transizione Zero Trust (NIST SP 800-207)
+L'architettura deve basarsi sui tre assiomi del NIST:
+1.  **Verifica esplicita**: Autenticare e autorizzare sempre in base a identità, dispositivo, contesto e anomalie comportamentali.
+2.  **Privilegio minimo (Least Privilege)**: Limitare l'accesso con modelli *Just-In-Time* (JIT) e *Just-Enough-Administration* (JEA) per prevenire movimenti laterali.
+3.  **Assunzione della compromissione (Assume Breach)**: Segmentare la rete in micro-perimetri e crittografare tutte le sessioni di comunicazione (TLS 1.3/SSH) ipotizzando che la rete interna sia ostile.
+
+#### 3. Componenti Tecnologiche Chiave
+*   **Identità**: MFA (Multi-Factor Authentication) resistente al phishing (FIDO2) e Single Sign-On (SSO) integrato con analisi del rischio in tempo reale (Risk-Based Authentication).
+*   **Endpoint**: EDR/XDR (Endpoint/Extended Detection and Response) per rilevare l'abuso comportamentale degli strumenti di sistema (es. script PowerShell anomali).
+*   **Rete**: Microsegmentazione software-defined (SD-WAN / microsegmenti a livello hypervisor) e adozione di SDP (Software-Defined Perimeter) in sostituzione delle VPN tradizionali.
+*   **Applicazioni**: Privileged Access Management (PAM) per gli amministratori di sistema e monitoraggio centralizzato tramite SIEM di nuova generazione con funzionalità UEBA (User and Entity Behavior Analytics).
+
+#### 4. Architettura Logica (NIST SP 800-207)
+
+```mermaid
+graph TD
+    User["Utente / Dispositivo (Lavoro Agile)"] --> PEP["Policy Enforcement Point (PEP)"]
+    PEP --> Resources["Risorse Aziendali (App, Dati, API)"]
+    
+    subgraph Control_Plane["Control Plane"]
+        PDP["Policy Decision Point (PDP)"]
+        PA["Policy Administrator (Gestisce Connessioni)"]
+        PE["Policy Engine (Valuta Regole)"]
+        PDP --> PEP
+        PE --> PA
+    end
+    
+    subgraph Context_Sources["Risk & Context Intelligence"]
+        IDP["Identity Provider (IdP / FIDO2)"] --> PDP
+        EDR["EDR / Device Health State"] --> PDP
+        SIEM["SIEM / UEBA (Anomaly Detection)"] --> PDP
+        ThreatIntel["Cyber Threat Intelligence (DORA)"] --> PDP
+    end
+    
+    classDef control fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef context fill:#efebe9,stroke:#5d4037,stroke-width:1px;
+    class PDP,PA,PE control;
+    class IDP,EDR,SIEM,ThreatIntel context;
+```
+
+#### 5. Trade-off e Valutazione di Sicurezza/Performance
+*   **Vantaggi (Sicurezza)**: Riduzione drastica della superficie di attacco; contenimento immediato dei movimenti laterali; visibilità granulare in linea con DORA e NIS2.
+*   **Svantaggi (Performance/Costi)**: Introduzione di latenza dovuta alla costante verifica dei token di autorizzazione; complessità di configurazione iniziale; rischio di "fatica da MFA" per gli utenti finali (mitigabile con SSO e policy contestuali intelligenti).
+
+---
+
+## 📝 Tema 2: Sicurezza e Governance dell'Intelligenza Artificiale Generativa e Agentica in ambito Bancario
+
+### ❓ Traccia
+> L'introduzione di soluzioni di Intelligenza Artificiale Generativa e sistemi Agentici (autonomi) all'interno dei processi di un'istituzione finanziaria offre grandi incrementi di produttività, ma solleva gravi rischi legali e di sicurezza (Prompt Injection, Confused Deputy, violazione dei dati personali).
+> 
+> Il candidato descriva un framework di governance e sicurezza per l'adozione dell'IA in Banca d'Italia, facendo riferimento al **SANS AI Security Maturity Model (AI-SMM) 2026** e ai requisiti del regolamento europeo **EU AI Act**. Illustri le contromisure tecniche a protezione delle API e degli input avversari e presenti un diagramma Mermaid relativo al flusso di validazione degli input/output del sistema.
+
+---
+
+### 💡 Soluzione Proposta
+
+#### 1. Inquadramento Normativo ed Organizzativo (AI Act & NIS2)
+*   **EU AI Act**: Classifica i sistemi IA in base al rischio. I sistemi impiegati per la gestione delle infrastrutture critiche o per il monitoraggio dei lavoratori (algorithmic management, Capo IX) sono classificati ad **Alto Rischio**, imponendo audit preventivi, logging dettagliato e supervisione umana (*human-in-the-loop*).
+*   **SANS AI-SMM (Maturity Stages)**: Un'istituzione finanziaria deve puntare a una maturità di **Stadio 3 (Defined / Risk-Informed)** o **Stadio 4 (Managed / Integrated)**, definendo inventari accurati dei modelli, controlli sugli accessi delle API e tracciabilità del *data lineage*.
+
+#### 2. Vulnerabilità Tecniche Specifiche dei Sistemi Agentici
+*   **Prompt Injection**: Input malevoli che sovrascrivono le istruzioni di sistema del Large Language Model (LLM), portando all'esecuzione di comandi non autorizzati.
+*   **Confused Deputy (Delegato Confuso)**: Si verifica quando l'agente IA, dotato di privilegi elevati per interagire con database o API (Non-Human Identities - NHI), esegue un'azione dannosa per conto di un utente malintenzionato che non possiede tali privilegi.
+
+#### 3. Contromisure Tecniche e Architettura di Sicurezza
+*   **AI Security Gateway**: Un proxy interposto tra l'utente e il modello LLM che effettua la pulizia del prompt (*sanitization*), la rimozione di dati personali (PII scrubbing in conformità al GDPR) e il controllo dei tentativi di iniezione.
+*   **Isolamento dei Tool (Sandboxing)**: Gli agenti IA devono invocare le API esterne esclusivamente attraverso microservizi isolati, con privilegi minimi e autorizzazioni rigidamente definite tramite OAuth2.
+*   **Non-Human Identity (NHI) Management**: Trattare ogni agente IA come un'entità di sistema distinta, assegnando credenziali monitorate e ruoli IAM (Identity and Access Management) specifici, soggetti a rotazione e audit continuo.
+
+#### 4. Flusso Logico di Validazione Input/Output (AI Security Gateway)
+
+```mermaid
+graph LR
+    Client["Client / Operatore"] -->|1. Prompt Input| Gateway["AI Security Gateway"]
+    
+    subgraph Gateway_Controls["Filtri e Controlli del Gateway"]
+        Sanitize["Input Sanitization & PII Filter"] --> InjectionCheck["Prompt Injection Shield"]
+        InjectionCheck --> NHICheck["Identity & RBAC Verification"]
+    end
+    
+    Gateway -->|2. Safe Prompt| LLM["LLM Engine (GenAI Core)"]
+    LLM -->|3. Raw Output| OutputValidator["Output Evaluator & Guardrails"]
+    
+    subgraph Output_Controls["Filtri di Output"]
+        Hallucination["Hallucination & Bias Check"] --> DataLeak["Data Leakage Prevention (DLP)"]
+    end
+    
+    OutputValidator -->|4. Validated Output| Client
+    OutputValidator -.->|Log & Audit| SIEM["SIEM & AI Governance Audit"]
+    
+    classDef filter fill:#fff3e0,stroke:#ffb74d,stroke-width:1px;
+    class Sanitize,InjectionCheck,NHICheck,Hallucination,DataLeak filter;
+```
+
+#### 5. Trade-off e Gestione del Rischio Legale/Operativo
+*   **Trade-off (Latenza vs. Sicurezza)**: L'inserimento di filtri di input/output (es. modelli di classificazione minori per rilevare iniezioni o filtri DLP) aumenta il tempo di risposta totale dell'applicazione.
+*   **Stabilità contrattuale (NIS2 / Terze Parti)**: L'allocazione della responsabilità nei contratti di fornitura di modelli "Foundation" (SaaS) deve essere regolata accuratamente, poiché i modelli probabilistici non garantiscono la determinazione degli esiti (*hallucinations*).
+
+---
+
+## 📝 Tema 3: Continuità Operativa e Resilienza Digitale (ISO 22301 & DORA) nel settore dei pagamenti
+
+### ❓ Traccia
+> Il ruolo della Banca d'Italia come autorità di sorveglianza sui sistemi di pagamento impone standard elevatissimi di disponibilità dei servizi finanziari. Il Regolamento DORA richiede che i piani di continuità operativa ICT siano integrati con la strategia complessiva di gestione dei rischi.
+> 
+> Il candidato descriva le fasi di progettazione e implementazione di un **Business Continuity Management System (BCMS)** in conformità allo standard **ISO 22301** e a **DORA**. Delinei in particolare la metodologia per la conduzione della **Business Impact Analysis (BIA)**, la definizione dei parametri **RTO** e **RPO** e le strategie di Disaster Recovery in architetture cloud-native. Presenti le fasi di risposta a un incidente grave tramite un diagramma Mermaid.
+
+---
+
+### 💡 Soluzione Proposta
+
+#### 1. Fasi del BCMS (ISO 22301) e Allineamento a DORA
+Un BCMS resiliente si articola secondo il ciclo PDCA (Plan-Do-Check-Act):
+*   **Plan (Contesto e Leadership)**: Definire il perimetro del BCMS, identificando i servizi di pagamento critici (es. TARGET2, BI-COMP). Coinvolgere l'alta direzione e definire la politica di Business Continuity.
+*   **Do (BIA e Risk Assessment)**: Eseguire la Business Impact Analysis e il Risk Assessment per identificare le minacce e definire le strategie di continuità.
+*   **Check (Test e Monitoraggio)**: Condurre esercitazioni regolari e audit interni.
+*   **Act (Miglioramento Continuo)**: Aggiornare i piani di continuità (BCP) in base agli esiti dei test e ai mutamenti dello scenario di minaccia.
+
+#### 2. Metodologia per la Business Impact Analysis (BIA)
+La BIA valuta l'impatto di un'interruzione sui processi aziendali nel corso del tempo.
+*   **Identificazione delle criticità**: Determinare i servizi la cui interruzione causerebbe danni finanziari sistemici o sanzioni regolatorie.
+*   **Determinazione dei parametri chiave**:
+    *   **RTO (Recovery Time Objective)**: Il tempo massimo tollerabile per il ripristino del servizio dopo un incidente. Per i sistemi di pagamento critici, l'RTO è spesso vicino a zero (real-time o poche ore).
+    *   **RPO (Recovery Point Objective)**: La quantità massima tollerabile di dati che possono andare perduti (espressa in tempo). Nel settore finanziario, l'RPO deve tendere a zero (transazioni registrate in modo persistente).
+*   **Analisi delle interdipendenze**: Mappare le dipendenze tecnologiche (database, middleware), umane e di terze parti (fornitori di servizi cloud).
+
+#### 3. Strategie di Disaster Recovery in Ambienti Cloud-Native
+Per garantire RTO e RPO prossimi allo zero, si adottano le seguenti strategie architetturali:
+*   **Multi-Region Active-Active**: Il servizio è erogato contemporaneamente da due regioni cloud geograficamente distanti. I dati sono replicati in modo sincrono (o quasi-sincrono con algoritmi di consenso distribuiti come Raft/Paxos). In caso di fallimento di una regione, il traffico viene reindirizzato istantaneamente senza perdita di dati.
+*   **Disaccoppiamento tramite code di messaggi**: Architetture basate su eventi (es. Kafka) che memorizzano i messaggi delle transazioni in modo persistente. Se un database di destinazione va offline, i messaggi non vengono persi ma rimangono in coda in attesa del ripristino.
+
+#### 4. Flusso di Gestione degli Incidenti Gravi (DORA & ISO 22301)
+
+```mermaid
+graph TD
+    Incident["Rilevazione Incidente Grave (ICT / Cyber)"] --> Triage["Classificazione & Triage (Criteri DORA)"]
+    
+    subgraph Incident_Response["Gestione Tecnica & Operativa"]
+        Triage --> Activate_BCP["Attivazione BCP (ISO 22301)"]
+        Activate_BCP --> Activate_DR["Attivazione Disaster Recovery (Failover)"]
+        Activate_DR --> Recovery["Ripristino dei Servizi Critici"]
+        Recovery --> Post_Mortem["Analisi Post-Incidente & Miglioramento"]
+    end
+    
+    subgraph Regulatory_Compliance["Adempimenti Regolatori DORA"]
+        Triage --> Initial_Notification["Notifica Iniziale (Autorità di Vigilanza)"]
+        Initial_Notification --> Progress_Report["Report di Progresso (Intermedio)"]
+        Recovery --> Final_Report["Report Finale (Analisi Cause)"]
+    end
+    
+    classDef response fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef compliance fill:#fffde7,stroke:#fbc02d,stroke-width:2px;
+    class Activate_BCP,Activate_DR,Recovery,Post_Mortem response;
+    class Initial_Notification,Progress_Report,Final_Report compliance;
+```
+
+#### 5. Trade-off e Sfide Implementative
+*   **Costo della Ridondanza vs. Rischio**: L'architettura Active-Active sincrona richiede investimenti notevoli in connettività a bassissima latenza e storage di fascia alta. Il costo deve essere bilanciato rispetto alle sanzioni previste da DORA e al danno reputazionale sistemico.
+*   **Coerenza dei dati distribuita**: Gestire la consistenza dei dati in sistemi distribuiti (Teorema CAP). Privilegiare la consistenza (*Consistency*) rispetto alla disponibilità (*Availability*) nel momento di picco per evitare transazioni duplicate o registrate parzialmente (proprietà ACID).
+
+---
+
+> [!TIP]
+> **Consiglio per il Candidato**: Durante lo svolgimento dello scritto, strutturate le risposte suddividendo la soluzione in:
+> 1.  *Analisi dello Scenario / Contesto Normativo*;
+> 2.  *Soluzione Architetturale (hardware/software/processi)*;
+> 3.  *Diagramma Architetturale*;
+> 4.  *Analisi dei Trade-off (Security vs. Performance / Costi)*.
+> Questo schema dimostra rigore ingegneristico e visione manageriale, elementi fortemente valutati dalla commissione d'esame della Banca d'Italia.
