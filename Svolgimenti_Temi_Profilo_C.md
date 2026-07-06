@@ -1,7 +1,7 @@
 # Svolgimenti — Prova scritta Profilo C (Assistente ICT)
 ### Risposte-modello ai sei temi · Banca d'Italia 2026 (programma di pag. 11)
 
-> Ogni svolgimento segue la struttura attesa: **impostazione → sviluppo tecnico con specifiche concrete → esempio nel contesto Banca d'Italia → rischi residui** (metodo PEEL). I temi 🇬🇧 sono redatti in inglese, come per l'elaborato in lingua. Taglio Profilo C: fondamenti applicati, lessico corretto, scelte motivate.
+> Ogni svolgimento segue la struttura attesa: **impostazione → sviluppo tecnico con specifiche concrete → esempio nel contesto Banca d'Italia → rischi residui** (metodo PEEL). Taglio Profilo C: fondamenti applicati, lessico corretto, scelte motivate.
 
 ---
 ---
@@ -26,24 +26,24 @@
 
 ---
 
-## Model Answer 1.2 — Secure SDLC and OWASP for a web application 🇬🇧
+## Svolgimento Tema 1.2 — Secure SDLC e OWASP per un'applicazione web
 
-**Framing.** Security cannot be "added at the end": for a web application handling authentication and sensitive customer data, it must be built into every phase of the development life cycle. Every internet-facing banking application is targeted by automated attacks around the clock, so a **Secure SDLC (S-SDLC)** is the baseline, not an option.
+**Impostazione.** La sicurezza non può essere "aggiunta alla fine": per un'applicazione web che gestisce autenticazione e dati sensibili dei clienti, deve essere incorporata in ogni fase del ciclo di vita dello sviluppo. Ogni applicazione bancaria esposta su internet è bersaglio di attacchi automatizzati 24 ore su 24, per cui un **Secure SDLC (S-SDLC)** è la base di partenza, non un'opzione.
 
-**(a) Security across the SDLC.** Security is integrated at each stage: in **requirements**, security needs are captured alongside functional and non-functional ones (confidentiality, integrity, availability, performance); in **design**, **threat modelling** (e.g. STRIDE) identifies attack surfaces; in **implementation**, secure coding standards and **code review** apply; in **testing**, dedicated security testing runs; in **deployment**, hardening and secure configuration; in **operation**, continuous **monitoring** and patching. The principle is "shift left" — find defects early, where they are cheapest to fix.
+**(a) La sicurezza lungo l'SDLC.** La sicurezza si integra in ogni fase: nei **requisiti**, le esigenze di sicurezza vengono raccolte insieme a quelle funzionali e non funzionali (riservatezza, integrità, disponibilità, prestazioni); nella **progettazione**, il **threat modelling** (es. STRIDE) individua le superfici di attacco; nell'**implementazione**, si applicano standard di codifica sicura e **code review**; nel **testing**, viene eseguito un test di sicurezza dedicato; nel **deployment**, hardening e configurazione sicura; nell'**esercizio**, monitoraggio continuo e applicazione delle patch. Il principio è "shift left" — individuare i difetti il prima possibile, quando costano meno da correggere.
 
-**(b) Testing strategy.** Functional correctness is checked with **unit and integration tests**; security uses three complementary techniques. **SAST** (Static Application Security Testing) analyses the source code without running it, catching patterns such as missing prepared statements or insecure dependencies (e.g. SonarQube, Semgrep). **DAST** (Dynamic Application Security Testing) attacks the running application to find runtime issues such as broken sessions or misconfigurations (e.g. OWASP ZAP, Burp Suite). **Fuzzing** sends random or malformed input to uncover crashes and unexpected behaviour. SAST sees the code but not the runtime; DAST sees the runtime but not the code — a mature pipeline uses both, integrated into CI.
+**(b) Strategia di testing.** La correttezza funzionale si verifica con **test unitari e di integrazione**; la sicurezza si basa su tre tecniche complementari. Il **SAST** (Static Application Security Testing) analizza il codice sorgente senza eseguirlo, individuando pattern come query prive di prepared statement o dipendenze insicure (es. SonarQube, Semgrep). Il **DAST** (Dynamic Application Security Testing) attacca l'applicazione in esecuzione per trovare problemi a runtime come sessioni compromesse o configurazioni errate (es. OWASP ZAP, Burp Suite). Il **fuzzing** invia input casuali o malformati per individuare crash e comportamenti inattesi. Il SAST vede il codice ma non il runtime; il DAST vede il runtime ma non il codice — una pipeline matura usa entrambi, integrati nella CI.
 
-**(c) OWASP Top 10 and countermeasures.** The OWASP Top 10 is the common reference list of critical web vulnerabilities. The most relevant here:
-- **A01 Broken Access Control** — missing or flawed authorisation lets a user reach others' data. Countermeasures: enforce authorisation **server-side**, apply the **principle of least privilege**, deny by default.
-- **A02 Cryptographic Failures** — sensitive data unencrypted or weak algorithms. Countermeasures: **TLS** for data in transit, strong encryption at rest, never MD5/SHA-1 for passwords.
-- **A03 Injection** (e.g. SQL injection) — unsanitised input interpreted as code. Countermeasure: **parameterised prepared statements**, input validation.
+**(c) OWASP Top 10 e contromisure.** L'OWASP Top 10 è l'elenco di riferimento condiviso delle vulnerabilità web più critiche. Le più rilevanti in questo contesto:
+- **A01 Broken Access Control** — un'autorizzazione mancante o errata permette a un utente di accedere ai dati altrui. Contromisure: applicare l'autorizzazione **lato server**, adottare il **principio del privilegio minimo**, negare per default.
+- **A02 Cryptographic Failures** — dati sensibili non cifrati o algoritmi deboli. Contromisure: **TLS** per i dati in transito, cifratura robusta at-rest, mai MD5/SHA-1 per le password.
+- **A03 Injection** (es. SQL injection) — input non sanificato interpretato come codice. Contromisura: **prepared statement parametrizzati**, validazione dell'input.
 
-**(d) Credentials and code quality.** Passwords are never stored in clear text or with fast hashes; use deliberately slow, memory-hard **key-derivation functions** such as **Argon2id** with a salt. Code quality (test coverage, low cyclomatic complexity, controlled technical debt) underpins maintainable security.
+**(d) Credenziali e qualità del codice.** Le password non vengono mai memorizzate in chiaro né con hash veloci; si usano **funzioni di derivazione della chiave (KDF)** deliberatamente lente e memory-hard come **Argon2id**, con un salt. La qualità del codice (copertura dei test, bassa complessità ciclomatica, debito tecnico sotto controllo) è alla base di una sicurezza mantenibile.
 
-**Context.** For a public institution like the Banca d'Italia, where every exposed application is a target, an S-SDLC with layered testing is essential to protect confidentiality and integrity of data.
+**Esempio nel contesto.** Per un'istituzione pubblica come la Banca d'Italia, dove ogni applicazione esposta è un bersaglio, un S-SDLC con testing stratificato è essenziale per proteggere riservatezza e integrità dei dati.
 
-**Residual risks.** (1) **Zero-day** vulnerabilities not caught by known-pattern tools. (2) **Vulnerable third-party dependencies** (supply-chain risk). (3) **Misconfiguration** in deployment. (4) **Human error** despite process — mitigated by continuous monitoring and review.
+**Rischi residui.** (1) Vulnerabilità **zero-day** non individuate dagli strumenti basati su pattern noti. (2) **Dipendenze di terze parti vulnerabili** (rischio di supply chain). (3) **Errori di configurazione** nel deployment. (4) **Errore umano** nonostante il processo — mitigato da monitoraggio continuo e revisione.
 
 ---
 ---
@@ -68,42 +68,42 @@
 
 ---
 
-## Model Answer 2.2 — Machine-learning fundamentals for a classification problem 🇬🇧
+## Svolgimento Tema 2.2 — Fondamenti di machine learning per un problema di classificazione
 
-**Framing.** The task — classifying a transaction as legitimate or fraudulent — is a **supervised classification** problem, but its defining feature is that fraud is **rare**, which shapes both the modelling and the evaluation. The goal is a model that *generalises* to new data, not one that memorises the training set.
+**Impostazione.** Il compito — classificare una transazione come legittima o fraudolenta — è un problema di **classificazione supervisionata**, ma la sua caratteristica distintiva è che la frode è un evento **raro**, il che condiziona sia la modellazione sia la valutazione. L'obiettivo è un modello che **generalizzi** su dati nuovi, non uno che memorizzi il training set.
 
-**(a) Types of learning.** **Supervised** learning trains on **labelled** data (each transaction marked legitimate/fraudulent) and is the natural fit here. **Unsupervised** learning finds structure without labels and is used when labelled fraud is scarce — e.g. **anomaly detection** (isolation forest, autoencoders) that learns "normal" behaviour and flags deviations. **Reinforcement** learning, where an agent learns from rewards, is not suited to this batch-classification task.
+**(a) Tipi di apprendimento.** L'apprendimento **supervisionato** si addestra su dati **etichettati** (ogni transazione marcata come legittima/fraudolenta) ed è la scelta naturale in questo caso. L'apprendimento **non supervisionato** individua strutture senza etichette e si usa quando le frodi etichettate sono scarse — es. **anomaly detection** (isolation forest, autoencoder) che apprende il comportamento "normale" e segnala le deviazioni. L'apprendimento per **rinforzo**, in cui un agente apprende da ricompense, non è adatto a questo compito di classificazione batch.
 
-**(b) The ML pipeline.** Steps: **data preparation** (cleaning, handling missing values, encoding); **feature selection/engineering** (e.g. transaction amount, frequency, time-of-day, deviation from the customer's habits); a **train/validation/test split** so the model is trained on one portion, tuned on another, and evaluated on unseen data; then **model training** (e.g. logistic regression as an interpretable baseline, then tree-based models for performance).
+**(b) La pipeline di ML.** Fasi: **preparazione dei dati** (pulizia, gestione dei valori mancanti, encoding); **selezione/ingegnerizzazione delle feature** (es. importo della transazione, frequenza, ora del giorno, deviazione dalle abitudini del cliente); una suddivisione **train/validation/test** in modo che il modello sia addestrato su una parte, calibrato su un'altra e valutato su dati mai visti; quindi l'**addestramento del modello** (es. regressione logistica come baseline interpretabile, poi modelli ad albero per le prestazioni).
 
-**(c) Overfitting and evaluation.** **Overfitting** occurs when the model fits the noise of the training data and fails on new cases; symptoms are high training accuracy but poor test accuracy. Mitigations: **regularisation**, **cross-validation**, simpler models, more data. Crucially, **accuracy is misleading** for rare events — a model predicting "never fraud" can be 99% accurate and useless. Better metrics: **precision** (of those flagged, how many are truly fraud), **recall** (of all frauds, how many we catch) and their balance, **F1**. In fraud detection, missing a fraud (low recall) is usually costlier than a false alarm, but false positives create friction — the decision threshold must reflect those costs.
+**(c) Overfitting e valutazione.** L'**overfitting** si verifica quando il modello si adatta al rumore dei dati di addestramento e fallisce sui casi nuovi; i sintomi sono un'accuratezza alta in training ma scarsa in test. Mitigazioni: **regolarizzazione**, **cross-validation**, modelli più semplici, più dati. È fondamentale ricordare che l'**accuratezza è fuorviante** per gli eventi rari — un modello che predice "mai frode" può avere il 99% di accuratezza ed essere inutile. Metriche migliori: **precision** (tra i casi segnalati, quanti sono davvero frodi), **recall** (tra tutte le frodi, quante ne cogliamo) e il loro bilanciamento, l'**F1**. Nel fraud detection, perdere una frode (recall basso) è di solito più costoso di un falso allarme, ma i falsi positivi generano attrito — la soglia decisionale deve riflettere questi costi.
 
-**(d) Interpretability and the AI Act.** **Logistic regression** yields readable coefficients (you can explain *why* a transaction was flagged), whereas a deep "black-box" model does not. In a regulated context this matters: the **AI Act** classifies fraud-detection and credit-scoring systems as **high-risk**, requiring explainability, data governance and human oversight.
+**(d) Interpretabilità e AI Act.** La **regressione logistica** fornisce coefficienti leggibili (si può spiegare *perché* una transazione è stata segnalata), mentre un modello "black-box" profondo no. In un contesto regolamentato questo conta: l'**AI Act** classifica i sistemi di fraud detection e credit scoring come **ad alto rischio**, richiedendo spiegabilità, governance dei dati e sorveglianza umana.
 
-**Context.** For the Banca d'Italia as a supervisor, understanding ML means being able to **govern** it — to verify that supervised entities use such models transparently and lawfully — not merely to build it.
+**Esempio nel contesto.** Per la Banca d'Italia in quanto autorità di vigilanza, capire il ML significa poterlo **governare** — verificare che i soggetti vigilati utilizzino tali modelli in modo trasparente e conforme — non semplicemente saperlo costruire.
 
-**Residual risks.** (1) **Concept drift** — fraud patterns change, so the model degrades and needs retraining. (2) **Class imbalance** mishandled → poor recall. (3) **Bias** in the data producing unfair outcomes. (4) **Explainability–performance trade-off**: the strongest models are the least transparent.
+**Rischi residui.** (1) **Concept drift** — i pattern di frode cambiano, per cui il modello degrada e va ri-addestrato. (2) **Sbilanciamento delle classi** gestito male → recall scarso. (3) **Bias** nei dati che produce risultati iniqui. (4) **Trade-off spiegabilità-prestazioni**: i modelli più potenti sono i meno trasparenti.
 
 ---
 ---
 
 # AMBITO 3 — Architettura dei sistemi informatici e delle reti
 
-## Model Answer 3.1 — Secure, resilient network with cloud elements 🇬🇧
+## Svolgimento Tema 3.1 — Rete sicura e resiliente con componenti cloud
 
-**Framing.** A network connecting branch offices to a central data centre, with some services in the cloud, must satisfy three goals at once: **secure communication**, **segmentation** so that one compromise does not spread, and **resilience** so that the service survives failures. Defence in depth is the guiding principle.
+**Impostazione.** Una rete che collega le filiali a un data center centrale, con alcuni servizi in cloud, deve soddisfare simultaneamente tre obiettivi: **comunicazione sicura**, **segmentazione** in modo che una compromissione non si propaghi, e **resilienza** affinché il servizio sopravviva ai guasti. La difesa in profondità è il principio guida.
 
-**(a) Layered models and devices.** The **OSI** and **TCP/IP** models structure communication into layers. Key devices: a **switch** operates at layer 2 (Data Link), forwarding frames by MAC address within a LAN; a **router** operates at layer 3 (Network), routing IP packets between networks. Core protocols include IP, TCP/UDP, DNS, and HTTPS over TLS.
+**(a) Modelli a livelli e dispositivi.** I modelli **OSI** e **TCP/IP** strutturano la comunicazione in livelli. Dispositivi chiave: uno **switch** opera al livello 2 (Data Link), inoltrando i frame in base all'indirizzo MAC all'interno di una LAN; un **router** opera al livello 3 (Rete), instradando i pacchetti IP tra reti diverse. I protocolli fondamentali includono IP, TCP/UDP, DNS e HTTPS su TLS.
 
-**(b) Segmentation and perimeter defence.** Public-facing services sit in a **DMZ**, isolated from the internal network; internal networks are split into **VLANs** to limit lateral movement. A **stateful firewall** enforces traffic policy; **IDS/IPS** detect and block intrusions; a **reverse proxy** provides TLS termination, a **WAF** and rate limiting, hiding internal topology. Branch and remote connectivity uses **VPNs** (IPsec or TLS) to encrypt traffic over untrusted links, and **TLS** protects data in transit end-to-end.
+**(b) Segmentazione e difesa perimetrale.** I servizi esposti al pubblico risiedono in una **DMZ**, isolata dalla rete interna; le reti interne sono suddivise in **VLAN** per limitare il movimento laterale. Un **firewall stateful** applica la policy sul traffico; **IDS/IPS** rilevano e bloccano le intrusioni; un **reverse proxy** fornisce terminazione TLS, un **WAF** e rate limiting, nascondendo la topologia interna. La connettività delle filiali e degli accessi remoti utilizza **VPN** (IPsec o TLS) per cifrare il traffico su collegamenti non fidati, e **TLS** protegge i dati in transito end-to-end.
 
-**(c) Network attacks and countermeasures.** **DDoS** floods the service — mitigated with traffic scrubbing, CDNs and rate limiting. **Man-in-the-middle** intercepts traffic — countered by TLS and certificate validation/pinning. **ARP/DNS spoofing** redirects traffic — mitigated with DNSSEC, dynamic ARP inspection and network segmentation. Underlying all: the **principle of least privilege** and micro-segmentation to minimise the **blast radius** of any compromise.
+**(c) Attacchi alla rete e contromisure.** Il **DDoS** satura il servizio — mitigato con traffic scrubbing, CDN e rate limiting. Il **man-in-the-middle** intercetta il traffico — contrastato con TLS e validazione/pinning dei certificati. Lo **spoofing ARP/DNS** reindirizza il traffico — mitigato con DNSSEC, dynamic ARP inspection e segmentazione della rete. Alla base di tutto: il **principio del privilegio minimo** e la micro-segmentazione per minimizzare il **raggio d'impatto (blast radius)** di ogni compromissione.
 
-**(d) Cloud fundamentals and resilience.** Cloud service models — **IaaS, PaaS, SaaS** — differ in what the provider versus the customer manages; the **shared-responsibility model** makes this boundary explicit (the provider secures the infrastructure, the customer secures its data and configuration). **High availability** removes single points of failure through redundancy (active-active or active-standby), **load balancing** and **multi-AZ** deployment — 99.99% availability allows roughly 52 minutes of downtime per year. **Disaster recovery** adds backups, defined **RPO/RTO** and a secondary site.
+**(d) Fondamenti cloud e resilienza.** I modelli di servizio cloud — **IaaS, PaaS, SaaS** — differiscono per ciò che è gestito dal fornitore rispetto al cliente; il **modello di responsabilità condivisa** rende esplicito questo confine (il fornitore protegge l'infrastruttura, il cliente protegge i propri dati e la configurazione). L'**alta disponibilità** elimina i single point of failure tramite ridondanza (active-active o active-standby), **load balancing** e deployment **multi-AZ** — una disponibilità del 99,99% consente circa 52 minuti di downtime all'anno. Il **disaster recovery** aggiunge backup, **RPO/RTO** definiti e un sito secondario.
 
-**Context.** A central bank's network carries critical, high-value traffic and is a constant target; segmentation, encryption and resilient design directly support operational continuity, in line with DORA's expectations.
+**Esempio nel contesto.** La rete di una banca centrale veicola traffico critico e di elevato valore ed è un bersaglio costante; segmentazione, cifratura e design resiliente sostengono direttamente la continuità operativa, in linea con le aspettative di DORA.
 
-**Residual risks.** (1) **Cloud concentration risk** (dependence on one provider) — to be governed with exit plans. (2) **Misconfiguration**, the leading cause of cloud incidents. (3) **Insider threats** and credential theft. (4) **Correlated failures** in redundant systems.
+**Rischi residui.** (1) **Rischio di concentrazione cloud** (dipendenza da un unico fornitore) — da governare con piani di uscita. (2) **Errori di configurazione**, causa principale degli incidenti cloud. (3) **Minacce interne (insider)** e furto di credenziali. (4) **Guasti correlati** nei sistemi ridondanti.
 
 ---
 
@@ -126,4 +126,4 @@
 ---
 ---
 
-> **Nota d'uso.** Sono risposte-modello di riferimento: all'esame conta riprodurne l'**impianto** (impostazione → sviluppo con specifiche → esempio nel contesto BdI → rischi residui), non il testo a memoria. Allena la scrittura *a mano e a tempo* (≈2h per quesito) e verifica di saper produrre in autonomia almeno uno dei tre svolgimenti in inglese. *Promemoria*: pag. 11 è il programma del **Profilo C**; se il tuo obiettivo resta il **Profilo A**, usa questi come ripasso dei fondamentali.
+> **Nota d'uso.** Sono risposte-modello di riferimento: all'esame conta riprodurne l'**impianto** (impostazione → sviluppo con specifiche → esempio nel contesto BdI → rischi residui), non il testo a memoria. Allena la scrittura *a mano e a tempo* (≈2h per quesito). Ricorda inoltre che la prova prevede un elaborato in lingua inglese: esercitati a scrivere autonomamente in inglese almeno uno di questi svolgimenti. *Promemoria*: pag. 11 è il programma del **Profilo C**; se il tuo obiettivo resta il **Profilo A**, usa questi come ripasso dei fondamentali.

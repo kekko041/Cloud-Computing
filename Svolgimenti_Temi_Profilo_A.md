@@ -1,7 +1,7 @@
 # Svolgimenti — Prova scritta Profilo A (Esperto ICT)
 ### Risposte-modello ai sei temi · Banca d'Italia 2026
 
-> Ogni svolgimento segue la struttura attesa dalla Commissione: **impostazione del problema → sviluppo tecnico con specifiche concrete → esempi calati nel contesto Banca d'Italia/Eurosistema → conclusione con rischi residui**, secondo il metodo PEEL. I temi 🇬🇧 sono redatti in inglese, come si farebbe all'esame per l'elaborato in lingua.
+> Ogni svolgimento segue la struttura attesa dalla Commissione: **impostazione del problema → sviluppo tecnico con specifiche concrete → esempi calati nel contesto Banca d'Italia/Eurosistema → conclusione con rischi residui**, secondo il metodo PEEL.
 
 ---
 ---
@@ -33,70 +33,70 @@ L'event-driven offre disaccoppiamento, scalabilità orizzontale dei controlli e 
 
 ---
 
-## Model Answer 1.2 — Supervisory data platform: relational vs NoSQL 🇬🇧
+## Svolgimento Tema 1.2 — Piattaforma dati di vigilanza: relazionale vs NoSQL
 
-**Framing.** A supervisory analytics platform must ingest highly heterogeneous data — structured balance-sheet returns, time series, transaction logs, free-text documents — and serve statistical analysis, data-quality controls and risk models. No single storage paradigm fits all of this, so the core design decision is *polyglot persistence* governed by a unified architecture, not a single "best" database.
+**Impostazione.** Una piattaforma di analisi a supporto della vigilanza deve ingerire dati fortemente eterogenei — segnalazioni strutturate di bilancio, serie storiche, log di transazioni, documenti in testo libero — e servire analisi statistiche, controlli di qualità dei dati e modelli di rischio. Nessun singolo paradigma di storage si adatta a tutto questo: la decisione architetturale di fondo è quindi la *polyglot persistence* governata da un'architettura unificata, non un singolo database "migliore in assoluto".
 
-**(a) End-to-end architecture.** I propose a **Lakehouse** design, which combines the low-cost, schema-flexible storage of a Data Lake with the transactional guarantees and performance of a Warehouse. A pure Data Warehouse is too rigid for unstructured inputs; a raw Data Lake risks becoming a "data swamp" without governance. The Lakehouse, built on an object store with an open table format (e.g. Delta Lake or Apache Iceberg), resolves this tension. Pipeline layers:
+**(a) Architettura end-to-end.** Propongo un'architettura **Lakehouse**, che combina il costo contenuto e la flessibilità di schema di un Data Lake con le garanzie transazionali e le prestazioni di un Data Warehouse. Un Data Warehouse puro è troppo rigido per gli input non strutturati; un Data Lake grezzo rischia di diventare un "data swamp" (pantano di dati) senza governance. Il Lakehouse, costruito su un object store con un formato tabellare aperto (es. Delta Lake o Apache Iceberg), risolve questa tensione. Livelli della pipeline:
 
-- **Ingestion** — streaming via Apache Kafka for transaction logs, batch loaders for periodic returns;
-- **Storage** — a *medallion* layout: *bronze* (raw), *silver* (cleansed/validated), *gold* (curated, analysis-ready);
-- **Processing** — Apache Spark (and Flink for streaming) for transformation and feature computation, orchestrated with Airflow/dbt;
-- **Serving** — a columnar warehouse engine for analytical queries, plus specialised stores for non-tabular data.
+- **Ingestione** — streaming tramite Apache Kafka per i log di transazione, caricamenti batch per le segnalazioni periodiche;
+- **Storage** — un'organizzazione a *medaglioni* (medallion): *bronze* (grezzo), *silver* (ripulito/validato), *gold* (curato, pronto per l'analisi);
+- **Elaborazione** — Apache Spark (e Flink per lo streaming) per le trasformazioni e il calcolo delle feature, orchestrati con Airflow/dbt;
+- **Serving** — un motore di data warehouse columnare per le query analitiche, più store specializzati per i dati non tabellari.
 
-On the **Lambda vs Kappa** choice: Lambda maintains separate batch and speed layers (robust but duplicates logic); **Kappa** treats everything as a stream and is simpler to maintain. For supervision, where most analysis is periodic and reproducibility matters, a **batch-dominant Lambda** approach is pragmatic, with a streaming path only for near-real-time controls.
+Sulla scelta **Lambda vs Kappa**: Lambda mantiene livelli batch e speed separati (robusto ma duplica la logica); **Kappa** tratta tutto come uno stream ed è più semplice da mantenere. Per la vigilanza, dove la maggior parte delle analisi è periodica e la riproducibilità è importante, un approccio **Lambda a prevalenza batch** è pragmatico, con un percorso di streaming solo per i controlli quasi in tempo reale.
 
-**(b) Relational vs NoSQL by data type.** The decision follows the data's shape and access pattern, guided by the **CAP theorem**:
+**(b) Relazionale vs NoSQL per tipo di dato.** La decisione segue la forma del dato e il pattern di accesso, guidata dal **teorema CAP**:
 
-- *Balance-sheet and regulatory returns* → **relational / columnar warehouse**. Strong schema, integrity constraints, complex joins and aggregations; here ACID and consistency (CP) dominate.
-- *Time series* (rates, market data) → **columnar or time-series store**, optimised for range scans and compression.
-- *Transaction logs* (high volume, append-only) → **wide-column / key-value** store for write throughput; eventual consistency (AP) is acceptable.
-- *Documents* (reports, correspondence) → **document store** plus a search/index engine.
-- *Ownership and exposure networks* → **graph database**. Traversing relationships (beneficial ownership, intra-group exposures) is where graphs outperform relational joins — directly relevant to **AML and systemic-risk** analysis.
+- *Segnalazioni di bilancio e regolamentari* → **relazionale / warehouse columnare**. Schema rigido, vincoli di integrità, join e aggregazioni complesse; qui dominano ACID e consistenza (CP).
+- *Serie storiche* (tassi, dati di mercato) → **store columnare o time-series**, ottimizzato per range scan e compressione.
+- *Log di transazione* (alto volume, append-only) → store **wide-column / key-value** per l'elevato throughput di scrittura; la consistenza eventuale (AP) è accettabile.
+- *Documenti* (report, corrispondenza) → **document store** più un motore di ricerca/indicizzazione.
+- *Reti di proprietà ed esposizione* → **database a grafo**. L'attraversamento delle relazioni (titolarità effettiva, esposizioni infragruppo) è l'ambito in cui i grafi superano i join relazionali — direttamente rilevante per l'analisi **AML e del rischio sistemico**.
 
-On modelling: the warehouse uses **denormalised star schemas** for read-heavy analytics, whereas the operational layer stays **normalised** to avoid update anomalies. Denormalisation trades storage and write-complexity for query speed.
+Sulla modellazione: il warehouse usa **schemi a stella denormalizzati** per analisi ad alta intensità di lettura, mentre il livello operativo resta **normalizzato** per evitare anomalie di aggiornamento. La denormalizzazione scambia spazio di storage e complessità di scrittura con velocità di interrogazione.
 
-**(c) Query optimisation and data quality.** Performance levers: **partitioning** (e.g. by reporting date), **indexing**, **predicate/column pushdown**, **materialised views** for recurring aggregations, and statistics-driven cost-based optimisation. Data quality is enforced through **validation rules** at the silver layer, **deduplication**, reconciliation against control totals, and end-to-end **data lineage** so every figure is traceable to its source — essential for a supervisor that must defend its numbers.
+**(c) Ottimizzazione delle query e qualità dei dati.** Leve di performance: **partizionamento** (es. per data di segnalazione), **indicizzazione**, *predicate/column pushdown*, **viste materializzate** per le aggregazioni ricorrenti, e ottimizzazione *cost-based* guidata dalle statistiche. La qualità del dato si garantisce tramite **regole di validazione** al livello silver, **deduplicazione**, riconciliazione rispetto a totali di controllo, e **data lineage** end-to-end, in modo che ogni valore sia tracciabile fino alla fonte — essenziale per un'autorità di vigilanza che deve poter difendere i propri numeri.
 
-**(d) Non-functional requirements.** Horizontal scalability via the decoupled storage/compute model; security through encryption at rest and in transit, fine-grained access control and audit logging; **GDPR compliance** through data minimisation, purpose limitation and pseudonymisation of personal data; governance via a data catalogue and stewardship.
+**(d) Requisiti non funzionali.** Scalabilità orizzontale grazie al modello disaccoppiato storage/calcolo; sicurezza tramite cifratura at-rest e in transito, controllo degli accessi granulare e audit logging; **conformità GDPR** tramite minimizzazione dei dati, limitazione delle finalità e pseudonimizzazione dei dati personali; governance tramite un catalogo dati e attività di *data stewardship*.
 
-**Context.** A central bank such as the Banca d'Italia is, in large part, a vast system of evolving and queryable databases; supervisory and statistical functions depend on exactly this kind of governed, multi-model platform.
+**Esempio nel contesto.** Una banca centrale come la Banca d'Italia è, in larga misura, un vasto sistema di basi di dati in evoluzione e interrogabili; le funzioni di vigilanza e statistiche dipendono esattamente da una piattaforma governata e multi-modello di questo tipo.
 
-**Residual risks.** (1) **Data-swamp drift** without disciplined governance. (2) **Schema/contract drift** between source systems and the platform. (3) **Cost** of storage/compute at scale. (4) **Reconciliation gaps** across paradigms, which can undermine trust in figures. (5) **Re-identification risk** if pseudonymisation is weak.
+**Rischi residui.** (1) **Deriva verso il data swamp** senza una governance disciplinata. (2) **Deriva di schema/contratto** tra i sistemi sorgente e la piattaforma. (3) **Costo** di storage e calcolo su larga scala. (4) **Gap di riconciliazione** tra paradigmi diversi, che possono minare la fiducia nei dati. (5) **Rischio di re-identificazione** se la pseudonimizzazione è debole.
 
 ---
 ---
 
 # AMBITO 2 — Crittografia, DLT, privacy
 
-## Model Answer 2.1 — Post-quantum migration of institutional cryptography 🇬🇧
+## Svolgimento Tema 2.1 — Migrazione post-quantum della crittografia istituzionale
 
-**Framing.** The "harvest now, decrypt later" threat means an adversary can capture today's encrypted traffic and decrypt it once a cryptographically relevant quantum computer exists. For an institution that holds **long-lived confidential data** — supervisory communications, sensitive statistics, signing/PKI infrastructure — migration planning cannot wait for "Q-Day"; it must start now.
+**Impostazione.** La minaccia "harvest now, decrypt later" implica che un avversario possa catturare oggi il traffico cifrato e decifrarlo non appena esisterà un computer quantistico crittograficamente rilevante. Per un'istituzione che custodisce **dati riservati di lunga durata** — comunicazioni di vigilanza, statistiche sensibili, infrastrutture di firma/PKI — la pianificazione della migrazione non può attendere il "Q-Day": deve iniziare ora.
 
-**(a) Why current public-key cryptography fails.** **Shor's algorithm** solves integer factorisation and the discrete-logarithm problem in polynomial time on a quantum computer, breaking **RSA** and **elliptic-curve** schemes (ECDH, ECDSA) that underpin virtually every TLS handshake, signed update and certificate. **Symmetric** cryptography is only *weakened*: **Grover's algorithm** gives a quadratic speed-up, so AES-256 retains roughly 128-bit effective security — still strong. Hash functions similarly need larger outputs (SHA-384/512). The asymmetric layer is therefore the urgent problem.
+**(a) Perché la crittografia a chiave pubblica attuale è vulnerabile.** L'**algoritmo di Shor** risolve la fattorizzazione di interi e il problema del logaritmo discreto in tempo polinomiale su un computer quantistico, rompendo gli schemi **RSA** e a **curva ellittica** (ECDH, ECDSA) che sono alla base di praticamente ogni handshake TLS, aggiornamento firmato e certificato. La crittografia **simmetrica** viene solo *indebolita*: l'**algoritmo di Grover** offre un'accelerazione quadratica, per cui AES-256 mantiene una sicurezza effettiva di circa 128 bit — ancora robusta. Anche le funzioni hash necessitano di output più lunghi (SHA-384/512). Il livello asimmetrico è quindi il problema urgente.
 
-**(b) The NIST standards.** Finalised in August 2024:
+**(b) Gli standard NIST.** Finalizzati nell'agosto 2024:
 
-- **FIPS 203 — ML-KEM** (lattice-based, from CRYSTALS-Kyber): a **key-encapsulation mechanism** replacing RSA/ECDH for establishing shared secrets. ML-KEM-768 is the enterprise default.
-- **FIPS 204 — ML-DSA** (lattice-based, from CRYSTALS-Dilithium): the **primary digital-signature** algorithm, replacing RSA-PSS, ECDSA and EdDSA. NIST recommends adopting it first.
-- **FIPS 205 — SLH-DSA** (hash-based, from SPHINCS+): a **conservative backup signature** scheme whose security rests only on hash-function properties — a different mathematical foundation, so it survives a break of the lattice assumptions.
+- **FIPS 203 — ML-KEM** (basato su reticoli, derivato da CRYSTALS-Kyber): un **meccanismo di incapsulamento di chiave (KEM)** che sostituisce RSA/ECDH per stabilire segreti condivisi. ML-KEM-768 è lo standard di default per l'impresa.
+- **FIPS 204 — ML-DSA** (basato su reticoli, derivato da CRYSTALS-Dilithium): l'algoritmo di **firma digitale primario**, in sostituzione di RSA-PSS, ECDSA ed EdDSA. Il NIST ne raccomanda l'adozione per primo.
+- **FIPS 205 — SLH-DSA** (basato su hash, derivato da SPHINCS+): uno schema di **firma di riserva conservativo**, la cui sicurezza si fonda unicamente sulle proprietà delle funzioni hash — un fondamento matematico diverso, che sopravvive quindi a un'eventuale rottura delle ipotesi sui reticoli.
 
-A fourth signature, **FN-DSA** (Falcon), is in progress as FIPS 206; it yields compact signatures but is hard to implement without side-channel leakage.
+Una quarta firma, **FN-DSA** (Falcon), è in corso di standardizzazione come FIPS 206; produce firme compatte ma è difficile da implementare senza incorrere in side-channel leak.
 
-**(c) Migration roadmap.** A disciplined programme, not a single update:
+**(c) Roadmap di migrazione.** Un programma disciplinato, non un singolo aggiornamento:
 
-1. **Cryptographic inventory (CBOM)** — discover every use of public-key crypto across applications, protocols, HSMs, certificates and code-signing.
-2. **Risk-based prioritisation** — migrate first the data with long-term confidentiality (HNDL-exposed) and the most critical signing roots.
-3. **Hybrid mode** — combine a classical algorithm (e.g. X25519) with a PQC algorithm (ML-KEM) in one handshake, so the channel is safe if *either* holds; this also preserves FIPS 140-3 compliance during transition.
-4. **PKI migration** — issue hybrid/PQC X.509 certificates; plan for **longer certificate chains** and larger keys; verify CA, intermediaries and CDN edges accept the bigger sizes.
-5. **Crypto-agility** — architect systems so algorithms can be swapped quickly; this is the durable goal, since hybrid mode is a transition, not a destination.
-6. **Timeline** — align to NIST guidance: deprecate classical asymmetric algorithms around **2030**, disallow them by **2035**.
+1. **Inventario crittografico (CBOM)** — individuare ogni utilizzo di crittografia a chiave pubblica in applicazioni, protocolli, HSM, certificati e firma del codice.
+2. **Prioritizzazione basata sul rischio** — migrare per prime i dati con riservatezza a lungo termine (esposti al rischio HNDL) e le radici di firma più critiche.
+3. **Modalità ibrida** — combinare un algoritmo classico (es. X25519) con un algoritmo PQC (ML-KEM) in un unico handshake, in modo che il canale sia sicuro se *anche solo uno* dei due regge; questo preserva inoltre la conformità FIPS 140-3 durante la transizione.
+4. **Migrazione della PKI** — emettere certificati X.509 ibridi/PQC; pianificare **catene di certificati più lunghe** e chiavi più grandi; verificare che CA, intermediari e edge CDN accettino le dimensioni maggiori.
+5. **Agilità crittografica** — progettare i sistemi in modo che gli algoritmi possano essere sostituiti rapidamente; questo è l'obiettivo duraturo, poiché la modalità ibrida è una transizione, non una destinazione.
+6. **Tempistiche** — allinearsi alle indicazioni NIST: dismettere gli algoritmi asimmetrici classici entro circa il **2030**, vietarli entro il **2035**.
 
-**(d) Protocol and infrastructure impact.** **TLS 1.3** gains hybrid key exchange; **IPsec/IKEv2** and **SSH** key agreement must follow; **HSMs** need vendor firmware supporting the new primitives. Larger keys and signatures increase handshake size, certificate-chain size and, potentially, fragmentation (MTU) and performance — all of which must be tested.
+**(d) Impatto su protocolli e infrastrutture.** **TLS 1.3** acquisisce lo scambio di chiavi ibrido; **IPsec/IKEv2** e l'accordo di chiave **SSH** devono seguire; gli **HSM** necessitano di firmware dei fornitori che supporti le nuove primitive. Chiavi e firme più grandi aumentano la dimensione dell'handshake e della catena di certificati e, potenzialmente, la frammentazione (MTU) e l'impatto sulle prestazioni — tutti aspetti da testare.
 
-**Context.** Because the Banca d'Italia protects information whose confidentiality must hold for decades and operates signing infrastructure of systemic importance, the HNDL threat is directly material; crypto-agility is also a natural fit with DORA's operational-resilience expectations.
+**Esempio nel contesto.** Poiché la Banca d'Italia protegge informazioni la cui riservatezza deve durare decenni e gestisce infrastrutture di firma di rilevanza sistemica, la minaccia HNDL è direttamente rilevante; l'agilità crittografica si integra inoltre naturalmente con le aspettative di resilienza operativa di DORA.
 
-**Residual risks.** (1) **Implementation side-channels**, especially in Gaussian sampling (FN-DSA) — use vetted libraries. (2) **Immature ecosystem** and uneven HSM support. (3) **Long hardware replacement cycles** for network appliances and embedded devices. (4) **A future break** of a chosen scheme — mitigated precisely by agility plus the hash-based SLH-DSA backup.
+**Rischi residui.** (1) **Side-channel di implementazione**, specialmente nel campionamento gaussiano (FN-DSA) — usare librerie validate. (2) **Ecosistema immaturo** e supporto HSM disomogeneo. (3) **Cicli lunghi di sostituzione hardware** per apparati di rete e dispositivi embedded. (4) **Una futura rottura** dello schema scelto — mitigata proprio dall'agilità crittografica unita al backup basato su hash SLH-DSA.
 
 ---
 
@@ -143,29 +143,29 @@ A fourth signature, **FN-DSA** (Falcon), is in progress as FIPS 206; it yields c
 
 ---
 
-## Model Answer 3.2 — LLMs and RAG inside the institution: architecture and governance 🇬🇧
+## Svolgimento Tema 3.2 — LLM e RAG all'interno dell'istituzione: architettura e governance
 
-**Framing.** The institution wants to use Large Language Models to help staff analyse regulatory and supervisory documentation, under two hard constraints: **no exposure of confidential data** and **verifiable, traceable answers**. These constraints, more than raw model capability, dictate the architecture — which is why **Retrieval-Augmented Generation (RAG)**, not fine-tuning, is the right backbone.
+**Impostazione.** L'istituzione vuole utilizzare i Large Language Model per aiutare il personale ad analizzare la documentazione regolamentare e di vigilanza, nel rispetto di due vincoli inderogabili: **nessuna esposizione di dati riservati** e **risposte verificabili e tracciabili**. Questi vincoli, più della pura capacità del modello, determinano l'architettura — motivo per cui la **Retrieval-Augmented Generation (RAG)**, e non il fine-tuning, è la spina dorsale corretta.
 
-**(a) Transformers and the options.** Transformers rest on **self-attention**, which lets the model weigh the relevance of every token to every other, plus **embeddings** (dense vector representations of meaning) and positional encoding. A **foundation model** is pre-trained on broad data and then adapted. Three adaptation routes: **prompting** (no change to the model), **fine-tuning** (retrain weights on domain data — costly, static, and it risks baking confidential data into the model), and **RAG** (keep the model fixed but feed it retrieved, authoritative context at query time).
+**(a) Transformer e le opzioni disponibili.** I Transformer si basano sul **self-attention**, che permette al modello di ponderare la rilevanza di ogni token rispetto a tutti gli altri, più gli **embedding** (rappresentazioni vettoriali dense del significato) e la codifica posizionale. Un **foundation model** è pre-addestrato su dati ampi e poi adattato. Tre percorsi di adattamento: **prompting** (nessuna modifica al modello), **fine-tuning** (riaddestrare i pesi su dati di dominio — costoso, statico, e con il rischio di incorporare dati riservati nel modello), e **RAG** (mantenere il modello fisso ma fornirgli, al momento della query, un contesto recuperato e autorevole).
 
-**(b) A secure RAG architecture.**
+**(b) Un'architettura RAG sicura.**
 
-1. **Ingestion** — internal documents are chunked and converted to embeddings, stored in a **vector database** (e.g. pgvector/FAISS-class engines) inside the controlled perimeter.
-2. **Retrieval** — a user query is embedded, the top-k most similar chunks are retrieved; **hybrid search** (dense + keyword/BM25) and a **re-ranking** step improve precision.
-3. **Generation** — retrieved passages augment the prompt; the LLM answers **with citations to the source passages**, so every claim is traceable.
+1. **Ingestione** — i documenti interni vengono suddivisi in chunk e convertiti in embedding, memorizzati in un **database vettoriale** (es. motori della classe pgvector/FAISS) all'interno del perimetro controllato.
+2. **Recupero (retrieval)** — la query dell'utente viene trasformata in embedding, si recuperano i top-k chunk più simili; la **ricerca ibrida** (densa + parola chiave/BM25) e un passaggio di **re-ranking** migliorano la precisione.
+3. **Generazione** — i passaggi recuperati arricchiscono il prompt; l'LLM risponde **con citazioni ai passaggi sorgente**, così ogni affermazione è tracciabile.
 
-RAG is preferable to fine-tuning here because knowledge is **dynamic** (regulation changes) and **confidential**: documents stay in a governed store, answers are grounded and attributable, updates require no retraining, and hallucination is reduced because the model reasons over supplied evidence rather than memory.
+La RAG è preferibile al fine-tuning in questo contesto perché la conoscenza è **dinamica** (la normativa cambia) e **riservata**: i documenti restano in uno store governato, le risposte sono ancorate e attribuibili, gli aggiornamenti non richiedono riaddestramento, e l'allucinazione si riduce perché il modello ragiona sulle evidenze fornite anziché sulla memoria.
 
-**(c) Generative-AI-specific risks and mitigations.** **Hallucination** → grounding in retrieval, citation, and refusal when evidence is absent. **Data leakage** → avoid sending confidential data to external APIs; prefer **on-premise or sovereign-cloud** deployment, with PII filtering and strict access controls. **Prompt injection** (malicious instructions hidden in retrieved or user content) → input/output guardrails, separation of instructions from data, least-privilege tool access. **Vendor lock-in and sovereignty** → favour open/sovereign models for sensitive use and design for portability. **Evaluation** must be explicit: *groundedness/faithfulness*, answer relevance and retrieval precision, measured continuously.
+**(c) Rischi specifici dell'IA generativa e mitigazioni.** **Allucinazione** → ancoraggio al retrieval, citazione, e rifiuto di rispondere quando manca l'evidenza. **Fuga di dati (data leakage)** → evitare di inviare dati riservati ad API esterne; preferire un deployment **on-premise o su cloud sovrano**, con filtraggio dei PII e controlli di accesso rigorosi. **Prompt injection** (istruzioni malevole nascoste nel contenuto recuperato o inserito dall'utente) → guardrail su input/output, separazione tra istruzioni e dati, accesso agli strumenti secondo il principio del privilegio minimo. **Vendor lock-in e sovranità** → privilegiare modelli aperti/sovrani per gli usi sensibili e progettare per la portabilità. La **valutazione** deve essere esplicita: *groundedness/faithfulness*, rilevanza della risposta e precisione del retrieval, misurate in continuo.
 
-**(d) AI Act and governance.** General-purpose AI models carry transparency and technical-documentation obligations, with stricter rules for the largest "systemic" models; the deployment must ensure **human oversight** (the analyst validates, the model assists) and security of data. Governance, traceability and the ability to explain outputs are not add-ons but conditions of use for a public institution.
+**(d) AI Act e governance.** I modelli di IA per finalità generali comportano obblighi di trasparenza e documentazione tecnica, con regole più stringenti per i modelli "sistemici" più grandi; il deployment deve garantire la **sorveglianza umana** (l'analista valida, il modello assiste) e la sicurezza dei dati. Governance, tracciabilità e capacità di spiegare gli output non sono opzionali ma condizioni d'uso per un'istituzione pubblica.
 
-**Context.** For the Banca d'Italia, the value of an LLM assistant lies in fast access to its own knowledge base, but its admissibility depends on **verifiability and confidentiality** — precisely what a citation-grounded, internally hosted RAG system delivers, and what an opaque external model would not.
+**Esempio nel contesto.** Per la Banca d'Italia, il valore di un assistente basato su LLM risiede nell'accesso rapido alla propria base di conoscenza, ma la sua ammissibilità dipende da **verificabilità e riservatezza** — esattamente ciò che un sistema RAG ospitato internamente e ancorato a citazioni garantisce, e che un modello esterno opaco non potrebbe offrire.
 
-**Residual risks.** (1) **Residual hallucination** even with grounding. (2) **Retrieval gaps** (the answer is only as good as what is retrieved). (3) **Evolving prompt-injection** techniques. (4) **Operational dependency** and model/version drift. (5) **Over-reliance** by users who treat outputs as authoritative without verification.
+**Rischi residui.** (1) **Allucinazione residua** anche con l'ancoraggio. (2) **Lacune nel retrieval** (la risposta vale quanto ciò che viene recuperato). (3) Tecniche di **prompt injection in evoluzione**. (4) **Dipendenza operativa** e deriva di modello/versione. (5) **Eccessivo affidamento (over-reliance)** da parte di utenti che trattano gli output come autorevoli senza verifica.
 
 ---
 ---
 
-> **Nota d'uso.** Questi svolgimenti sono *risposte-modello* di riferimento: all'esame conta riprodurne l'**impianto** (impostazione → sviluppo tecnico con specifiche → esempio nel contesto BdI → rischi residui), non memorizzarne il testo. Allena la scrittura *a mano e a tempo* (≈2h per quesito) e verifica di saper produrre in autonomia almeno uno dei tre svolgimenti in inglese.
+> **Nota d'uso.** Questi svolgimenti sono *risposte-modello* di riferimento: all'esame conta riprodurne l'**impianto** (impostazione → sviluppo tecnico con specifiche → esempio nel contesto BdI → rischi residui), non memorizzarne il testo. Allena la scrittura *a mano e a tempo* (≈2h per quesito). Ricorda inoltre che la prova prevede un elaborato in lingua inglese: esercitati a scrivere autonomamente in inglese almeno uno di questi svolgimenti.
