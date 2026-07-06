@@ -19,11 +19,32 @@ Misura come il tempo di esecuzione (o lo spazio in memoria) di un algoritmo cres
 * **Alberi binari di ricerca (BST):** ogni nodo ha al più due figli; il sottoalbero sinistro contiene valori minori, quello destro valori maggiori. Ricerca, inserimento e cancellazione in **O(log n)** se l'albero è bilanciato, ma degradano a **O(n)** nel caso patologico (albero sbilanciato, es. inserimento di dati già ordinati). Alberi auto-bilancianti (AVL, Red-Black) garantiscono O(log n) anche nel caso peggiore.
 
 ### 1.3 Algoritmi di Ordinamento
-| Algoritmo | Complessità (medio) | Note |
-|---|---|---|
-| Bubble/Selection Sort | O(n²) | Semplici ma inefficienti su grandi dataset |
-| Merge Sort | O(n log n) | Stabile, divide-et-impera, richiede memoria ausiliaria O(n) |
-| Quick Sort | O(n log n) medio, O(n²) worst case | In-place, worst case su input già ordinati con scelta ingenua del pivot |
+
+**Il limite teorico:** qualunque algoritmo di ordinamento basato su **confronti** richiede almeno **Ω(n log n)** confronti nel caso peggiore (dimostrazione con l'albero delle decisioni: `n!` permutazioni possibili → altezza minima `log(n!) ≈ n log n`). MergeSort, HeapSort e QuickSort (medio) raggiungono già questo limite teorico; solo algoritmi non basati su confronti (Counting/Radix/Bucket Sort), sfruttando informazioni strutturali sui dati, scendono sotto n log n.
+
+| Algoritmo | Medio | Peggiore | Spazio | Stabile | Note |
+|---|---|---|---|---|---|
+| **QuickSort** | O(n log n) | O(n²) | O(log n) | No | In-place, costanti bassissime → il più veloce in pratica. Worst case con pivot ricorrentemente cattivo (es. array già ordinato + pivot = primo elemento); mitigato con pivot casuale o *median-of-three*. |
+| **MergeSort** | O(n log n) | O(n log n) | O(n) | Sì | Stesso costo in ogni caso → molto prevedibile. Ottimo per liste collegate (accesso sequenziale) e ordinamento esterno (dati su disco). |
+| **HeapSort** | O(n log n) | O(n log n) | O(1) | No | In-place ma non cache-friendly: più lento di QuickSort in pratica. |
+| **RadixSort** | O(nk) | O(nk) | O(n+k) | Sì | Non basato su confronti, `k` = numero di cifre. Velocissimo per interi. |
+| **CountingSort** | O(n+k) | O(n+k) | O(k) | Sì | Solo per interi in range limitato [0,k]. |
+| **BubbleSort** | O(n²) | O(n²) | O(1) | Sì | Semplice ma inefficiente, solo a scopo didattico. |
+| **InsertionSort** | O(n²) | O(n²) | O(1) | Sì | Efficientissimo su input **quasi ordinato**: O(n) nel caso già ordinato. |
+
+**Perché conta la stabilità:** un algoritmo è *stabile* se preserva l'ordine relativo tra elementi con la stessa chiave. È cruciale negli ordinamenti multi-criterio a fasi (es. prima per data, poi — in modo stabile — per importo): il risultato finale è "per importo, e a parità di importo per data". Se il secondo passaggio non è stabile, l'ordinamento precedente va perso.
+
+**MergeSort (von Neumann, 1945):** paradigma divide-et-impera — divide l'array a metà, ordina ricorsivamente ciascuna metà, fonde le due metà ordinate in tempo lineare. Ricorrenza `T(n) = 2·T(n/2) + O(n)` → per il Master Theorem, `T(n) = O(n log n)` in ogni caso (migliore/medio/peggiore).
+
+**QuickSort (Hoare, 1960):** sceglie un pivot, partiziona l'array (minori a sinistra, maggiori a destra), ricorre sulle due porzioni. In-place e velocissimo in pratica, ma il caso peggiore va sempre mitigato con pivot casuale/median-of-three.
+
+**Cheat-sheet — quale scegliere:**
+* Array in memoria, nessun vincolo di stabilità → **QuickSort**
+* Serve stabilità, o ordinamento esterno (dati su disco) → **MergeSort**
+* Serve garanzia O(n log n) worst-case con spazio O(1) → **HeapSort**
+* Lista collegata → **MergeSort**
+* Array quasi ordinato → **InsertionSort**
+* Interi in range limitato → **CountingSort / RadixSort**
 
 ### 1.4 Algoritmi su Grafi
 * **BFS (Breadth-First Search):** esplorazione per livelli, usa una coda; trova il cammino minimo in grafi non pesati.
