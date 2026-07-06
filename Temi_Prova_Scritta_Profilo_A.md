@@ -1,7 +1,7 @@
 # Prova scritta — Profilo A (Esperto ICT)
-### Sette temi d'esame su tre ambiti tematici · Banca d'Italia 2026
+### Nove temi d'esame su tre ambiti tematici · Banca d'Italia 2026
 
-> **Come funziona la prova reale.** La Commissione propone **sei quesiti** (due per ciascuno dei tre ambiti del programma di pag. 9 del bando). Tu ne scegli **due, su due ambiti differenti**, da svolgere in **5 ore**. **Almeno uno** dei due va redatto in **lingua inglese** (o l'intero quesito è formulato in inglese). Il **Tema 1.3** qui sotto è un quesito extra di allenamento (non fa parte dei sei ufficiali), aggiunto per esercitarsi su un'area del programma non coperta dagli altri due temi dell'Ambito 1.
+> **Come funziona la prova reale.** La Commissione propone **sei quesiti** (due per ciascuno dei tre ambiti del programma di pag. 9 del bando). Tu ne scegli **due, su due ambiti differenti**, da svolgere in **5 ore**. **Almeno uno** dei due va redatto in **lingua inglese** (o l'intero quesito è formulato in inglese). I **Temi 1.3, 2.3 e 3.3** qui sotto sono quesiti extra di allenamento (non fanno parte dei sei ufficiali), aggiunti per esercitarsi su aree del programma non coperte dagli altri due temi di ciascun ambito.
 >
 > **Metodo di risposta consigliato (PEEL).** *Point* (tesi/impostazione) → *Evidence* (dati, concetti, standard) → *Explanation* (analisi delle scelte e dei trade-off) → *Link* (collegamento al contesto Banca d'Italia / sistema finanziario). La Commissione valuta: correttezza tecnica, organizzazione logica, lessico specialistico, padronanza dell'inglese.
 >
@@ -95,6 +95,22 @@
 
 ---
 
+### Tema 2.3 — Autenticazione forte e comunicazione sicura per l'accesso esterno a un portale di vigilanza
+
+> La Banca d'Italia mette a disposizione degli intermediari vigilati un portale web per l'invio di segnalazioni e la consultazione di comunicazioni riservate. È necessario progettare l'intero impianto di **sicurezza delle comunicazioni e dell'autenticazione**, in un contesto in cui gli utenti esterni accedono da reti non fidate e le credenziali compromesse rappresentano il vettore di attacco più frequente.
+>
+> Il candidato:
+> - (a) spieghi come **crittografia simmetrica e asimmetrica** si combinano nell'handshake **TLS** per stabilire un canale sicuro, motivando perché l'asimmetrica non sostituisce ma inizializza la simmetrica;
+> - (b) descriva il ruolo della **firma digitale**, dei **certificati X.509** e di una **PKI** nel garantire autenticità e non ripudio, e come si estende la fiducia lungo una catena di certificazione fino a una radice attendibile (incluso il tema della **revoca**, CRL vs OCSP);
+> - (c) progetti un meccanismo di **autenticazione forte** per gli utenti esterni (MFA, protocolli standard come OAuth2/OIDC o FIDO2/WebAuthn), motivandolo alla luce del principio **Zero Trust**;
+> - (d) discuta la **gestione sicura delle credenziali e dei segreti** lato server (hashing delle password con KDF memory-hard, custodia delle chiavi in HSM/vault, rotazione periodica).
+>
+> Si motivino le scelte e si identifichino i principali rischi residui.
+
+**Punti chiave da trattare.** TLS: scambio di chiavi asimmetrico/ibrido (es. ECDHE, con forward secrecy) per stabilire una chiave di sessione, poi cifratura simmetrica (AES-GCM) per il traffico, per motivi di performance; PKI e catena di fiducia (CA radice, intermedie, revoca via CRL o — preferibile per tempestività — OCSP); autenticazione forte: fattori di autenticazione (sai/hai/sei), FIDO2/WebAuthn resistente al phishing perché la firma è vincolata al dominio richiedente, vs OTP via SMS/app più deboli (SIM swap); OAuth2 per la delega dell'autorizzazione e OIDC come layer di autenticazione sopra OAuth2; Zero Trust: verifica esplicita e continua, non fiducia basata sulla rete di provenienza; gestione segreti: Argon2id con salt per le password, HSM/vault per chiavi private e segreti applicativi, rotazione periodica e privilegio minimo sull'accesso ai segreti.
+
+---
+
 ## Ambito 3 — Intelligenza artificiale, machine learning, data science
 *Riferimento manuale: Capitolo 4 (§4.1–§4.4). Programma bando: IA deduttiva/induttiva/generativa; rappresentazione della conoscenza e ragionamento automatico; agenti e sistemi multiagente; classificazione/predizione/clustering; ML supervisionato/semi/non/rinforzo; reti neurali, deep learning, embeddings, transformer; foundation model e LLM; big data; data mining, visualization, dati sintetici.*
 
@@ -127,6 +143,22 @@
 > Si discutano limiti, rischi residui e implicazioni di sovranità tecnologica.
 
 **Punti chiave da trattare.** RAG riduce allucinazioni e consente aggiornamento senza riaddestrare; importanza della citazione delle fonti per la verificabilità (requisito istituzionale); prompt injection e isolamento dei dati riservati; deployment on-premise / cloud sovrano vs API esterne (riservatezza); valutazione (groundedness, faithfulness); collegamento all'AI Act (GPAI, trasparenza) e alla resilienza/sicurezza. *Tema "caldo" e ottimo candidato per l'elaborato in inglese, dove il lessico è altamente standardizzato.*
+
+---
+
+### Tema 3.3 — Sistema multiagente per l'automazione dei controlli di vigilanza: conoscenza, ragionamento e dati sintetici
+
+> La Banca d'Italia vuole automatizzare parte dei controlli di conformità normativa sulle segnalazioni ricevute dagli intermediari, oggi svolti manualmente da più unità specialistiche (controlli contabili, antiriciclaggio, prudenziali). Si valuta un **sistema multiagente basato su IA**, che integri regole normative esplicite con modelli di apprendimento automatico, testato su dati sintetici per non esporre informazioni riservate durante lo sviluppo.
+>
+> Il candidato:
+> - (a) confronti **IA simbolica/deduttiva** (rappresentazione della conoscenza tramite regole/ontologie e motori di inferenza) e **IA induttiva/statistica** (apprendimento da dati), motivando dove ciascun approccio è più adatto per codificare regole normative rispetto a individuare pattern anomali;
+> - (b) progetti un'**architettura multiagente** (agenti specializzati per dominio di controllo, orchestrazione, comunicazione tra agenti), motivando i vantaggi rispetto a un unico sistema monolitico;
+> - (c) descriva l'uso di tecniche di **clustering/apprendimento non supervisionato** per segmentare comportamenti e individuare anomalie su grandi volumi di segnalazioni (big data), e il ruolo della **data visualization** per la reportistica agli analisti;
+> - (d) discuta la generazione di **dati sintetici** per addestramento e test in un ambiente privacy-safe, le tecniche principali e i relativi rischi (fedeltà statistica, rischio di memorizzazione dei dati originali).
+>
+> Si motivino le scelte e si identifichino i principali rischi residui, anche alla luce dell'AI Act.
+
+**Punti chiave da trattare.** IA simbolica per regole normative esplicite, deterministiche e spiegabili by design (basi di regole/ontologie/grafi di conoscenza + motore di inferenza); IA induttiva/ML per pattern non codificabili a priori (anomalie nuove); architettura multiagente con agenti specializzati per dominio (contabile, AML, prudenziale) e un orchestratore che instrada e arbitra tra esiti potenzialmente in conflitto; vantaggi di modularità e manutenibilità rispetto al monolite, dato che le normative dei tre ambiti evolvono con cadenze indipendenti; clustering non supervisionato (k-means, DBSCAN, gerarchico) per segmentazione comportamentale e anomaly detection senza etichette pregresse; data visualization (proiezioni dimensionali, dashboard) per rendere actionable gli output e garantire la sorveglianza umana richiesta dall'AI Act; dati sintetici (GAN/VAE, copule statistiche, SMOTE per classi rare) per sviluppo privacy-safe, con il rischio duale di bassa fedeltà statistica (scarsa generalizzazione) o eccessiva fedeltà (memorizzazione e privacy leakage residuo, da verificare con test tipo membership inference).
 
 ---
 
