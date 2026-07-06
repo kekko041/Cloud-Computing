@@ -26,7 +26,23 @@ Un candidato esperto ICT deve aver ben chiaro che **andare in cloud non trasferi
 * In ambito IaaS (Infrastructure as a Service), la Banca d'Italia rimane responsabile dell'aggiornamento dei sistemi operativi, delle patch, della gestione degli accessi (IAM - Identity and Access Management) e della configurazione dei firewall virtuali.
 * L'adozione del paradigma **Zero Trust** è obbligatoria: nessuna entità (nemmeno un dipendente del provider cloud) ha un "trust" predefinito. Ogni accesso alle interfacce di management del cloud deve essere filtrato, loggato e soggetto a MFA (Autenticazione Multi-Fattore) e PAM (Privileged Access Management).
 
-## 5. Resilienza Operativa (Cloud Disaster Recovery)
+## 5. Quale Modello di Servizio? IaaS vs PaaS vs SaaS
+Una domanda frequente: le fonti pongono un vincolo che obblighi la Banca d'Italia al solo IaaS? **No.** Nessuna norma (EBA outsourcing, DORA) vieta PaaS o SaaS: la scelta del modello è una decisione di **risk management**, non un divieto regolamentare. Cambia solo la ripartizione delle responsabilità (Shared Responsibility Model, punto 4):
+
+| Modello | Cosa gestisce la Banca (cliente) | Cosa gestisce il CSP |
+|---|---|---|
+| **IaaS** | OS, middleware, runtime, applicazioni, dati, patching | Hardware, virtualizzazione, rete fisica |
+| **PaaS** | Solo codice applicativo e dati | OS, middleware, runtime, scalabilità, patch infrastruttura |
+| **SaaS** | Solo configurazione e dati (es. IAM) | Tutto il resto, incluse le applicazioni |
+
+**Il criterio che orienta la scelta non è il modello in sé, ma la criticità del carico applicativo:**
+* **Funzioni Critiche o Importanti (FCI):** se il servizio (di qualunque modello, anche SaaS) supporta una FCI, scattano comunque gli obblighi rafforzati EBA/DORA visti al punto 1 (diritto illimitato di audit, exit strategy testata, registro degli accordi verso le autorità) — indipendentemente da IaaS/PaaS/SaaS.
+* **Data Sovereignty:** vale per tutti e tre i modelli: i dati devono restare in UE/SEE.
+* **Onere di due diligence:** più si sale verso il SaaS, meno controllo tecnico diretto ha la Banca (non può più patchare/configurare in prima persona), quindi **cresce l'onere di due diligence contrattuale e di monitoraggio continuo del fornitore**, a compensare il controllo tecnico che si perde.
+
+**Regola pratica da portare all'esame:** dati e funzioni più sensibili/critici → si preferisce IaaS o architettura ibrida con controllo diretto; funzioni di supporto non critiche → PaaS/SaaS accettabili, purché il contratto soddisfi i requisiti EBA/DORA su audit ed exit strategy.
+
+## 6. Resilienza Operativa (Cloud Disaster Recovery)
 In caso di fallimento di una "Availability Zone" (AZ) o di un'intera regione cloud, i servizi della Banca non possono fermarsi.
 * **Architetture Active-Active:** I servizi critici devono essere distribuiti su più Data Center (sia fisici della Banca che virtuali su Cloud) che operano in simultanea. Se un nodo cade, il traffico viene reindirizzato istantaneamente (Global Server Load Balancing).
 
