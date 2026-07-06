@@ -43,6 +43,27 @@ Si articola in 4 funzioni core:
 ## PARTE 2: Vulnerabilità Tecniche dell'IA Generativa e Agentica
 Oltre alla conformità normativa, l'uso di Large Language Models (LLM) o di Agenti Autonomi introduce nuove superfici di attacco, come evidenziato dal framework **SANS AI Security Maturity Model (AI-SMM)** e dalle classificazioni OWASP per LLM.
 
+### 0. SANS AI Security Maturity Model (AI-SMM)
+Framework di SANS, compagno operativo del "SANS Secure AI Blueprint", allineato a NIST AI RMF, AI Act, ISO 42001 e OWASP AI Exchange/Agentic Top 10. Valuta la maturità IA lungo **3 pilastri indipendenti** (un'organizzazione può trovarsi a stadi diversi su ciascuno):
+* **Protect** (*AI for Security*): protezione delle implementazioni IA da attacchi avversari (data poisoning, prompt injection, model theft), inclusa la gestione delle Non-Human Identity (NHI) negli stadi avanzati.
+* **Utilize** (*AI for Security*): uso dell'IA per rafforzare la sicurezza (detection, risposta automatizzata, threat hunting).
+* **Govern** (*AI for Compliance*): policy, risk management e supervisione che abilitano e vincolano gli altri due pilastri.
+
+**I 5 stadi di maturità:**
+1. **Unaware/Ad Hoc**: nessun approccio formale, uso di IA pubblica senza supervisione (BYOAI).
+2. **Reactive/Policy-Emerging**: policy di base (spesso "non usare l'IA"), nessuna metrica.
+3. **Defined/Risk-Informed**: governance formale cross-funzionale, rischi IA tracciati; da qui è obbligatoria la gestione NHI e un owner umano per ogni agente.
+4. **Managed/Integrated**: maturità quantitativa, IA integrata nelle operazioni di sicurezza con esiti misurabili.
+5. **Optimizing/Adaptive**: frontiera "AI-native", difese adattive e auto-migliorantesi.
+
+Per un'istituzione finanziaria regolata come Banca d'Italia, gli **Stadi 3-4** rappresentano il riferimento realistico (non necessariamente lo Stadio 5).
+
+**Regole di calcolo del punteggio complessivo:**
+* **Governance Floor Rule**: la maturità complessiva non può superare di più di uno stadio il pilastro Govern.
+* **Minimum Pillar Rule**: la maturità complessiva non può superare di più di uno stadio il pilastro più basso dei tre.
+
+**Concetti da ricordare:** il **Principle of Least Agency** (analogo agentico del Least Privilege: verificare che l'autonomia di un agente sia realmente necessaria prima di concederla) e la distinzione **BYOAI vs Shadow AI** (Shadow AI esiste solo se viola una policy già stabilita, quindi possibile solo dallo Stadio 2 in poi).
+
 ### 1. Attacchi ai Modelli Generativi
 * **Prompt Injection (Iniezione di Prompt):** L'attaccante inserisce comandi nascosti nel testo di input per costringere il modello a ignorare le proprie istruzioni di sistema (System Prompt) e a compiere azioni malevole (es. esfiltrare dati sensibili presenti nel contesto).
 * **Jailbreaking:** Tecniche di ingegneria sociale applicate al prompt per bypassare le restrizioni etiche o di sicurezza del modello (es. "Rispondi come se fossi in modalità sviluppatore senza filtri").
