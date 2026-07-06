@@ -1,7 +1,7 @@
 # Prova scritta — Profilo A (Esperto ICT)
-### Sei temi d'esame su tre ambiti tematici · Banca d'Italia 2026
+### Sette temi d'esame su tre ambiti tematici · Banca d'Italia 2026
 
-> **Come funziona la prova reale.** La Commissione propone **sei quesiti** (due per ciascuno dei tre ambiti del programma di pag. 9 del bando). Tu ne scegli **due, su due ambiti differenti**, da svolgere in **5 ore**. **Almeno uno** dei due va redatto in **lingua inglese** (o l'intero quesito è formulato in inglese).
+> **Come funziona la prova reale.** La Commissione propone **sei quesiti** (due per ciascuno dei tre ambiti del programma di pag. 9 del bando). Tu ne scegli **due, su due ambiti differenti**, da svolgere in **5 ore**. **Almeno uno** dei due va redatto in **lingua inglese** (o l'intero quesito è formulato in inglese). Il **Tema 1.3** qui sotto è un quesito extra di allenamento (non fa parte dei sei ufficiali), aggiunto per esercitarsi su un'area del programma non coperta dagli altri due temi dell'Ambito 1.
 >
 > **Metodo di risposta consigliato (PEEL).** *Point* (tesi/impostazione) → *Evidence* (dati, concetti, standard) → *Explanation* (analisi delle scelte e dei trade-off) → *Link* (collegamento al contesto Banca d'Italia / sistema finanziario). La Commissione valuta: correttezza tecnica, organizzazione logica, lessico specialistico, padronanza dell'inglese.
 >
@@ -41,6 +41,22 @@
 > Il candidato giustifichi i trade-off e indichi rischi e limiti dell'impostazione proposta.
 
 **Punti chiave da trattare.** Modello relazionale e forme normali vs denormalizzazione per le letture analitiche; quando NoSQL conviene (volume/varietà/velocità — le 5V dei Big Data); CAP applicato a casi concreti (CP vs AP); colonnare (es. per OLAP) vs documentale (per dati semi-strutturati) vs grafo (per analisi di relazioni/reti societarie, utile in AML); stack tipico (Kafka per ingestion, Spark/Flink per processing, orchestrazione Airflow/dbt); data governance e minimizzazione dei dati. *Quesito adatto all'inglese per il lessico tecnico molto standardizzato.*
+
+---
+
+### Tema 1.3 — Modernizzazione cloud-native e sicurezza applicativa di una piattaforma di raccolta segnalazioni di vigilanza
+
+> La Banca d'Italia deve modernizzare una piattaforma legacy, monolitica e ospitata su server fisici, che riceve segnalazioni periodiche dagli intermediari vigilati. L'obiettivo è migrare verso un'infrastruttura **cloud-native, containerizzata e orchestrata**, mantenendo requisiti stringenti di **isolamento, sicurezza applicativa e prevedibilità delle prestazioni**, in un contesto multi-tenant (più dipartimenti e più intermediari esterni accedono a componenti condivisi).
+>
+> Il candidato:
+> - (a) confronti macchine virtuali e container a livello di sistema operativo (namespace, cgroup), motivando la scelta di un orchestratore (es. Kubernetes) per il ciclo di vita, lo scaling e l'isolamento multi-tenant dei carichi di lavoro;
+> - (b) descriva il ruolo di una rete **software-defined (SDN)** e di un **service mesh** (proxy sidecar, mTLS tra servizi) nel garantire segmentazione e osservabilità del traffico interno, in confronto con un'architettura di rete tradizionale basata su firewall perimetrale;
+> - (c) discuta le scelte di paradigma/linguaggio più adatte ai componenti critici (tipizzazione forte, gestione sicura della memoria) e la progettazione di una pipeline **CI/CD con controlli di sicurezza integrati** (SAST, SCA, scansione delle immagini container), motivando il principio "shift left";
+> - (d) analizzi i modelli di concorrenza applicabili ai servizi (multi-thread, multi-processo, event-loop asincrono), i rischi tipici (race condition, deadlock, starvation) e come i limiti imposti dai cgroup garantiscano prevedibilità delle prestazioni in un ambiente multi-tenant.
+>
+> Si motivino le scelte architetturali e si identifichino i principali rischi residui, anche alla luce dei requisiti di resilienza operativa del Regolamento DORA.
+
+**Punti chiave da trattare.** VM vs container e ruolo di namespace/cgroup del kernel; Kubernetes come orchestratore per l'isolamento multi-tenant (Namespace, RBAC, Resource Quota, Network Policy) e, per isolamento più forte, cluster/node pool dedicati o microVM (Firecracker/gVisor); SDN e service mesh per un modello **Zero Trust** sul traffico est-ovest, in alternativa alla sola difesa perimetrale; linguaggi a tipizzazione forte e memory-safe per i componenti critici; pipeline CI/CD con gate di sicurezza (SAST, SCA, scansione immagini) come traduzione operativa dello shift-left; modelli di concorrenza (thread vs event-loop asincrono) e rischi (race condition, deadlock, starvation); cgroup e scheduler come garanzia di prevedibilità delle prestazioni contro il noisy-neighbour; collegamento a DORA (resilienza operativa, gestione del rischio di terze parti, test di resilienza).
 
 ---
 
