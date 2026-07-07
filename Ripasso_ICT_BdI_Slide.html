@@ -1,0 +1,1186 @@
+<title>Ripasso ICT — Concorso Banca d'Italia</title>
+<style>
+  :root{
+    --bg:#f2f4f2;
+    --surface:#ffffff;
+    --surface-2:#e8ece9;
+    --text:#161d1a;
+    --text-muted:#4c5751;
+    --border:#d5dbd6;
+    --accent-a:#0f6e5f;
+    --accent-a-soft:#e1efe9;
+    --accent-c:#a5601a;
+    --accent-c-soft:#f5e9d8;
+    --accent-neutral:#3c4a6b;
+    --accent-neutral-soft:#e6e9f2;
+    --risk:#a13d29;
+    --risk-soft:#f6e4de;
+    --shadow: 0 1px 2px rgba(20,30,25,.06), 0 8px 24px -12px rgba(20,30,25,.18);
+    --font-head:"Segoe UI Semibold","Segoe UI",-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --font-body:"Segoe UI",-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --font-mono:"Cascadia Code","Consolas","SF Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1412;
+      --surface:#161d1a;
+      --surface-2:#1d2521;
+      --text:#e7ece9;
+      --text-muted:#93a29b;
+      --border:#2a332e;
+      --accent-a:#4fc6ac;
+      --accent-a-soft:#173029;
+      --accent-c:#e0a256;
+      --accent-c-soft:#302416;
+      --accent-neutral:#8b98c4;
+      --accent-neutral-soft:#1c2233;
+      --risk:#e2836a;
+      --risk-soft:#2e1c16;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1412; --surface:#161d1a; --surface-2:#1d2521; --text:#e7ece9; --text-muted:#93a29b;
+    --border:#2a332e; --accent-a:#4fc6ac; --accent-a-soft:#173029; --accent-c:#e0a256; --accent-c-soft:#302416;
+    --accent-neutral:#8b98c4; --accent-neutral-soft:#1c2233; --risk:#e2836a; --risk-soft:#2e1c16;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"]{
+    --bg:#f2f4f2; --surface:#ffffff; --surface-2:#e8ece9; --text:#161d1a; --text-muted:#4c5751;
+    --border:#d5dbd6; --accent-a:#0f6e5f; --accent-a-soft:#e1efe9; --accent-c:#a5601a; --accent-c-soft:#f5e9d8;
+    --accent-neutral:#3c4a6b; --accent-neutral-soft:#e6e9f2; --risk:#a13d29; --risk-soft:#f6e4de;
+    --shadow: 0 1px 2px rgba(20,30,25,.06), 0 8px 24px -12px rgba(20,30,25,.18);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--font-body);
+    font-size:16px; line-height:1.5;
+  }
+  ::selection{ background:var(--accent-a); color:#fff; }
+
+  h1,h2,h3{ font-family:var(--font-head); text-wrap:balance; margin:0; }
+
+  .deck{
+    scroll-snap-type:y proximity;
+    overflow-y:auto;
+    height:100vh;
+    scroll-behavior:smooth;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .deck{ scroll-behavior:auto; }
+  }
+
+  .slide{
+    scroll-snap-align:start;
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:5.5rem 1.75rem 4rem;
+    position:relative;
+    border-bottom:1px solid var(--border);
+  }
+  .slide-inner{
+    width:100%;
+    max-width:1080px;
+  }
+
+  /* ---- eyebrow / badges ---- */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:.4em;
+    font-family:var(--font-mono);
+    font-size:.85rem;
+    font-weight:600;
+    letter-spacing:.03em;
+    padding:.3em .7em;
+    border-radius:.35em;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text);
+  }
+  .badge.a{ background:var(--accent-a-soft); color:var(--accent-a); border-color:transparent; }
+  .badge.c{ background:var(--accent-c-soft); color:var(--accent-c); border-color:transparent; }
+  .badge.n{ background:var(--accent-neutral-soft); color:var(--accent-neutral); border-color:transparent; }
+
+  /* ---- cover ---- */
+  .slide-cover .slide-inner{ text-align:left; }
+  .slide-cover h1{
+    font-size:clamp(2.4rem,5.2vw,4rem);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-top:1rem;
+    max-width:14ch;
+  }
+  .slide-cover .kicker{ font-size:1.05rem; color:var(--text-muted); margin-top:1.1rem; max-width:52ch; }
+  .cover-sources{
+    margin-top:2.6rem; display:flex; flex-wrap:wrap; gap:.6rem;
+  }
+  .src-chip{
+    font-family:var(--font-mono); font-size:.78rem; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:999px; padding:.35em .9em;
+  }
+  .cover-hint{
+    margin-top:3.4rem; font-size:.85rem; color:var(--text-muted);
+    display:flex; align-items:center; gap:.6rem;
+  }
+  kbd{
+    font-family:var(--font-mono); font-size:.78rem; border:1px solid var(--border);
+    border-bottom-width:2px; border-radius:.3em; padding:.05em .5em; background:var(--surface);
+  }
+
+  /* ---- index ---- */
+  .slide-index h2{ font-size:1.9rem; margin-bottom:.3rem; }
+  .index-sub{ color:var(--text-muted); margin-bottom:2rem; }
+  .index-cols{ display:grid; grid-template-columns:repeat(2,1fr); gap:2.2rem 2.6rem; }
+  @media (max-width:720px){ .index-cols{ grid-template-columns:1fr; } }
+  .index-group h3{
+    font-family:var(--font-mono); font-size:.82rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--text-muted); font-weight:600; margin-bottom:.7rem; padding-bottom:.5rem; border-bottom:1px solid var(--border);
+  }
+  .index-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.15rem; }
+  .index-list button{
+    all:unset; cursor:pointer; display:flex; align-items:baseline; gap:.65rem;
+    width:100%; padding:.42rem .3rem; border-radius:.4rem; font-size:.94rem;
+  }
+  .index-list button:hover, .index-list button:focus-visible{ background:var(--surface-2); }
+  .index-list button:focus-visible{ outline:2px solid var(--accent-a); outline-offset:1px; }
+  .index-num{ font-family:var(--font-mono); font-size:.78rem; color:var(--text-muted); flex-shrink:0; width:2.6em; }
+
+  /* ---- section divider ---- */
+  .slide-divider .slide-inner{ text-align:left; }
+  .slide-divider .div-num{ font-family:var(--font-mono); font-size:1.1rem; color:var(--text-muted); }
+  .slide-divider h2{ font-size:clamp(2rem,4.4vw,3.1rem); margin-top:.6rem; max-width:18ch; }
+  .slide-divider .div-themes{ margin-top:1.6rem; display:flex; flex-wrap:wrap; gap:.55rem; }
+
+  /* ---- theme slide ---- */
+  .theme-head{ display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap; }
+  .theme-head h2{ font-size:clamp(1.35rem,2.6vw,1.85rem); margin-top:.55rem; max-width:34ch; }
+  .lede{ margin-top:1.1rem; max-width:78ch; color:var(--text); font-size:1rem; }
+  .lede strong{ color:var(--accent-a); }
+  .slide-theme.profc .lede strong{ color:var(--accent-c); }
+
+  .grid-4{
+    margin-top:1.5rem; display:grid; grid-template-columns:repeat(2,1fr); gap:.9rem;
+  }
+  @media (max-width:820px){ .grid-4{ grid-template-columns:1fr; } }
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:.7rem;
+    padding:1rem 1.15rem 1.05rem; box-shadow:var(--shadow);
+  }
+  .card h3{
+    font-size:.92rem; font-weight:700; color:var(--accent-a);
+  }
+  .slide-theme.profc .card h3{ color:var(--accent-c); }
+  .card ul{ margin:.55rem 0 0; padding-left:1.05rem; }
+  .card li{ margin:.28rem 0; font-size:.9rem; color:var(--text); }
+  .card li::marker{ color:var(--text-muted); }
+  .card li b{ color:var(--text); }
+
+  .footbar{ margin-top:1.1rem; display:grid; grid-template-columns:1.1fr 1fr; gap:.8rem; }
+  @media (max-width:820px){ .footbar{ grid-template-columns:1fr; } }
+  .footbar .box{ border-radius:.6rem; padding:.75rem 1rem; font-size:.87rem; }
+  .esempio-box{ background:var(--accent-neutral-soft); }
+  .rischi-box{ background:var(--risk-soft); }
+  .tag{
+    font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+    font-weight:700; display:block; margin-bottom:.3rem;
+  }
+  .esempio-box .tag{ color:var(--accent-neutral); }
+  .rischi-box .tag{ color:var(--risk); }
+  .chips{ display:flex; flex-wrap:wrap; gap:.4rem; }
+  .chip{
+    font-size:.8rem; background:var(--surface); border:1px solid var(--border); border-radius:999px;
+    padding:.2em .7em;
+  }
+
+  /* ---- simulazione slide ---- */
+  .slide-sim h2{ font-size:1.75rem; }
+  .sim-sub{ color:var(--text-muted); margin-top:.4rem; max-width:70ch; }
+  .sim-cols{ margin-top:1.8rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  @media (max-width:900px){ .sim-cols{ grid-template-columns:1fr; } }
+  .sim-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:.7rem; padding:1.15rem 1.2rem;
+    box-shadow:var(--shadow);
+  }
+  .sim-card h3{ font-size:1.02rem; color:var(--accent-neutral); }
+  .sim-card ul{ margin:.7rem 0 0; padding-left:1.05rem; }
+  .sim-card li{ margin:.4rem 0; font-size:.89rem; }
+
+  /* ---- closing ---- */
+  .slide-close .slide-inner{ text-align:left; }
+  .slide-close h2{ font-size:2.1rem; max-width:20ch; }
+  .close-grid{ margin-top:1.8rem; display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+  @media (max-width:720px){ .close-grid{ grid-template-columns:1fr; } }
+  .close-card{ border:1px solid var(--border); border-radius:.7rem; padding:1rem 1.15rem; background:var(--surface); }
+  .close-card h3{ font-size:.95rem; color:var(--accent-a); }
+  .close-card p{ font-size:.89rem; color:var(--text-muted); margin:.5rem 0 0; }
+
+  /* ---- chrome: topbar, nav, progress, menu ---- */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; height:3.1rem; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 1.1rem; background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--border);
+  }
+  .topbar .brand{ font-family:var(--font-mono); font-size:.8rem; color:var(--text-muted); letter-spacing:.04em; }
+  .topbar .counter{ font-family:var(--font-mono); font-size:.8rem; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+  .menu-btn{
+    all:unset; cursor:pointer; font-family:var(--font-mono); font-size:.78rem; color:var(--text);
+    border:1px solid var(--border); border-radius:.4rem; padding:.32em .8em; display:flex; align-items:center; gap:.4em;
+  }
+  .menu-btn:hover{ background:var(--surface-2); }
+  .menu-btn:focus-visible{ outline:2px solid var(--accent-a); outline-offset:1px; }
+
+  .progress{
+    position:fixed; top:3.1rem; left:0; right:0; height:2px; background:var(--border); z-index:40;
+  }
+  .progress-bar{ height:100%; width:0%; background:var(--accent-a); transition:width .15s ease; }
+
+  .navpad{
+    position:fixed; right:1.3rem; bottom:1.3rem; z-index:40;
+    display:flex; flex-direction:column; gap:.5rem;
+  }
+  .navpad button{
+    all:unset; cursor:pointer; width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center;
+    background:var(--surface); border:1px solid var(--border); border-radius:50%; box-shadow:var(--shadow); color:var(--text);
+  }
+  .navpad button:hover{ background:var(--surface-2); }
+  .navpad button:focus-visible{ outline:2px solid var(--accent-a); outline-offset:2px; }
+  .navpad button:disabled{ opacity:.35; cursor:default; }
+
+  .menu-overlay{
+    position:fixed; inset:0; z-index:50; background:color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter:blur(6px); overflow-y:auto; padding:4.5rem 1.75rem 3rem;
+    opacity:0; pointer-events:none; transition:opacity .16s ease;
+  }
+  .menu-overlay.open{ opacity:1; pointer-events:auto; }
+  .menu-overlay-inner{ max-width:1080px; margin:0 auto; }
+  .menu-overlay h2{ font-size:1.3rem; }
+  .menu-close{
+    position:fixed; top:.85rem; right:1.1rem; z-index:51; all:unset; cursor:pointer;
+    font-family:var(--font-mono); font-size:.78rem; border:1px solid var(--border); border-radius:.4rem;
+    padding:.32em .8em; background:var(--surface); color:var(--text);
+  }
+
+  @media print{
+    .topbar,.progress,.navpad,.menu-overlay{ display:none; }
+    .deck{ height:auto; overflow:visible; }
+    .slide{ min-height:auto; page-break-after:always; }
+  }
+</style>
+
+<div class="topbar">
+  <span class="brand">RIPASSO ICT · BANCA D'ITALIA</span>
+  <button class="menu-btn" id="menuOpenBtn" aria-haspopup="true" aria-expanded="false">Indice <kbd>M</kbd></button>
+  <span class="counter" id="counter">01 / 24</span>
+</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="navpad">
+  <button id="prevBtn" aria-label="Slide precedente" title="Precedente (↑)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 15l6-6 6 6"/></svg>
+  </button>
+  <button id="nextBtn" aria-label="Slide successiva" title="Successiva (↓)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div>
+
+<button class="menu-close" id="menuCloseBtn" hidden>Chiudi <kbd>Esc</kbd></button>
+<div class="menu-overlay" id="menuOverlay" role="dialog" aria-label="Indice slide">
+  <div class="menu-overlay-inner">
+    <h2>Salta a una slide</h2>
+    <p class="index-sub">Clicca un titolo, o chiudi con Esc.</p>
+    <div class="index-cols" id="menuList"></div>
+  </div>
+</div>
+
+<main class="deck" id="deck">
+
+  <!-- 0 · COVER -->
+  <section class="slide slide-cover" data-title="Copertina">
+    <div class="slide-inner">
+      <span class="eyebrow">Concorso Esperto/Assistente ICT — Banca d'Italia 2026</span>
+      <h1>Ripasso rapido: 25 temi svolti, Profilo A e Profilo C</h1>
+      <p class="kicker">Sintesi delle risposte-modello (metodo PEEL) per il ripasso a colpo d'occhio: impostazione, sviluppo tecnico per punti (a)–(d), esempio nel contesto Banca d'Italia, rischi residui.</p>
+      <div class="cover-sources">
+        <span class="src-chip">Soluzione_Simulazione_Esame.md</span>
+        <span class="src-chip">Svolgimenti_Temi_Profilo_A.md</span>
+        <span class="src-chip">Svolgimenti_Temi_Profilo_C.md</span>
+      </div>
+      <div class="cover-hint"><kbd>↑</kbd><kbd>↓</kbd> naviga · <kbd>M</kbd> indice · <kbd>Home</kbd>/<kbd>End</kbd> inizio/fine</div>
+    </div>
+  </section>
+
+  <!-- 1 · INDEX -->
+  <section class="slide slide-index" data-title="Indice">
+    <div class="slide-inner">
+      <h2>Indice</h2>
+      <p class="index-sub">24 slide · clicca un tema per saltarci direttamente</p>
+      <div class="index-cols">
+        <div class="index-group">
+          <h3>Simulazione &amp; Profilo A</h3>
+          <ul class="index-list">
+            <li><button data-jump="sim"><span class="index-num">SIM</span>Sistema AI per la Vigilanza</button></li>
+            <li><button data-jump="a11"><span class="index-num">A 1.1</span>Pagamento ad alta disponibilità</button></li>
+            <li><button data-jump="a12"><span class="index-num">A 1.2</span>Dati vigilanza: relazionale vs NoSQL</button></li>
+            <li><button data-jump="a13"><span class="index-num">A 1.3</span>Cloud-native e sicurezza applicativa</button></li>
+            <li><button data-jump="a21"><span class="index-num">A 2.1</span>Migrazione post-quantum</button></li>
+            <li><button data-jump="a22"><span class="index-num">A 2.2</span>DLT e Privacy-Enhancing Tech</button></li>
+            <li><button data-jump="a23"><span class="index-num">A 2.3</span>Autenticazione forte e TLS</button></li>
+            <li><button data-jump="a31"><span class="index-num">A 3.1</span>Fraud detection/AML e AI Act</button></li>
+            <li><button data-jump="a32"><span class="index-num">A 3.2</span>LLM e RAG istituzionale</button></li>
+            <li><button data-jump="a33"><span class="index-num">A 3.3</span>Multiagente per i controlli</button></li>
+          </ul>
+        </div>
+        <div class="index-group">
+          <h3>Profilo C</h3>
+          <ul class="index-list">
+            <li><button data-jump="c11"><span class="index-num">C 1.1</span>Algoritmi e strutture dati</button></li>
+            <li><button data-jump="c12"><span class="index-num">C 1.2</span>Secure SDLC e OWASP</button></li>
+            <li><button data-jump="c21"><span class="index-num">C 2.1</span>Progettazione di una base dati</button></li>
+            <li><button data-jump="c22"><span class="index-num">C 2.2</span>ML per la classificazione</button></li>
+            <li><button data-jump="c31"><span class="index-num">C 3.1</span>Rete sicura e resiliente</button></li>
+            <li><button data-jump="c32"><span class="index-num">C 3.2</span>Crittografia e cenni DLT</button></li>
+            <li><button data-jump="close"><span class="index-num">—</span>Promemoria d'esame</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · SIMULAZIONE -->
+  <section class="slide slide-sim" id="sim" data-title="Simulazione — Sistema AI per la Vigilanza">
+    <div class="slide-inner">
+      <span class="badge n">Simulazione d'esame</span>
+      <h2 style="margin-top:.6rem">Sistema AI per la Vigilanza</h2>
+      <p class="sim-sub">Architettura che bilancia IA generativa con data sovereignty, security by design e resilienza operativa di una banca centrale.</p>
+      <div class="sim-cols">
+        <div class="sim-card">
+          <h3>1 · Cloud, sovranità, anti lock-in</h3>
+          <ul>
+            <li><b>Hybrid cloud:</b> dati core ACID on-premise, calcolo LLM su cloud pubblico IaaS/PaaS</li>
+            <li><b>BYOK:</b> chiavi negli HSM on-premise, il provider non accede mai ai dati in chiaro</li>
+            <li><b>Cloud-native + IaC:</b> container OCI/Kubernetes + Terraform → exit strategy</li>
+          </ul>
+        </div>
+        <div class="sim-card">
+          <h3>2 · Architettura AI: no allucinazioni</h3>
+          <ul>
+            <li><b>RAG</b> su DB vettoriale interno con la knowledge base normata; risposte con citazione delle fonti</li>
+            <li><b>AI Security Gateway:</b> input sanitization anti prompt-injection + data masking/DLP (PII, GDPR)</li>
+            <li><b>Human-in-the-loop:</b> AI Act, IA come "augmented intelligence", decisione sempre umana</li>
+          </ul>
+        </div>
+        <div class="sim-card">
+          <h3>3 · Resilienza operativa e DORA</h3>
+          <ul>
+            <li><b>Multi-AZ active-active</b> + replica asincrona geograficamente distante</li>
+            <li><b>Microsegmentazione Zero Trust (ZTNA)</b> tra IA, DB vettoriale e interfacce</li>
+            <li><b>SOC/SIEM H24</b> + test di resilienza continui (TLPT, TIBER-EU)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: Profilo A - Ambito 1 -->
+  <section class="slide slide-divider" data-title="Profilo A — Ambito 1">
+    <div class="slide-inner">
+      <span class="div-num">Profilo A — Ambito 1</span>
+      <h2>Computazione, software, sistemi</h2>
+      <div class="div-themes">
+        <span class="badge a">1.1 Pagamenti HA</span>
+        <span class="badge a">1.2 Dati vigilanza</span>
+        <span class="badge a">1.3 Cloud-native</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 1.1 -->
+  <section class="slide slide-theme profa" id="a11" data-title="A 1.1 — Pagamento ad alta disponibilità">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 1.1</span>
+        <div><span class="eyebrow">Ambito 1 — Computazione, software, sistemi</span>
+        <h2>Architettura di un sistema di pagamento ad alta disponibilità</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Sistema RTGS "systemic": la <b>consistenza forte</b> prevale sulla disponibilità eventuale — un pagamento regolato è definitivo e irrevocabile.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Architettura applicativa</h3><ul>
+          <li>Microservizi <b>event-driven</b>, gateway <b>ISO 20022</b></li>
+          <li>Event backbone (Kafka), messaggi idempotenti</li>
+          <li><b>Ledger ACID</b> centrale come unica fonte di verità</li>
+          <li>Pattern: <b>CQRS</b>, <b>Saga</b>, outbox transazionale</li>
+        </ul></div>
+        <div class="card"><h3>(b) Consistenza distribuita</h3><ul>
+          <li>Teorema <b>CAP</b> → scelta <b>CP</b> per il ledger</li>
+          <li><b>ACID</b> non negoziabile per la finalità giuridica</li>
+          <li><b>BASE</b> accettabile solo su reportistica/repliche</li>
+        </ul></div>
+        <div class="card"><h3>(c) Alta disponibilità / DR</h3><ul>
+          <li>Multi-region + terzo sito di salvaguardia</li>
+          <li>Ledger: <b>active-passive</b> sync vicino + async remoto</li>
+          <li>Servizi stateless: <b>active-active</b> multi-zona</li>
+          <li>RTO: minuti · <b>RPO ≈ 0</b> per il regolamento</li>
+        </ul></div>
+        <div class="card"><h3>(d) Osservabilità &amp; incidenti</h3><ul>
+          <li>Logging immutabile, <b>distributed tracing</b>, SLO</li>
+          <li>NIST IR: 6 fasi (preparazione → lezioni apprese)</li>
+          <li>Pilastri <b>DORA</b>: rischio ICT, reporting, TLPT, terze parti</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>TARGET / Eurosistema — indisponibilità prolungata avrebbe effetti sistemici</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">guasti correlati</span><span class="chip">concentrazione cloud</span><span class="chip">cyber</span><span class="chip">liquidità intraday</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 1.2 -->
+  <section class="slide slide-theme profa" id="a12" data-title="A 1.2 — Dati vigilanza: relazionale vs NoSQL">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 1.2</span>
+        <div><span class="eyebrow">Ambito 1 — Computazione, software, sistemi</span>
+        <h2>Piattaforma dati di vigilanza: relazionale vs NoSQL</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Dati fortemente eterogenei → <b>polyglot persistence</b> governata, non un singolo database "migliore in assoluto".</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Architettura end-to-end</h3><ul>
+          <li><b>Lakehouse</b>: object store + formato tabellare aperto</li>
+          <li>Medaglioni: <b>bronze / silver / gold</b></li>
+          <li>Kafka (streaming) + Spark/Flink + Airflow/dbt</li>
+          <li><b>Lambda a prevalenza batch</b> (riproducibilità)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Scelta per tipo di dato</h3><ul>
+          <li>Bilanci/segnalazioni → <b>relazionale</b> (CP, ACID)</li>
+          <li>Serie storiche → store <b>time-series/columnare</b></li>
+          <li>Log transazione → <b>wide-column/KV</b> (AP)</li>
+          <li>Reti di esposizione → <b>database a grafo</b> (AML)</li>
+        </ul></div>
+        <div class="card"><h3>(c) Query &amp; qualità dato</h3><ul>
+          <li>Partizionamento, indicizzazione, viste materializzate</li>
+          <li>Validazione a livello silver, deduplicazione</li>
+          <li><b>Data lineage</b> end-to-end (tracciabilità)</li>
+        </ul></div>
+        <div class="card"><h3>(d) Requisiti non funzionali</h3><ul>
+          <li>Scalabilità: storage/calcolo disaccoppiati</li>
+          <li>Cifratura at-rest/in transito, audit logging</li>
+          <li><b>GDPR</b>: minimizzazione, pseudonimizzazione</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Una banca centrale è, in larga misura, un vasto sistema di basi dati governate e interrogabili</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">data swamp</span><span class="chip">schema drift</span><span class="chip">costo</span><span class="chip">gap riconciliazione</span><span class="chip">re-identificazione</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 1.3 -->
+  <section class="slide slide-theme profa" id="a13" data-title="A 1.3 — Cloud-native e sicurezza applicativa">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 1.3</span>
+        <div><span class="eyebrow">Ambito 1 — Computazione, software, sistemi</span>
+        <h2>Modernizzazione cloud-native e sicurezza applicativa</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> L'isolamento che prima era "gratis" (macchine fisiche separate) va ricostruito esplicitamente: OS, rete, pipeline. Multi-tenant → criterio guida è l'isolamento.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Container &amp; orchestrazione</h3><ul>
+          <li>VM = hypervisor; container = <b>namespace + cgroup</b> del kernel</li>
+          <li><b>Kubernetes</b>: scheduling, scaling, rolling update</li>
+          <li>Multi-tenant: Namespace + RBAC + ResourceQuota + NetworkPolicy</li>
+          <li>Isolamento extra: microVM (Firecracker, gVisor/Kata)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Reti software-defined</h3><ul>
+          <li><b>SDN</b>: piano di controllo separato dal piano dati</li>
+          <li><b>Service mesh</b> (Istio/Linkerd): sidecar, <b>mTLS</b></li>
+          <li>Modello <b>Zero Trust</b>: nessuna fiducia per posizione di rete</li>
+        </ul></div>
+        <div class="card"><h3>(c) Ingegneria del software sicuro</h3><ul>
+          <li>Linguaggi a tipizzazione forte per i componenti critici</li>
+          <li>CI/CD "shift left": <b>SAST</b> + <b>SCA</b> + scan immagini</li>
+          <li>Firma delle immagini, gate che blocca vulnerabilità critiche</li>
+        </ul></div>
+        <div class="card"><h3>(d) Concorrenza &amp; risorse</h3><ul>
+          <li>Multi-thread/processo (CPU-bound) vs event-loop async (I/O-bound)</li>
+          <li>Race condition, deadlock, starvation → message-passing</li>
+          <li><b>cgroup + CFS + OOM killer</b> → prevedibilità multi-tenant</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Piattaforma segnalazioni multi-tenant → traduzione pratica di resilienza operativa DORA</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">control-plane</span><span class="chip">complessità operativa</span><span class="chip">kernel condiviso</span><span class="chip">supply chain</span><span class="chip">skill gap</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: Profilo A - Ambito 2 -->
+  <section class="slide slide-divider" data-title="Profilo A — Ambito 2">
+    <div class="slide-inner">
+      <span class="div-num">Profilo A — Ambito 2</span>
+      <h2>Crittografia, DLT, privacy</h2>
+      <div class="div-themes">
+        <span class="badge a">2.1 Post-quantum</span>
+        <span class="badge a">2.2 DLT &amp; PET</span>
+        <span class="badge a">2.3 Autenticazione forte</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 2.1 -->
+  <section class="slide slide-theme profa" id="a21" data-title="A 2.1 — Migrazione post-quantum">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 2.1</span>
+        <div><span class="eyebrow">Ambito 2 — Crittografia, DLT, privacy</span>
+        <h2>Migrazione post-quantum della crittografia istituzionale</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Minaccia <b>"harvest now, decrypt later"</b>: per dati riservati di lunga durata, la pianificazione non può attendere il Q-Day.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Perché è vulnerabile</h3><ul>
+          <li><b>Shor</b> rompe RSA/ECC (fattorizzazione, log discreto)</li>
+          <li><b>Grover</b> indebolisce solo la simmetrica: AES-256 → ~128 bit</li>
+          <li>Hash: servono output più lunghi (SHA-384/512)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Standard NIST (2024)</h3><ul>
+          <li><b>FIPS 203 — ML-KEM</b>: scambio chiavi (reticoli)</li>
+          <li><b>FIPS 204 — ML-DSA</b>: firma digitale primaria</li>
+          <li><b>FIPS 205 — SLH-DSA</b>: firma di riserva (hash-based)</li>
+          <li>FN-DSA/Falcon: in arrivo (FIPS 206)</li>
+        </ul></div>
+        <div class="card"><h3>(c) Roadmap di migrazione</h3><ul>
+          <li>Inventario crittografico (<b>CBOM</b>) → priorità sul rischio</li>
+          <li><b>Modalità ibrida</b> (classico + PQC) nello stesso handshake</li>
+          <li>PKI ibrida/PQC, poi <b>agilità crittografica</b></li>
+          <li>Dismissione ~2030, divieto ~2035</li>
+        </ul></div>
+        <div class="card"><h3>(d) Impatto su protocolli</h3><ul>
+          <li><b>TLS 1.3</b> hybrid key exchange</li>
+          <li>IPsec/IKEv2, SSH, firmware HSM</li>
+          <li>Handshake e catene di certificati più grandi</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Riservatezza da proteggere per decenni + infrastrutture di firma sistemiche → HNDL rilevante</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">side-channel</span><span class="chip">ecosistema immaturo</span><span class="chip">hardware legacy</span><span class="chip">rottura schema futuro</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 2.2 -->
+  <section class="slide slide-theme profa" id="a22" data-title="A 2.2 — DLT e Privacy-Enhancing Technologies">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 2.2</span>
+        <div><span class="eyebrow">Ambito 2 — Crittografia, DLT, privacy</span>
+        <h2>DLT e Privacy-Enhancing Technologies per la finanza tokenizzata</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Finalità, riservatezza, scalabilità e GDPR in tensione — contesto <b>regolamentato, a soggetti noti</b>, non rete pubblica anonima.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Architettura e consenso</h3><ul>
+          <li>Rete <b>permissioned</b> + consenso <b>BFT</b> (PBFT/IBFT)</li>
+          <li>Finalità immediata e deterministica, nessun fork</li>
+          <li>PoW/PoS scartati (costo, finalità probabilistica)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Smart contract</h3><ul>
+          <li>Esecuzione <b>deterministica</b> (EVM/Solidity, Move, DAML)</li>
+          <li>Rischi: reentrancy, overflow, <b>oracoli</b> (SPOF)</li>
+          <li>Contromisure: audit, verifica formale, checks-effects-interactions</li>
+        </ul></div>
+        <div class="card"><h3>(c) Scalabilità &amp; interoperabilità</h3><ul>
+          <li><b>Layer-2/rollup</b> (optimistic o ZK), sharding</li>
+          <li>Bridge, schemi notary, <b>HTLC</b> cross-chain</li>
+        </ul></div>
+        <div class="card"><h3>(d) Privacy vs GDPR</h3><ul>
+          <li><b>zk-SNARK/STARK</b>, omomorfica, MPC</li>
+          <li>Immutabilità DLT vs diritto alla cancellazione (art. 17)</li>
+          <li>Dati personali <b>off-chain</b>, solo hash/commitment on-chain</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Eurosistema — regolamento wholesale in moneta di banca centrale (wholesale CBDC)</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">oracoli</span><span class="chip">gestione chiavi</span><span class="chip">governance rete</span><span class="chip">certezza giuridica</span><span class="chip">frammentazione bridge</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 2.3 -->
+  <section class="slide slide-theme profa" id="a23" data-title="A 2.3 — Autenticazione forte e comunicazione sicura">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 2.3</span>
+        <div><span class="eyebrow">Ambito 2 — Crittografia, DLT, privacy</span>
+        <h2>Autenticazione forte e comunicazione sicura per l'accesso esterno</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Le credenziali compromesse, non le falle crittografiche, sono il vettore #1. Principio guida: <b>Zero Trust</b> — canale sicuro + identità verificata.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) TLS: simmetrica + asimmetrica</h3><ul>
+          <li>Asimmetrica <b>inizializza</b> (ECDHE, forward secrecy)</li>
+          <li>Chiave di sessione simmetrica (AES-GCM) cifra il traffico</li>
+        </ul></div>
+        <div class="card"><h3>(b) Firma, certificati, PKI</h3><ul>
+          <li>X.509, catena di fiducia CA root → intermedie → foglia</li>
+          <li>Revoca: <b>CRL</b> (periodica) vs <b>OCSP</b> (real-time, preferibile)</li>
+        </ul></div>
+        <div class="card"><h3>(c) MFA e Zero Trust</h3><ul>
+          <li><b>FIDO2/WebAuthn</b> — resistente al phishing, chiave mai lascia il device</li>
+          <li><b>OAuth2</b> (autorizzazione) + <b>OIDC</b> (autenticazione) per la delega</li>
+          <li>Verifica esplicita e continua della sessione</li>
+        </ul></div>
+        <div class="card"><h3>(d) Credenziali &amp; segreti</h3><ul>
+          <li><b>Argon2id</b> + salt per le password</li>
+          <li>Chiavi in <b>HSM/vault</b>, mai nel codice</li>
+          <li>Rotazione periodica dei segreti</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Portale per intermediari esterni — bersaglio permanente di phishing e credential stuffing</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">MFA non adottato da terzi</span><span class="chip">CA compromessa</span><span class="chip">session hijacking</span><span class="chip">HSM SPOF</span><span class="chip">SIM swap</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: Profilo A - Ambito 3 -->
+  <section class="slide slide-divider" data-title="Profilo A — Ambito 3">
+    <div class="slide-inner">
+      <span class="div-num">Profilo A — Ambito 3</span>
+      <h2>Intelligenza artificiale, machine learning, data science</h2>
+      <div class="div-themes">
+        <span class="badge a">3.1 Fraud/AML + AI Act</span>
+        <span class="badge a">3.2 LLM &amp; RAG</span>
+        <span class="badge a">3.3 Multiagente</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 3.1 -->
+  <section class="slide slide-theme profa" id="a31" data-title="A 3.1 — Fraud detection/AML e AI Act">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 3.1</span>
+        <div><span class="eyebrow">Ambito 3 — IA, ML, data science</span>
+        <h2>Pipeline ML per fraud detection/AML e governance sotto l'AI Act</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Sistema <b>ad alto rischio</b> per l'AI Act. Le frodi sono <b>eventi rari</b>: orienta modello e metriche.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Pipeline end-to-end</h3><ul>
+          <li>Feature engineering: velocity, aggregazioni, feature di grafo</li>
+          <li>Supervisionato: logistica baseline → random forest/XGBoost</li>
+          <li>Non supervisionato: isolation forest, autoencoder</li>
+        </ul></div>
+        <div class="card"><h3>(b) Sbilanciamento &amp; metriche</h3><ul>
+          <li>Accuratezza <b>fuorviante</b> → precision/recall/F1, <b>AUC-PR</b></li>
+          <li>SMOTE, class weighting, tuning della soglia</li>
+          <li>Trade-off: recall (FN costoso) vs precision (alert fatigue)</li>
+        </ul></div>
+        <div class="card"><h3>(c) Spiegabilità, bias, robustezza</h3><ul>
+          <li><b>SHAP/LIME</b> come requisito di vigilanza</li>
+          <li>Fairness, MLOps, <b>concept drift</b></li>
+        </ul></div>
+        <div class="card"><h3>(d) AI Act &amp; model risk</h3><ul>
+          <li>Risk management, data governance, documentazione</li>
+          <li>Logging, <b>sorveglianza umana</b>, model risk management</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>AI Act: scoring creditizio, AML, fraud detection = alto rischio esplicito</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">concept drift</span><span class="chip">costo falsi positivi</span><span class="chip">qualità dato</span><span class="chip">spiegabilità vs prestazioni</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 3.2 -->
+  <section class="slide slide-theme profa" id="a32" data-title="A 3.2 — LLM e RAG istituzionale">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 3.2</span>
+        <div><span class="eyebrow">Ambito 3 — IA, ML, data science</span>
+        <h2>LLM e RAG all'interno dell'istituzione: architettura e governance</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Nessuna esposizione di dati riservati + risposte verificabili → <b>RAG</b>, non fine-tuning.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Transformer &amp; opzioni</h3><ul>
+          <li><b>Self-attention</b>, embedding, codifica posizionale</li>
+          <li>Prompting vs fine-tuning (rischio: incorpora dati riservati) vs RAG</li>
+        </ul></div>
+        <div class="card"><h3>(b) Architettura RAG sicura</h3><ul>
+          <li>Ingestione: chunk + embedding → DB vettoriale interno</li>
+          <li>Retrieval ibrido (denso + BM25) + re-ranking</li>
+          <li>Generazione <b>con citazione</b> dei passaggi sorgente</li>
+        </ul></div>
+        <div class="card"><h3>(c) Rischi IA generativa</h3><ul>
+          <li>Allucinazione → ancoraggio + citazione</li>
+          <li>Data leakage → on-prem/cloud sovrano</li>
+          <li><b>Prompt injection</b> → guardrail, privilegio minimo</li>
+        </ul></div>
+        <div class="card"><h3>(d) AI Act &amp; governance</h3><ul>
+          <li>Trasparenza GPAI, documentazione tecnica</li>
+          <li>Sorveglianza umana: l'analista valida, il modello assiste</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Ammissibilità dipende da verificabilità + riservatezza → RAG interno con citazioni</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">allucinazione residua</span><span class="chip">gap di retrieval</span><span class="chip">prompt injection evolutiva</span><span class="chip">over-reliance</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A 3.3 -->
+  <section class="slide slide-theme profa" id="a33" data-title="A 3.3 — Sistema multiagente per i controlli di vigilanza">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge a">A · 3.3</span>
+        <div><span class="eyebrow">Ambito 3 — IA, ML, data science</span>
+        <h2>Sistema multiagente: conoscenza, ragionamento e dati sintetici</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Regole esplicite → IA <b>simbolica</b>; pattern non anticipabili → IA <b>statistica</b>. Progetto ibrido e multiagente.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Simbolica vs induttiva</h3><ul>
+          <li>Regole if-then, <b>ontologie</b>, motore di inferenza → deterministico, spiegabile</li>
+          <li>ML per anomalie nuove, non codificabili a priori</li>
+        </ul></div>
+        <div class="card"><h3>(b) Architettura multiagente</h3><ul>
+          <li>Agenti specializzati (contabile, AML, prudenziale)</li>
+          <li>Agente <b>orchestratore</b>: instrada, aggrega, arbitra conflitti</li>
+        </ul></div>
+        <div class="card"><h3>(c) Clustering &amp; data viz</h3><ul>
+          <li><b>k-means</b>, <b>DBSCAN</b>, gerarchico → outlier = anomalie</li>
+          <li>t-SNE/UMAP, dashboard → sorveglianza umana effettiva</li>
+        </ul></div>
+        <div class="card"><h3>(d) Dati sintetici</h3><ul>
+          <li>GAN/VAE, copule statistiche, <b>SMOTE</b></li>
+          <li>Rischio duplice: bassa fedeltà vs memorizzazione (privacy leak)</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Automatizza il lavoro di unità specialistiche mantenendo tracciabilità e motivabilità</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">conflitto tra agenti</span><span class="chip">drift normativo</span><span class="chip">falsi positivi</span><span class="chip">dati sintetici mal calibrati</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER: Profilo C -->
+  <section class="slide slide-divider" data-title="Profilo C">
+    <div class="slide-inner">
+      <span class="div-num">Profilo C — Assistente ICT</span>
+      <h2>Fondamenti applicati: software, dati, reti</h2>
+      <div class="div-themes">
+        <span class="badge c">1.1 Algoritmi</span>
+        <span class="badge c">1.2 Secure SDLC</span>
+        <span class="badge c">2.1 Basi di dati</span>
+        <span class="badge c">2.2 ML</span>
+        <span class="badge c">3.1 Reti</span>
+        <span class="badge c">3.2 Crittografia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 1.1 -->
+  <section class="slide slide-theme profc" id="c11" data-title="C 1.1 — Algoritmi e strutture dati">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 1.1</span>
+        <div><span class="eyebrow">Ambito 1 — Progettazione e sviluppo del software</span>
+        <h2>Algoritmi e strutture dati per la riconciliazione di transazioni</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Deduplica, ordinamento, ricerca su grandi volumi: la scelta della struttura dati determina l'efficienza del sistema.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Strutture dati</h3><ul>
+          <li><b>Hash table</b> per ricerca/dedup — O(1) medio</li>
+          <li>Array ordinato/albero bilanciato per dati ordinati — O(log n)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Algoritmi &amp; complessità</h3><ul>
+          <li><b>Merge sort</b> O(n log n) garantito e stabile</li>
+          <li>Quick sort O(n log n) medio, O(n²) pessimo</li>
+          <li>Ricerca binaria O(log n); trade-off tempo/memoria</li>
+        </ul></div>
+        <div class="card"><h3>(c) Trade-off &amp; scalabilità</h3><ul>
+          <li>Hash table: velocità vs memoria/degenerazione</li>
+          <li>Array ordinato: parco di memoria ma insert O(n)</li>
+        </ul></div>
+        <div class="card"><h3>(d) Trattabilità P/NP</h3><ul>
+          <li><b>P</b>: risolvibile in tempo polinomiale</li>
+          <li><b>NP</b>: verificabile in tempo polinomiale</li>
+          <li>NP-difficili → euristiche e approssimazioni</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Riconciliazione 24/7 di grandi volumi entro finestre operative limitate</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">collisioni hash</span><span class="chip">consumo memoria</span><span class="chip">data skew</span><span class="chip">external sorting</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 1.2 -->
+  <section class="slide slide-theme profc" id="c12" data-title="C 1.2 — Secure SDLC e OWASP">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 1.2</span>
+        <div><span class="eyebrow">Ambito 1 — Progettazione e sviluppo del software</span>
+        <h2>Secure SDLC e OWASP per un'applicazione web</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> La sicurezza non si aggiunge alla fine: va incorporata in ogni fase del ciclo di vita ("shift left").</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Sicurezza lungo l'SDLC</h3><ul>
+          <li>Requisiti → design (<b>threat modelling STRIDE</b>)</li>
+          <li>Implementazione (coding sicuro, code review) → testing → deployment (hardening)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Strategia di testing</h3><ul>
+          <li><b>SAST</b> (codice statico) + <b>DAST</b> (runtime) + fuzzing</li>
+          <li>Integrati nella pipeline CI</li>
+        </ul></div>
+        <div class="card"><h3>(c) OWASP Top 10</h3><ul>
+          <li><b>A01</b> Broken Access Control → autorizzazione server-side, privilegio minimo</li>
+          <li><b>A02</b> Cryptographic Failures → TLS, mai MD5/SHA-1</li>
+          <li><b>A03</b> Injection → prepared statement parametrizzati</li>
+        </ul></div>
+        <div class="card"><h3>(d) Credenziali &amp; qualità codice</h3><ul>
+          <li><b>Argon2id</b> + salt, mai hash veloci</li>
+          <li>Test coverage, bassa complessità ciclomatica</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Applicazione pubblica esposta 24/7 = bersaglio costante di attacchi automatizzati</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">zero-day</span><span class="chip">supply chain</span><span class="chip">errori config</span><span class="chip">errore umano</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 2.1 -->
+  <section class="slide slide-theme profc" id="c21" data-title="C 2.1 — Progettazione di una base di dati">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 2.1</span>
+        <div><span class="eyebrow">Ambito 2 — Basi di dati e data science</span>
+        <h2>Progettazione di una base di dati: dal concettuale al fisico</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Tre fasi — concettuale, logica, fisica. In ambito bancario la <b>correttezza transazionale</b> è il vincolo dominante.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Modello ER</h3><ul>
+          <li>Entità: Cliente, Conto, Movimento</li>
+          <li>Relazioni 1:N / N:M, cardinalità</li>
+        </ul></div>
+        <div class="card"><h3>(b) Schema relazionale</h3><ul>
+          <li>PK/FK; normalizzazione <b>1NF/2NF/3NF</b></li>
+          <li>Previene anomalie di insert/update/delete</li>
+        </ul></div>
+        <div class="card"><h3>(c) Progettazione fisica</h3><ul>
+          <li>Indici <b>B-tree</b> su colonne interrogate (IBAN, data)</li>
+          <li>Trade-off: velocità di lettura vs costo in scrittura</li>
+        </ul></div>
+        <div class="card"><h3>(d) ACID vs NoSQL</h3><ul>
+          <li>Bonifico atomico → <b>ACID</b></li>
+          <li>Teorema CAP: CP (Mongo/HBase) vs AP (Cassandra/DynamoDB)</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Una banca centrale è, in larga misura, un grande sistema di basi di dati</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">over-normalizzazione</span><span class="chip">indici eccessivi</span><span class="chip">lock contention</span><span class="chip">NoSQL inappropriato</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 2.2 -->
+  <section class="slide slide-theme profc" id="c22" data-title="C 2.2 — ML per la classificazione">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 2.2</span>
+        <div><span class="eyebrow">Ambito 2 — Basi di dati e data science</span>
+        <h2>Fondamenti di machine learning per un problema di classificazione</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Classificazione supervisionata; la frode è un evento <b>raro</b> — obiettivo: generalizzare, non memorizzare.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Tipi di apprendimento</h3><ul>
+          <li>Supervisionato (dati etichettati) — scelta naturale</li>
+          <li>Non supervisionato: <b>anomaly detection</b> se frodi scarse</li>
+        </ul></div>
+        <div class="card"><h3>(b) Pipeline di ML</h3><ul>
+          <li>Pulizia/encoding → feature (importo, frequenza, orario)</li>
+          <li>Split <b>train/validation/test</b> → training</li>
+        </ul></div>
+        <div class="card"><h3>(c) Overfitting &amp; valutazione</h3><ul>
+          <li>Regolarizzazione, cross-validation</li>
+          <li>Accuratezza fuorviante → <b>precision/recall/F1</b></li>
+        </ul></div>
+        <div class="card"><h3>(d) Interpretabilità &amp; AI Act</h3><ul>
+          <li>Regressione logistica leggibile vs black-box</li>
+          <li>AI Act: alto rischio → spiegabilità + governance</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Capire il ML per poterlo governare, non solo per saperlo costruire</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">concept drift</span><span class="chip">sbilanciamento</span><span class="chip">bias</span><span class="chip">spiegabilità vs prestazioni</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 3.1 -->
+  <section class="slide slide-theme profc" id="c31" data-title="C 3.1 — Rete sicura e resiliente">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 3.1</span>
+        <div><span class="eyebrow">Ambito 3 — Architettura dei sistemi informatici e delle reti</span>
+        <h2>Rete sicura e resiliente con componenti cloud</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Sicurezza + segmentazione + resilienza, simultaneamente. Principio guida: <b>difesa in profondità</b>.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Livelli &amp; dispositivi</h3><ul>
+          <li>OSI/TCP-IP; switch (L2, MAC) vs router (L3, IP)</li>
+        </ul></div>
+        <div class="card"><h3>(b) Segmentazione &amp; perimetro</h3><ul>
+          <li><b>DMZ</b> + VLAN; firewall stateful; IDS/IPS</li>
+          <li>Reverse proxy + WAF; VPN (IPsec/TLS)</li>
+        </ul></div>
+        <div class="card"><h3>(c) Attacchi &amp; contromisure</h3><ul>
+          <li>DDoS → scrubbing/CDN/rate limiting</li>
+          <li>MITM → TLS + cert pinning</li>
+          <li>ARP/DNS spoofing → DNSSEC + dynamic ARP inspection + segmentazione</li>
+        </ul></div>
+        <div class="card"><h3>(d) Cloud &amp; resilienza</h3><ul>
+          <li>IaaS/PaaS/SaaS + responsabilità condivisa</li>
+          <li>HA multi-AZ (99,99% ≈ 52 min/anno) + DR (RPO/RTO)</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Rete di una banca centrale = traffico critico, bersaglio costante</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">concentrazione cloud</span><span class="chip">errori config</span><span class="chip">insider threat</span><span class="chip">guasti correlati</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C 3.2 -->
+  <section class="slide slide-theme profc" id="c32" data-title="C 3.2 — Crittografia e cenni DLT">
+    <div class="slide-inner">
+      <div class="theme-head">
+        <span class="badge c">C · 3.2</span>
+        <div><span class="eyebrow">Ambito 3 — Architettura dei sistemi informatici e delle reti</span>
+        <h2>Tecniche crittografiche e applicazioni, con cenni ai registri distribuiti</h2></div>
+      </div>
+      <p class="lede"><strong>Impostazione.</strong> Riservatezza, integrità, autenticità, non ripudio: i mattoni della sicurezza informatica.</p>
+      <div class="grid-4">
+        <div class="card"><h3>(a) Simmetrica, asimmetrica, hash</h3><ul>
+          <li><b>AES</b> (veloce, problema scambio chiave)</li>
+          <li><b>RSA/ECC</b> (lenta, coppia di chiavi)</li>
+          <li>SHA-256: one-way, anti-collisione</li>
+        </ul></div>
+        <div class="card"><h3>(b) Firma, X.509, PKI, TLS</h3><ul>
+          <li>Firma = hash cifrato con chiave privata</li>
+          <li>X.509 + PKI → base di TLS/HTTPS</li>
+        </ul></div>
+        <div class="card"><h3>(c) Due applicazioni</h3><ul>
+          <li>Handshake TLS: cert + scambio chiave → sessione simmetrica</li>
+          <li>Password: <b>Argon2id</b> + salt, mai MD5/SHA-1</li>
+        </ul></div>
+        <div class="card"><h3>(d) DLT &amp; post-quantum</h3><ul>
+          <li>DLT: immutabilità (hash-chain), decentralizzazione, consenso</li>
+          <li>Shor rompe RSA/ECC → <b>ML-KEM/ML-DSA</b>; AES resta robusto</li>
+        </ul></div>
+      </div>
+      <div class="footbar">
+        <div class="box esempio-box"><span class="tag">Esempio nel contesto</span>Comunicazioni e firma di un'istituzione finanziaria poggiano su queste primitive</div>
+        <div class="box rischi-box"><span class="tag">Rischi residui</span>
+          <div class="chips"><span class="chip">gestione chiavi</span><span class="chip">algoritmi obsoleti</span><span class="chip">certificati scaduti</span><span class="chip">harvest now, decrypt later</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide slide-close" id="close" data-title="Promemoria d'esame">
+    <div class="slide-inner">
+      <span class="eyebrow">Prima di chiudere il ripasso</span>
+      <h2>Promemoria per la prova scritta</h2>
+      <div class="close-grid">
+        <div class="close-card">
+          <h3>Metodo PEEL</h3>
+          <p>Impostazione → sviluppo tecnico con specifiche concrete (a)–(d) → esempio nel contesto Banca d'Italia/Eurosistema → rischi residui. Conta riprodurre l'impianto, non il testo a memoria.</p>
+        </div>
+        <div class="close-card">
+          <h3>Timing</h3>
+          <p>Allenati a scrivere a mano e a tempo, ≈2h per quesito, per abituarti al ritmo della prova reale.</p>
+        </div>
+        <div class="close-card">
+          <h3>Elaborato in inglese</h3>
+          <p>La prova prevede una parte in lingua inglese: esercitati a scrivere autonomamente in inglese almeno uno svolgimento.</p>
+        </div>
+        <div class="close-card">
+          <h3>Standard da citare</h3>
+          <p>ISO/IEC 27001, ITIL, DORA, GDPR, TIBER-EU, AI Act, NIST — collega sempre le risposte al riferimento normativo pertinente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  const deck = document.getElementById('deck');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progressBar');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuOpenBtn = document.getElementById('menuOpenBtn');
+  const menuCloseBtn = document.getElementById('menuCloseBtn');
+  const menuList = document.getElementById('menuList');
+  const total = slides.length;
+  let current = 0;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function setCurrent(i){
+    current = Math.max(0, Math.min(total-1, i));
+    counter.textContent = pad(current+1) + ' / ' + pad(total);
+    progressBar.style.width = ((current) / (total-1) * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total-1;
+  }
+
+  function goTo(i, behavior){
+    slides[i].scrollIntoView({ behavior: behavior || 'smooth', block:'start' });
+  }
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && e.intersectionRatio > 0.55){
+        setCurrent(slides.indexOf(e.target));
+      }
+    });
+  }, { root: deck, threshold: [0.55] });
+  slides.forEach(s=>io.observe(s));
+
+  prevBtn.addEventListener('click', ()=>goTo(Math.max(0,current-1)));
+  nextBtn.addEventListener('click', ()=>goTo(Math.min(total-1,current+1)));
+
+  function openMenu(){
+    menuOverlay.classList.add('open');
+    menuOpenBtn.setAttribute('aria-expanded','true');
+    menuCloseBtn.hidden = false;
+    menuCloseBtn.focus();
+  }
+  function closeMenu(){
+    menuOverlay.classList.remove('open');
+    menuOpenBtn.setAttribute('aria-expanded','false');
+    menuCloseBtn.hidden = true;
+    menuOpenBtn.focus();
+  }
+  menuOpenBtn.addEventListener('click', ()=> menuOverlay.classList.contains('open') ? closeMenu() : openMenu());
+  menuCloseBtn.addEventListener('click', closeMenu);
+  menuOverlay.addEventListener('click', (e)=>{ if(e.target === menuOverlay) closeMenu(); });
+
+  document.querySelectorAll('#menuList button, .index-list button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-jump');
+      const target = document.getElementById(id) || slides.find(s=>s.dataset.title && s.dataset.title.toLowerCase().includes(id));
+      closeMenu();
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // build overlay menu mirroring same groups as index slide, but flat with section headers
+  (function buildMenu(){
+    const groups = [
+      { title:'Simulazione & Profilo A', items:[
+        ['sim','SIM','Sistema AI per la Vigilanza'],
+        ['a11','A 1.1','Pagamento ad alta disponibilità'],
+        ['a12','A 1.2','Dati vigilanza: relazionale vs NoSQL'],
+        ['a13','A 1.3','Cloud-native e sicurezza applicativa'],
+        ['a21','A 2.1','Migrazione post-quantum'],
+        ['a22','A 2.2','DLT e Privacy-Enhancing Tech'],
+        ['a23','A 2.3','Autenticazione forte e TLS'],
+        ['a31','A 3.1','Fraud detection/AML e AI Act'],
+        ['a32','A 3.2','LLM e RAG istituzionale'],
+        ['a33','A 3.3','Multiagente per i controlli'],
+      ]},
+      { title:'Profilo C', items:[
+        ['c11','C 1.1','Algoritmi e strutture dati'],
+        ['c12','C 1.2','Secure SDLC e OWASP'],
+        ['c21','C 2.1','Progettazione di una base dati'],
+        ['c22','C 2.2','ML per la classificazione'],
+        ['c31','C 3.1','Rete sicura e resiliente'],
+        ['c32','C 3.2','Crittografia e cenni DLT'],
+        ['close','—','Promemoria d\\'esame'],
+      ]}
+    ];
+    groups.forEach(g=>{
+      const div = document.createElement('div');
+      div.className = 'index-group';
+      const h3 = document.createElement('h3'); h3.textContent = g.title;
+      const ul = document.createElement('ul'); ul.className = 'index-list';
+      g.items.forEach(([id,num,label])=>{
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.setAttribute('data-jump', id);
+        b.innerHTML = '<span class="index-num">'+num+'</span>'+label;
+        li.appendChild(b); ul.appendChild(li);
+      });
+      div.appendChild(h3); div.appendChild(ul);
+      menuList.appendChild(div);
+    });
+    menuList.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('data-jump');
+        const target = document.getElementById(id);
+        closeMenu();
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  })();
+
+  document.addEventListener('keydown', (e)=>{
+    const menuIsOpen = menuOverlay.classList.contains('open');
+    if(e.key === 'Escape' && menuIsOpen){ closeMenu(); return; }
+    if(e.key.toLowerCase() === 'm'){ menuIsOpen ? closeMenu() : openMenu(); return; }
+    if(menuIsOpen) return;
+    if(['ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); goTo(Math.min(total-1,current+1)); }
+    else if(['ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); goTo(Math.max(0,current-1)); }
+    else if(e.key === 'Home'){ e.preventDefault(); goTo(0); }
+    else if(e.key === 'End'){ e.preventDefault(); goTo(total-1); }
+  });
+
+  setCurrent(0);
+})();
+</script>
