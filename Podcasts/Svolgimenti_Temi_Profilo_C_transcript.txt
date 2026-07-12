@@ -1,0 +1,129 @@
+Svolgimenti — Prova scritta Profilo C (Assistente ICT)
+Risposte-modello ai sei temi · Banca d'Italia 2026 (programma di pag. 11)
+
+Ogni svolgimento segue la struttura attesa: impostazione → sviluppo tecnico con specifiche concrete → esempio nel contesto Banca d'Italia → rischi residui (metodo PEEL). I temi 🇬🇧 sono redatti in inglese, come per l'elaborato in lingua. Taglio Profilo C: fondamenti applicati, lessico corretto, scelte motivate.
+
+
+
+
+AMBITO 1 — Progettazione e sviluppo del software
+
+Svolgimento Tema 1.1 — Algoritmi e strutture dati per la riconciliazione di transazioni
+
+Impostazione. Il problema richiede tre operazioni su un grande volume di record: individuare i duplicati, ordinare per timbro temporale, ricercare per identificatore. La scelta delle strutture dati determina l'efficienza dell'intero sistema: con milioni di record, la differenza tra un'operazione O(n²) e una O(n log n) è la differenza tra un sistema usabile e uno che blocca le elaborazioni.
+
+(a) Strutture dati. Per ricerca e deduplica la struttura naturale è la tabella hash: l'identificatore della transazione è la chiave, e l'inserimento/ricerca avviene in tempo O(1) nel caso medio. Inserendo i record in una hash table, un duplicato si rileva immediatamente perché la chiave è già presente. Per il mantenimento dei dati ordinati uso un array ordinato (efficiente in lettura/ricerca binaria) o, se servono inserimenti frequenti mantenendo l'ordine, un albero bilanciato (es. albero di ricerca, operazioni in O(log n)). La lista concatenata è scartata per la ricerca (scorrimento O(n)), ma è utile per gestire le collisioni nella hash table (concatenamento).
+
+(b) Algoritmi e complessità. Ordinamento: il merge sort garantisce O(n log n) in ogni caso ed è stabile (mantiene l'ordine relativo dei record con uguale chiave), proprietà utile nella riconciliazione; il quick sort è O(n log n) nel caso medio ma degrada a O(n²) nel caso pessimo (pivot sbilanciato). Preferisco merge sort quando serve un limite garantito. Ricerca: su dati ordinati la ricerca binaria opera in O(log n); tramite hash table la ricerca puntuale è O(1) nel caso medio, O(n) nel caso pessimo (molte collisioni). Spazio: la hash table richiede memoria aggiuntiva — è un classico trade-off tempo/memoria.
+
+(c) Trade-off e scalabilità. La hash table compra velocità con occupazione di memoria e con il rischio di degenerazione in caso di funzione hash mal distribuita. L'array ordinato è parco di memoria ma costoso negli inserimenti (O(n) per mantenere l'ordine). Al crescere dei dati, la scelta corretta delle strutture è ciò che permette al sistema di scalare linearmente anziché esplodere.
+
+(d) Trattabilità (P/NP). Non tutti i problemi ammettono soluzioni efficienti: la classe P raccoglie i problemi risolvibili in tempo polinomiale, la classe NP quelli la cui soluzione è verificabile in tempo polinomiale. Per i problemi NP-difficili non si conoscono algoritmi efficienti: nella pratica si ricorre a euristiche e approssimazioni. Sapere riconoscere quando un problema è intrattabile evita di cercare soluzioni esatte impossibili da calcolare in tempi utili.
+
+Esempio nel contesto. Un sistema bancario che processa transazioni 24 ore su 24 deve riconciliare volumi enormi: l'uso di hash table per la deduplica e di ordinamenti O(n log n) è ciò che rende l'elaborazione completabile nelle finestre operative.
+
+Rischi residui. (1) Collisioni hash e cattiva distribuzione → degenerazione a O(n). (2) Consumo di memoria con dataset molto grandi. (3) Data skew (chiavi sbilanciate) che peggiora il caso pessimo. (4) Necessità di gestire dati che non entrano in memoria (algoritmi external sorting).
+
+
+
+Model Answer 1.2 — Secure SDLC and OWASP for a web application 🇬🇧
+
+Framing. Security cannot be "added at the end": for a web application handling authentication and sensitive customer data, it must be built into every phase of the development life cycle. Every internet-facing banking application is targeted by automated attacks around the clock, so a Secure SDLC (S-SDLC) is the baseline, not an option.
+
+(a) Security across the SDLC. Security is integrated at each stage: in requirements, security needs are captured alongside functional and non-functional ones (confidentiality, integrity, availability, performance); in design, threat modelling (e.g. STRIDE) identifies attack surfaces; in implementation, secure coding standards and code review apply; in testing, dedicated security testing runs; in deployment, hardening and secure configuration; in operation, continuous monitoring and patching. The principle is "shift left" — find defects early, where they are cheapest to fix.
+
+(b) Testing strategy. Functional correctness is checked with unit and integration tests; security uses three complementary techniques. SAST (Static Application Security Testing) analyses the source code without running it, catching patterns such as missing prepared statements or insecure dependencies (e.g. SonarQube, Semgrep). DAST (Dynamic Application Security Testing) attacks the running application to find runtime issues such as broken sessions or misconfigurations (e.g. OWASP ZAP, Burp Suite). Fuzzing sends random or malformed input to uncover crashes and unexpected behaviour. SAST sees the code but not the runtime; DAST sees the runtime but not the code — a mature pipeline uses both, integrated into CI.
+
+(c) OWASP Top 10 and countermeasures. The OWASP Top 10 is the common reference list of critical web vulnerabilities. The most relevant here:
+- A01 Broken Access Control — missing or flawed authorisation lets a user reach others' data. Countermeasures: enforce authorisation server-side, apply the principle of least privilege, deny by default.
+- A02 Cryptographic Failures — sensitive data unencrypted or weak algorithms. Countermeasures: TLS for data in transit, strong encryption at rest, never MD5/SHA-1 for passwords.
+- A03 Injection (e.g. SQL injection) — unsanitised input interpreted as code. Countermeasure: parameterised prepared statements, input validation.
+
+(d) Credentials and code quality. Passwords are never stored in clear text or with fast hashes; use deliberately slow, memory-hard key-derivation functions such as Argon2id with a salt. Code quality (test coverage, low cyclomatic complexity, controlled technical debt) underpins maintainable security.
+
+Context. For a public institution like the Banca d'Italia, where every exposed application is a target, an S-SDLC with layered testing is essential to protect confidentiality and integrity of data.
+
+Residual risks. (1) Zero-day vulnerabilities not caught by known-pattern tools. (2) Vulnerable third-party dependencies (supply-chain risk). (3) Misconfiguration in deployment. (4) Human error despite process — mitigated by continuous monitoring and review.
+
+
+
+
+AMBITO 2 — Basi di dati e data science
+
+Svolgimento Tema 2.1 — Progettazione di una base di dati: dal concettuale al fisico
+
+Impostazione. La progettazione di una base di dati per conti correnti e movimenti procede in tre fasi — concettuale, logica, fisica — che traducono i requisiti reali in uno schema efficiente e corretto. In ambito bancario la correttezza transazionale (un movimento non può "perdersi") è il vincolo dominante.
+
+(a) Progettazione concettuale (modello ER). Identifico le entità: Cliente (codice fiscale, nome, recapiti), Conto (IBAN, saldo, tipo), Movimento (id, data/ora, importo, causale). Le relazioni: un Cliente intesta uno o più Conti (1:N, o N:M se sono ammessi cointestatari); un Conto registra molti Movimenti (1:N). Le cardinalità esprimono questi vincoli. Il diagramma ER è indipendente dalla tecnologia: descrive cosa rappresentare, non come memorizzarlo.
+
+(b) Progettazione logica (schema relazionale). Traduco le entità in tabelle con chiavi primarie (PK) e chiavi esterne (FK): `Cliente(CF, ...)`, `Conto(IBAN, CF_titolare→Cliente, saldo, ...)`, `Movimento(id, IBAN→Conto, data, importo, ...)`. Applico la normalizzazione: la 1NF elimina i gruppi ripetuti (valori atomici); la 2NF rimuove le dipendenze parziali dalla chiave; la 3NF elimina le dipendenze transitive. La normalizzazione previene le anomalie di inserimento, aggiornamento e cancellazione (es. evitare di duplicare i dati anagrafici del cliente su ogni movimento, con il rischio di incoerenze).
+
+(c) Progettazione fisica. Scelgo gli indici sulle colonne più interrogate: indice sulla PK (automatico), e indici su `Movimento.IBAN` e `Movimento.data` per accelerare le query frequenti ("movimenti di un conto in un periodo"). Gli indici (tipicamente B-tree) velocizzano le letture ma rallentano le scritture e occupano spazio: vanno scelti in base ai pattern d'uso reali.
+
+(d) Transazioni ACID e alternativa NoSQL. Un bonifico deve essere atomico: o si addebita il mittente e si accredita il destinatario, o non accade nulla. Le proprietà ACID (Atomicità, Consistenza, Isolamento, Durabilità) garantiscono che il database non resti mai in uno stato incoerente. Valuterei una soluzione NoSQL per esigenze diverse: enormi volumi di dati semi-strutturati, scalabilità orizzontale, schema flessibile (es. log, dati documentali). Qui interviene il teorema CAP: in caso di partizione di rete si sceglie tra consistenza (CP, es. MongoDB/HBase) e disponibilità (AP, es. Cassandra/DynamoDB) — per i saldi conta la consistenza, per dati periferici può bastare la consistenza eventuale (BASE).
+
+Esempio nel contesto. I sistemi di un'istituzione come la Banca d'Italia sono, in larga misura, grandi basi di dati: la padronanza di modello relazionale, normalizzazione e ACID è competenza centrale.
+
+Rischi residui. (1) Over-normalizzazione che penalizza le letture → denormalizzazione mirata. (2) Indici eccessivi che appesantiscono le scritture. (3) Contention/lock sotto alto carico transazionale. (4) Scelta NoSQL inappropriata dove serve consistenza forte.
+
+
+
+Model Answer 2.2 — Machine-learning fundamentals for a classification problem 🇬🇧
+
+Framing. The task — classifying a transaction as legitimate or fraudulent — is a supervised classification problem, but its defining feature is that fraud is rare, which shapes both the modelling and the evaluation. The goal is a model that generalises to new data, not one that memorises the training set.
+
+(a) Types of learning. Supervised learning trains on labelled data (each transaction marked legitimate/fraudulent) and is the natural fit here. Unsupervised learning finds structure without labels and is used when labelled fraud is scarce — e.g. anomaly detection (isolation forest, autoencoders) that learns "normal" behaviour and flags deviations. Reinforcement learning, where an agent learns from rewards, is not suited to this batch-classification task.
+
+(b) The ML pipeline. Steps: data preparation (cleaning, handling missing values, encoding); feature selection/engineering (e.g. transaction amount, frequency, time-of-day, deviation from the customer's habits); a train/validation/test split so the model is trained on one portion, tuned on another, and evaluated on unseen data; then model training (e.g. logistic regression as an interpretable baseline, then tree-based models for performance).
+
+(c) Overfitting and evaluation. Overfitting occurs when the model fits the noise of the training data and fails on new cases; symptoms are high training accuracy but poor test accuracy. Mitigations: regularisation, cross-validation, simpler models, more data. Crucially, accuracy is misleading for rare events — a model predicting "never fraud" can be 99% accurate and useless. Better metrics: precision (of those flagged, how many are truly fraud), recall (of all frauds, how many we catch) and their balance, F1. In fraud detection, missing a fraud (low recall) is usually costlier than a false alarm, but false positives create friction — the decision threshold must reflect those costs.
+
+(d) Interpretability and the AI Act. Logistic regression yields readable coefficients (you can explain why a transaction was flagged), whereas a deep "black-box" model does not. In a regulated context this matters: the AI Act classifies fraud-detection and credit-scoring systems as high-risk, requiring explainability, data governance and human oversight.
+
+Context. For the Banca d'Italia as a supervisor, understanding ML means being able to govern it — to verify that supervised entities use such models transparently and lawfully — not merely to build it.
+
+Residual risks. (1) Concept drift — fraud patterns change, so the model degrades and needs retraining. (2) Class imbalance mishandled → poor recall. (3) Bias in the data producing unfair outcomes. (4) Explainability–performance trade-off: the strongest models are the least transparent.
+
+
+
+
+AMBITO 3 — Architettura dei sistemi informatici e delle reti
+
+Model Answer 3.1 — Secure, resilient network with cloud elements 🇬🇧
+
+Framing. A network connecting branch offices to a central data centre, with some services in the cloud, must satisfy three goals at once: secure communication, segmentation so that one compromise does not spread, and resilience so that the service survives failures. Defence in depth is the guiding principle.
+
+(a) Layered models and devices. The OSI and TCP/IP models structure communication into layers. Key devices: a switch operates at layer 2 (Data Link), forwarding frames by MAC address within a LAN; a router operates at layer 3 (Network), routing IP packets between networks. Core protocols include IP, TCP/UDP, DNS, and HTTPS over TLS.
+
+(b) Segmentation and perimeter defence. Public-facing services sit in a DMZ, isolated from the internal network; internal networks are split into VLANs to limit lateral movement. A stateful firewall enforces traffic policy; IDS/IPS detect and block intrusions; a reverse proxy provides TLS termination, a WAF and rate limiting, hiding internal topology. Branch and remote connectivity uses VPNs (IPsec or TLS) to encrypt traffic over untrusted links, and TLS protects data in transit end-to-end.
+
+(c) Network attacks and countermeasures. DDoS floods the service — mitigated with traffic scrubbing, CDNs and rate limiting. Man-in-the-middle intercepts traffic — countered by TLS and certificate validation/pinning. ARP/DNS spoofing redirects traffic — mitigated with DNSSEC, dynamic ARP inspection and network segmentation. Underlying all: the principle of least privilege and micro-segmentation to minimise the blast radius of any compromise.
+
+(d) Cloud fundamentals and resilience. Cloud service models — IaaS, PaaS, SaaS — differ in what the provider versus the customer manages; the shared-responsibility model makes this boundary explicit (the provider secures the infrastructure, the customer secures its data and configuration). High availability removes single points of failure through redundancy (active-active or active-standby), load balancing and multi-AZ deployment — 99.99% availability allows roughly 52 minutes of downtime per year. Disaster recovery adds backups, defined RPO/RTO and a secondary site.
+
+Context. A central bank's network carries critical, high-value traffic and is a constant target; segmentation, encryption and resilient design directly support operational continuity, in line with DORA's expectations.
+
+Residual risks. (1) Cloud concentration risk (dependence on one provider) — to be governed with exit plans. (2) Misconfiguration, the leading cause of cloud incidents. (3) Insider threats and credential theft. (4) Correlated failures in redundant systems.
+
+
+
+Svolgimento Tema 3.2 — Tecniche crittografiche e applicazioni, con cenni ai registri distribuiti (DLT)
+
+Impostazione. La crittografia fornisce i mattoni della sicurezza informatica: riservatezza, integrità, autenticità, non ripudio. In ambito bancario sostiene comunicazioni sicure, firme, protezione dei dati. Illustro le tecniche fondamentali, due applicazioni concrete e un cenno ai registri distribuiti.
+
+(a) Simmetrica, asimmetrica, hash. La crittografia simmetrica (es. AES) usa un'unica chiave condivisa per cifrare e decifrare: è veloce, ma pone il problema dello scambio sicuro della chiave. La crittografia asimmetrica (es. RSA, ECC) usa una coppia di chiavi: per inviare un messaggio cifrato a Bob si usa la sua chiave pubblica, e solo Bob può decifrarlo con la chiave privata; è più lenta, perciò si usa tipicamente per lo scambio di chiavi e per la firma. Le funzioni hash (es. SHA-256) producono un'impronta di lunghezza fissa, sono a senso unico e resistenti alle collisioni: servono per verificare l'integrità.
+
+(b) Firma digitale, X.509, PKI, TLS. La firma digitale si ottiene cifrando l'hash del messaggio con la chiave privata del firmatario: chiunque, con la chiave pubblica, può verificarla, ottenendo integrità, autenticità e non ripudio. La fiducia nelle chiavi pubbliche è garantita dai certificati X.509 emessi da Autorità di Certificazione all'interno di una PKI (Public Key Infrastructure). È questo il meccanismo che sta alla base di TLS/HTTPS.
+
+(c) Due applicazioni concrete. Comunicazione sicura (handshake TLS): client e server negoziano i parametri, il server presenta il certificato X.509, si stabilisce una chiave di sessione (con metodi a scambio sicuro) e da lì la comunicazione prosegue cifrata simmetricamente — combinando la sicurezza dell'asimmetrica con la velocità della simmetrica. Memorizzazione delle password: mai in chiaro né con algoritmi obsoleti (MD5/SHA-1); si usano KDF deliberatamente lente e memory-hard come Argon2id, con un salt per ogni utente, rendendo il brute force economicamente inattuabile.
+
+(d) Registri distribuiti (DLT) e post-quantum. Una DLT è un registro condiviso e replicato tra più nodi, le cui proprietà chiave sono immutabilità (i blocchi sono concatenati tramite hash, alterarne uno invaliderebbe la catena) e decentralizzazione; un algoritmo di consenso permette ai nodi di concordare sullo stato senza un'autorità centrale. Sul fronte post-quantum: un futuro computer quantistico, con l'algoritmo di Shor, romperebbe RSA ed ECC; per questo il NIST ha standardizzato algoritmi resistenti (ML-KEM per lo scambio chiavi, ML-DSA per le firme), mentre AES resta robusto (solo indebolito da Grover, e sufficiente con chiavi a 256 bit).
+
+Esempio nel contesto. Le comunicazioni e i sistemi di firma di un'istituzione finanziaria poggiano interamente su queste primitive; conoscere come si combinano (asimmetrica per stabilire fiducia, simmetrica per la velocità) è competenza di base per l'esercizio e la manutenzione dei sistemi.
+
+Rischi residui. (1) Gestione delle chiavi (generazione, custodia, revoca) come anello debole. (2) Algoritmi obsoleti ancora in uso. (3) Certificati scaduti o mal configurati. (4) Minaccia "harvest now, decrypt later", che rende prudente pianificare per tempo la transizione post-quantum.
+
+
+
+
+Nota d'uso. Sono risposte-modello di riferimento: all'esame conta riprodurne l'impianto (impostazione → sviluppo con specifiche → esempio nel contesto BdI → rischi residui), non il testo a memoria. Allena la scrittura a mano e a tempo (≈2h per quesito) e verifica di saper produrre in autonomia almeno uno dei tre svolgimenti in inglese. Promemoria: pag. 11 è il programma del Profilo C; se il tuo obiettivo resta il Profilo A, usa questi come ripasso dei fondamentali.

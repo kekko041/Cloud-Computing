@@ -1,0 +1,41 @@
+I 5 Pilastri del Regolamento DORA
+(Digital Operational Resilience Act - Regolamento UE 2022/2554)
+
+Il Regolamento DORA è la pietra miliare normativa dell'Unione Europea per rafforzare la sicurezza informatica e la resilienza del settore finanziario. Il suo obiettivo non è solo prevenire gli attacchi, ma garantire che le istituzioni finanziarie possano resistere, rispondere e riprendersi rapidamente in caso di gravi interruzioni operative.
+
+L'architettura del regolamento si fonda su 5 pilastri fondamentali. Analizziamoli dal punto di vista di un esperto ICT e Solutions Architect:
+
+1. Gestione del rischio ICT (ICT Risk Management)
+Questo pilastro richiede l'implementazione di un solido framework di governance e controllo dei rischi tecnologici, con la responsabilità finale assegnata all'organo di gestione (il Board).
+ Azione: Le entità devono dotarsi di strategie di continuità operativa (BCP) e piani di Disaster Recovery (DR) robusti (in conformità a standard come la ISO 22301).
+ Focus Tecnico: Identificazione e classificazione continua di tutti gli asset critici (hardware, software, dati), mappatura delle interdipendenze e adozione di meccanismi di protezione "Security by Design" (come il modello Zero Trust).
+
+2. Gestione, classificazione e segnalazione degli incidenti ICT (Incident Reporting)
+DORA armonizza e snellisce il processo di notifica degli incidenti gravi alle autorità competenti (come la Banca d'Italia/BCE o l'EBA/ESMA).
+ Azione: Stabilire procedure rigorose per monitorare, registrare, classificare e risolvere gli incidenti cyber.
+ Focus Tecnico: La segnalazione segue tempistiche stringenti in tre fasi: 
+  1. Notifica iniziale (entro poche ore dalla rilevazione per dare un "early warning").
+  2. Relazione intermedia (con gli aggiornamenti sullo stato di mitigazione).
+  3. Relazione finale (Root Cause Analysis e lezioni apprese). 
+  L'utilizzo di SIEM (Security Information and Event Management) e SOC (Security Operations Center) avanzati è essenziale per garantire la tempestività richiesta.
+
+3. Test di Resilienza Operativa Digitale (Digital Operational Resilience Testing)
+Non basta avere difese teoriche; DORA impone che vengano messe alla prova costantemente. Le entità finanziarie devono attuare un programma di test proporzionato alle proprie dimensioni e al proprio profilo di rischio.
+ Azione: Esecuzione regolare di vulnerability assessment, scansioni automatizzate e analisi del codice.
+ Focus Tecnico (TLPT): Per le entità finanziarie significative e sistemiche (incluse le infrastrutture critiche monitorate dalla Banca d'Italia), DORA introduce l'obbligo dei Threat-Led Penetration Testing (TLPT), basati sul framework europeo TIBER-EU. Si tratta di simulazioni di attacchi avanzati e furtivi (es. tecniche Living Off the Land o attacchi APT) eseguiti da Red Team su sistemi in produzione, all'insaputa dei team di difesa (Blue Team).
+
+4. Gestione del rischio derivante da fornitori terzi di servizi ICT (ICT Third-Party Risk Management)
+Molti degli incidenti più critici derivano da vulnerabilità nella Supply Chain (attacchi alla catena di fornitura, come il caso SolarWinds). DORA impone alle istituzioni finanziarie di monitorare attentamente il rischio introdotto da terzisti (es. Cloud Service Provider come AWS, Azure o Google Cloud, fornitori di data analytics, ecc.).
+ Azione: Inserimento di clausole contrattuali standardizzate e diritto di recesso/audit verso i fornitori.
+ Focus Tecnico: Mappatura dei fornitori critici, strategie di Exit Plan (come fare il "re-platforming" se un provider cloud fallisce o viene compromesso per evitare il lock-in) e, novità assoluta di DORA, l'introduzione di un Quadro di Sorveglianza Europeo diretto per i fornitori critici di servizi ICT (Critical ICT Third-Party Providers - CTPP), che saranno ispezionati direttamente dalle Autorità di Vigilanza Europee.
+
+5. Condivisione delle informazioni e intelligence (Information Sharing)
+Gli attaccanti cyber collaborano e condividono strumenti nel Dark Web; le istituzioni finanziarie devono fare altrettanto per difendersi efficacemente.
+ Azione: DORA incoraggia le entità finanziarie a scambiarsi informazioni sulle minacce cyber (Indicatori di Compromissione - IoC, tattiche e procedure - TTPs).
+ Focus Tecnico: Partecipazione attiva a network di condivisione sicura come i CERT/CSIRT finanziari o i nodi ISAC (Information Sharing and Analysis Center), sfruttando protocolli standardizzati per la Threat Intelligence (es. protocollo STIX/TAXII) nel rispetto della privacy e delle normative Antitrust.
+
+
+
+Nota importante: 
+Il punto chiave per l'esame
+Se in un tema d'esame per la Banca d'Italia viene menzionato DORA, la commissione si aspetta che il candidato non lo veda solo come un adempimento normativo, ma come un driver architetturale. Un'infrastruttura "DORA-compliant" è un'infrastruttura altamente ridondata (multi-cloud/multi-region), costantemente monitorata (Zero Trust e UEBA), regolarmente stressata tramite simulazioni offensive (TLPT) e legalmente tutelata nei confronti dei provider Cloud.

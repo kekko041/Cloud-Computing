@@ -1,0 +1,22 @@
+Articolo 7
+Prova scritta
+
+1. La prova scritta per il codice concorso AGID-01 di cui all’articolo 1, comma 1, del presente bando consisterà nella somministrazione di uno o più quesiti a risposta sintetica e in uno o più casi gestionali, anche volti ad accertare le competenze e le attitudini dei candidati in relazione alle specificità del profilo da selezionare.
+
+2. La prova scritta sarà volta a verificare le conoscenze nelle seguenti materie:
+-normazione tecnica nazionale, comunitaria e internazionale;
+-modelli di interoperabilità;
+-modellazione dati, meta datazione e machine learning;
+-modelli di architetture applicative e sistemi IT;
+-qualità e metriche del software;
+-metodologie e strumenti di gestione progettuale;
+-interventi di programmazione e innovazione ICT
+-metodologie di migrazione e consolidamento infrastrutture;
+-disciplina normativa delle gare pubbliche di ICT,
+-formazione del budget;
+-disciplina normativa in tema di performance e trasparenza amministrativa;
+-codice dell’amministrazione digitale (CAD);
+-codice degli appalti pubblici.
+
+Il tempo a disposizione per la prova scritta per il predetto codice AGID-01 è di quattro ore.
+La prova si intende superata se è raggiunto il punteggio minimo di 21/30 (ventuno/trentesimi).

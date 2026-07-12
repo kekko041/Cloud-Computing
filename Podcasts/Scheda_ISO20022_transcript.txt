@@ -1,0 +1,72 @@
+Scheda sintetica — ISO 20022
+Concorso Banca d'Italia 2026 · Profilo A (Esperto ICT) — memorizzazione rapida
+
+
+
+In una frase
+ISO 20022 è lo standard-metodologia internazionale per lo scambio di dati finanziari: definisce un modello concettuale condiviso dei processi (pagamenti, titoli, incassi, carte, FX, trade) in un dizionario dati centrale, dal quale si derivano messaggi in sintassi XML. Non è "un formato", ma un metodo che genera formati coerenti tra domini.
+
+
+
+I tre livelli (da citare all'esame)
+| Livello | Cosa contiene |
+|||
+| Concettuale | Modelli di business dei processi (indipendenti dalla tecnologia) |
+| Logico | Componenti di messaggio riutilizzabili (message components) |
+| Fisico | Sintassi effettiva del messaggio: XML (anche ASN.1) |
+
+Questa separazione è ciò che rende lo standard estensibile e coerente, a differenza dei vecchi messaggi SWIFT MT, organizzati a silos e con dati in testo libero.
+
+
+
+La nomenclatura dei messaggi (molto esaminabile)
+Formato: `area.numero.variante.versione` → es. `pacs.008.001.08`
+
+Le aree di business (prefisso di 4 lettere):
+| Prefisso | Area | Esempi tipici |
+||||
+| pain | Payments Initiation (cliente → banca) | `pain.001` (bonifico disposto), `pain.008` (addebito diretto) |
+| pacs | Payments Clearing & Settlement (banca ↔ banca) | `pacs.008` (bonifico interbancario), `pacs.009` (pagamento tra istituzioni), `pacs.004` (storno/return), `pacs.002` (status report) |
+| camt | Cash Management | `camt.053` (estratto conto), `camt.052` (report infragiornaliero), `camt.054` (notifica movimento), `camt.056` (richiesta di cancellazione) |
+| acmt | Account Management | apertura/gestione conti |
+| seev / sese | Securities (eventi / regolamento) | corporate actions, settlement titoli |
+
+Da ricordare: bonifico cliente→banca = `pain.001`; bonifico interbancario = `pacs.008`; estratto conto = `camt.053`.
+
+
+
+Perché è stato adottato (i benefici)
+- Dato ricco e strutturato: campi dedicati e granulari per parti, indirizzi, causali (gli MT li comprimevano in testo libero limitato).
+- AML / sanzioni / KYC: screening più affidabile perché i dati delle parti sono in campi distinti.
+- Straight-Through Processing (STP): meno interventi manuali, meno errori, meno rework.
+- Fraud detection più efficace (dati analizzabili).
+- Interoperabilità end-to-end tra istituzioni e infrastrutture di mercato (PMI).
+
+
+
+La migrazione — stato attuale (aggiornato)
+- Coesistenza MT ↔ ISO 20022 su SWIFT (schema CBPR+, pagamenti cross-border): iniziata a marzo 2023, conclusa il 22 novembre 2025. Da allora le istruzioni di pagamento interbancarie in MT (es. MT103, MT202) sono rifiutate.
+- Dal 1° gennaio 2026: costi aggiuntivi SWIFT per l'uso di MT legacy tramite servizi di traduzione/contingency.
+- La migrazione NON è finita con la fine della coesistenza. Prossime scadenze:
+  - Novembre 2026: dismissione degli indirizzi postali destrutturati → obbligo di indirizzi strutturati o ibridi (almeno città + codice paese in campi dedicati); migrazione dei messaggi exception & investigation verso camt.110 / camt.111.
+  - 2027–2028: sostituzione dei messaggi MT di rendicontazione (→ camt.05x), addebiti diretti (→ pain.008/pacs.003) e spese (→ camt.105/106).
+- Infrastrutture di mercato (PMI) già migrate: T2/TARGET (Eurosistema, marzo 2023), Fedwire (USA, marzo 2025), CHAPS, ecc.
+
+
+
+Aggancio Banca d'Italia (il "Link" che fa punteggio)
+- La BdI è tra i gestori tecnici delle TARGET Services dell'Eurosistema, tutte native ISO 20022 (T2, T2S, TIPS, ECMS).
+- Per il ruolo di Esperto ICT ("progettazione e realizzazione di sistemi e reti a supporto dell'azione della Banca, anche in ambito internazionale"), ISO 20022 è il linguaggio di quei sistemi.
+- Collegamento con euro digitale e finanza tokenizzata: l'interoperabilità con la messaggistica ISO 20022 esistente è un requisito di progetto.
+
+
+
+Come spenderlo in un elaborato (mini-frase pronta)
+"Il gateway di messaggistica del sistema di regolamento 'parla' ISO 20022 (`pacs.008`/`pacs.009`), mentre l'estratto è un `camt.053`; la ricchezza del dato strutturato abilita a valle i controlli AML e la STP. La coesistenza con i messaggi MT si è chiusa a novembre 2025 e la migrazione prosegue, per addressing e reporting, fino al 2028."
+
+
+
+Trappole da evitare
+- Non dire che ISO 20022 "è un formato XML": è una metodologia che usa XML come una delle sintassi.
+- Non confondere pain (initiation, lato cliente) con pacs (clearing & settlement, interbancario).
+- Non dire che la migrazione "è finita nel 2025": è finita solo la coesistenza sui payment instruction cross-border; il resto prosegue.

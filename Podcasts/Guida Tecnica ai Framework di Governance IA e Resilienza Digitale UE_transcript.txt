@@ -1,0 +1,139 @@
+Guida Tecnica ai Framework di Governance IA e Resilienza Digitale UE
+
+Questa guida fornisce un’analisi rigorosa dei modelli operativi e dei regimi normativi necessari per la gestione dell'Intelligenza Artificiale (IA) e della resilienza ICT nel mercato dell'Unione Europea.
+
+1\. Introduzione alla Governance dell’IA e Modelli Operativi
+
+Nel contesto normativo attuale, la  governance dell'IA  non è una semplice checklist di conformità, ma il modello operativo fondamentale per le decisioni responsabili. Essa definisce l'accountability, le metodologie di risk-management, i criteri di approvazione e il monitoraggio continuo, assicurando che il rischio residuo sia comunicato con precisione alla dirigenza e alle autorità.Un programma di governance integrato deve strutturarsi su tre livelli tecnici:
+
+ Management System (Livello di Gestione):  Il "contenitore" certificabile (es.  ISO/IEC 42001:2023 ) che attesta l’esistenza e l’efficacia del programma di gestione IA (AIMS).  
+ Risk-Management Operating Model (Livello Operativo):  Il framework metodologico per identificare, misurare e trattare i rischi (es.  NIST AI RMF 1.0 ).  
+ Control-level Taxonomies (Livello di Controllo):  Liste di riferimento tecniche per mitigazioni specifiche (es.  OWASP Top 10  per LLM e Agentic AI).
+
+Distinzione Tecnica Critica: Sistema IA vs. Modello IA
+
+Per una corretta allocazione delle responsabilità tra fornitori e deployer, è essenziale distinguere tra:
+
+ Sistema IA:  L' involucro organizzativo e tecnico  (envelope) che include il modello, l'infrastruttura, le interfacce I/O, i sistemi di monitoraggio e i protocolli di interazione umana.  
+ Modello IA:  Il  nucleo algoritmico  (core) addestrato sui dati, capace di generare output tramite inferenza.
+
+2\. Panoramica Comparativa dei Framework Fondamentali
+
+Framework,Tipo,Vincolante,Scopo Ottimale,Certificabile  
+EU AI Act,Regolamento UE,Sì,Conformità di prodotto e immissione sul mercato UE,No (Richiede Conformity Assessment\)  
+ISO/IEC 42001,Standard (AIMS),No,Governance organizzativa e fiducia dei partner,Sì  (Audit di terze parti)  
+NIST AI RMF 1.0,Risk Framework,No,Strutturazione interna dei processi di rischio,No  
+OWASP Top 10,Tassonomia,No,Sicurezza tecnica per LLM e sistemi agentici,No  
+GDPR,Regolamento UE,Sì,Protezione dei dati personali (Baseline orizzontale),No  
+NIS2,Direttiva UE,Sì,Cybersecurity per entità essenziali e importanti,No  
+DORA,Regolamento UE,Sì,Resilienza operativa per il settore finanziario,No  
+\Nota: Sebbene l'AI Act non sia certificabile direttamente, l'ISO/IEC 42001 è considerato il "ponte" de facto per dimostrare la presunzione di conformità ai requisiti del Regolamento.
+
+Criteri di Selezione Strategica
+
+ Market Access UE:  L' EU AI Act  è il punto di partenza obbligatorio per classificare il rischio e determinare il percorso di conformità.  
+ Procurement e B2B:  La certificazione  ISO/IEC 42001  rappresenta il segnale più forte di maturità per vincere appalti e garantire la supply chain.  
+ Sicurezza Applicativa:  Per sistemi basati su modelli generativi, il framework  OWASP  (LLM 2025/Agentic 2026\) è indispensabile per il threat modeling.
+
+3\. Il Regolamento UE sull’Intelligenza Artificiale (EU AI Act)
+
+L'AI Act classifica i sistemi in base al rischio per i diritti fondamentali:
+
+1. Inaccettabile:  Pratiche vietate (es. social scoring, manipolazione cognitiva).  
+2. Alto Rischio:  Sistemi soggetti a requisiti rigorosi (Annex III e Annex I).  
+3. Limitato:  Obblighi di trasparenza (es. chatbot, deepfake).  
+4. Minimo:  Nessun obbligo legale (codici di condotta volontari).
+
+Artefatti Probatori per il "Rischio Alto"
+
+Per i sistemi ad alto rischio, il fornitore deve garantire sei componenti documentali:
+
+1. Risk Management System:  Ciclo continuo di identificazione e mitigazione dei rischi.  
+2. Data Governance:  Controllo della qualità, dei bias e della rappresentatività dei dataset.  
+3. Technical Documentation:  Descrizione granulare dell'architettura e della logica (Annex IV).  
+4. Logging:  Registrazione automatica degli eventi per garantire la tracciabilità.  
+5. Sorveglianza Umana:  Design che permette l'intervento e l'override da parte di personale qualificato.  
+6. Accuratezza e Cybersecurity:  Target di performance e resilienza contro attacchi (es. poisoning, evasion).
+
+Modelli GPAI (General-Purpose AI)
+
+Tutti i modelli GPAI devono fornire documentazione tecnica e rispettare il diritto d'autore. Per i modelli con  rischio sistemico  (soglia \10^25 FLOPs ), si applicano obblighi di valutazione del modello, red-teaming avversario e reportistica sui "serious incidents". Tali modelli hanno una finestra ristretta per conformarsi ai  Codici di Pratica , previsti entro  maggio 2025 .
+
+4\. Digital Omnibus: Semplificazione e Controversie
+
+La proposta "Digital Omnibus" (Novembre 2025\) mira a ricalibrare il carico amministrativo, introducendo però elementi di forte frizione regolatoria.
+
+Categoria "Small Mid-cap" (SMC)
+
+Viene introdotta la categoria  Small Mid-cap , aziende che superano i limiti delle PMI ma non hanno le risorse delle grandi enterprise. Per le SMC sono previsti vantaggi significativi:
+
+ Documentazione tecnica semplificata.  
+ Sanzioni amministrative calibrate sulla capacità economica effettiva.
+
+La Controversia sulla Definizione di "Dati Personali"
+
+Il Digital Omnibus propone di ricalibrare il concetto di dato personale basandosi sull'identificabilità specifica per l'entità ( reasonably likely means ). Secondo questa proposta, un dato non sarebbe "personale" per un'azienda se questa non ha mezzi ragionevoli per identificare l'individuo, anche se un terzo potrebbe farlo.  Nota di cautela:  Questa ricalibrazione è oggetto di  pesante opposizione  da parte di EDPB e EDPS, che "esortano caldamente" i co-legislatori a non adottarla, ritenendo che possa minare le tutele del GDPR e creare pericolosi vuoti normativi.
+
+5\. Intersezione e Interoperabilità tra Normative UE
+
+5 Intersezioni Chiave tra NIS2 e AI Act
+
+1. Cybersecurity Risk:  NIS2 (Art. 21\) richiede misure per la sicurezza dei sistemi; l'AI Act (Art. 15\) specifica la resilienza contro attacchi avversari.  
+2. Incident Reporting:  Gli incidenti gravi IA possono attivare doppie notifiche: NIS2 (24/72h) e AI Act (notifica all'autorità di sorveglianza).  
+3. Supply Chain:  Entrambe le norme impongono la gestione rigorosa dei fornitori ICT e dei provider di modelli.  
+4. Governance:  La dirigenza deve approvare le misure NIS2 e garantire la supervisione umana richiesta dall'AI Act.  
+5. Sector Overlap:  Le "entità essenziali" NIS2 (energia, sanità) coincidono spesso con i casi d'uso ad "alto rischio" dell'Annex III.
+
+GDPR e AI Act: Deroghe per la Mitigazione dei Bias
+
+L'Articolo 10(5) dell'AI Act introduce una  deroga critica : è permesso trattare "categorie particolari di dati" (Art. 9 GDPR) per monitorare e correggere i bias algoritmici. Tuttavia, questa pratica deve basarsi sul motivo di  interesse pubblico rilevante  (Art. 9(2)(g) GDPR), deve rispettare il principio di  Privacy by Design  e avvenire solo se non esistono alternative meno intrusive.
+
+Comparazione: DORA vs NIS2, GDPR e ISO 27001
+
+Requisito,DORA,NIS2,GDPR,ISO 27001  
+Testing,Mandatorio ( TLPT  per funzioni critiche),Richiesto (non specifico),Discrezionale,Volontario  
+Terzi,Registro fornitori e exit strategy,Sicurezza supply chain,Nomina Responsabili,Controllo fornitori  
+Reporting,"3 fasi (iniziale, intermedio, finale)",Iniziale entro 24h,Entro 72h,Non prescrittivo
+
+6\. Strategia di Implementazione: "Single Spine of Controls"
+
+L'approccio "Single Spine" permette di implementare un unico controllo tecnico o procedurale per soddisfare molteplici framework, riducendo la ridondanza.
+
+ Esempio: Controllo "Documentazione Tecnica del Modello"  
+ Soddisfa  AI Act (Annex IV) : Requisiti di trasparenza e architettura.  
+ Mappa su  ISO 42001 (Annex A.6) : Gestione del ciclo di vita del sistema IA (AIMS).  
+ Soddisfa  NIST AI RMF (Map 1.1) : Caratterizzazione del sistema e del contesto d'uso.
+
+Componenti del Programma Modulos
+
+Per un’integrazione efficace, ogni controllo deve essere corredato da:  Requirements  (obblighi normativi),  Controls  (policy e misure tecniche),  Evidence  (artefatti probatori),  Review  (approvazioni periodiche) e  Runtime Inspection  (monitoraggio automatizzato).
+
+7\. Responsabilità della Dirigenza: Un Cambio di Paradigma
+
+La conformità non è più delegabile interamente al reparto IT. Si assiste a un  fondamentale spostamento della responsabilità  verso il  Management Body :
+
+ AI Literacy (Art. 26 AI Act):  La dirigenza deve assicurare che il personale abbia le competenze per comprendere i rischi e i benefici dell'IA.  
+ Responsabilità Personale (Art. 20 NIS2):  I membri del consiglio di amministrazione possono essere ritenuti  personalmente responsabili  per negligenza grave nella supervisione della cybersecurity e nella gestione della resilienza digitale.  
+ Governance Attiva:  Il board deve definire la tolleranza al rischio e approvare formalmente le strategie di adozione IA.
+
+8\. Cronoprogramma e Scadenze Chiave (Timeline)
+
+Data,Milestone e Obblighi  
+1 Agosto 2024,Entrata in vigore dell'EU AI Act.  
+2 Febbraio 2025,Efficacia dei divieti (Pratiche vietate) e obblighi di  AI Literacy .  
+Maggio 2025,Disponibilità prevista dei  GPAI Codes of Practice .  
+2 Agosto 2025,Applicazione delle norme sulla governance e obblighi per i modelli  GPAI .  
+2 Agosto 2026,Applicazione per i sistemi ad alto rischio  Annex III  (settori critici).  
+2 Agosto 2027,Applicazione per sistemi ad alto rischio  Annex I  (prodotti regolati).  
+2 Agosto 2028,Long-stop date : Termine ultimo per la conformità dei sistemi Annex I esistenti.
+
+9\. Checklist di Prontezza Operativa
+
+   Inventario IA & Classificazione:  Censire ogni sistema (interno/SaaS) e classificarlo secondo i tier di rischio dell'AI Act.  
+   Technical Documentation (Annex IV):  Preparare i pacchetti informativi tecnici, mappandoli simultaneamente ai controlli ISO 42001\.  
+   GPAI Procurement:  Verificare che i fornitori di modelli forniscano le evidenze necessarie per la conformità downstream.  
+   DORA Register of Providers:  Istituire e mantenere il registro aggiornato di tutti i fornitori ICT terzi e dei sub-appaltatori critici.  
+   Incident Reporting Runbook:  Sincronizzare i flussi di notifica per soddisfare le diverse timeline (NIS2 24h, GDPR 72h, AI Act incidenti gravi).  
+   Evidence of Management Training:  Documentare la formazione specifica del Board in materia di cybersecurity (NIS2) e IA (AI Act).  
+   Audit di Resilienza (TLPT):  Per le entità in ambito DORA, pianificare i test di penetrazione guidati dall'intelligence per le funzioni critiche.
+

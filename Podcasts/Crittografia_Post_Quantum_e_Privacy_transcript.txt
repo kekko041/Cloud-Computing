@@ -1,0 +1,46 @@
+Crittografia Avanzata, Privacy e Post-Quantum
+(Focus per il concorso Esperto ICT - Banca d'Italia)
+
+Nel settore finanziario, la protezione della riservatezza dei dati è prioritaria non solo per la compliance (GDPR), ma per la stabilità del sistema stesso. Oggi le banche centrali guardano oltre la crittografia classica (RSA, AES) per affrontare nuove sfide: elaborare dati cifrati e prepararsi all'avvento dei computer quantistici.
+
+
+
+1. Tecnologie per la Privacy Avanzata (Privacy-Enhancing Technologies - PETs)
+
+1.1 Homomorphic Encryption (Cifratura Omomorfica)
+Tradizionalmente, per elaborare un dato cifrato (es. calcolare una somma), è necessario prima decifrarlo, esponendolo a rischi. 
+   Cos'è: La cifratura omomorfica (Fully Homomorphic Encryption - FHE) permette di eseguire operazioni matematiche direttamente sui dati cifrati (ciphertext). Il risultato decifrato coinciderà con il risultato delle operazioni effettuate sui dati in chiaro.
+   Caso d'uso in Banca: Una banca commerciale può inviare dati finanziari cifrati alla Banca d'Italia per calcoli statistici o controlli anti-riciclaggio. La Banca d'Italia elabora i dati senza mai vederli in chiaro e restituisce il risultato cifrato.
+
+1.2 Secure Multi-Party Computation (SMPC)
+Permette a più entità di calcolare una funzione pubblica basata sui loro input privati, mantenendo segreti tali input. Nessun partecipante (e nessun server centrale) apprende nulla oltre al risultato finale.
+   Caso d'uso: Condivisione di indicatori di frode tra diverse banche senza rivelare i dettagli dei propri clienti, migliorando la sicurezza di sistema nel rispetto della privacy.
+
+1.3 Differential Privacy
+Una tecnica matematica che inietta "rumore" statistico calibrato all'interno di un dataset.
+   Obiettivo: Permette di estrarre pattern accurati a livello di popolazione (es. età media degli investitori) garantendo matematicamente che sia impossibile risalire all'identità o ai dati di un singolo individuo presente nel dataset (difesa contro i Re-identification attack).
+
+
+
+2. La Minaccia Quantistica (Q-Day)
+
+I computer quantistici non sono ancora abbastanza potenti per rompere la crittografia odierna, ma il rischio "Harvest Now, Decrypt Later" (raccogli i dati cifrati oggi per decifrarli tra 10 anni) è già reale.
+
+   Algoritmo di Shor: Risolve i problemi matematici della fattorizzazione dei numeri primi e dei logaritmi discreti in tempo polinomiale. Questo significa che distruggerà completamente la crittografia asimmetrica odierna (RSA, ECC, Diffie-Hellman), rendendo vulnerabili TLS/SSL, firme digitali e infrastrutture a chiave pubblica (PKI).
+   Algoritmo di Grover: Indebolisce la crittografia simmetrica (AES) e le funzioni di Hash (SHA). La mitigazione in questo caso è semplice: basta raddoppiare la lunghezza della chiave (es. passare da AES-128 a AES-256 e da SHA-256 a SHA-512) per ripristinare la sicurezza.
+
+
+
+3. Crittografia Post-Quantum (PQC) e QKD
+
+Per difendersi dall'Algoritmo di Shor, la comunità scientifica sta adottando due strade complementari:
+
+3.1 Algoritmi Post-Quantum (Il processo NIST)
+Sono nuovi algoritmi matematici complessi (es. basati su reticoli - Lattice-based cryptography) che sono eseguibili su computer classici ma sono resistenti agli attacchi quantistici.
+   Il NIST (National Institute of Standards and Technology) ha standardizzato di recente i primi algoritmi definitivi, come Kyber (ora ML-KEM) per lo scambio chiavi e Dilithium (ML-DSA) per le firme digitali.
+   Crypto-Agility: Architettura che le banche devono implementare per poter sostituire rapidamente gli algoritmi obsoleti con quelli post-quantum senza dover riscrivere il codice applicativo.
+
+3.2 Quantum Key Distribution (QKD)
+Mentre la PQC si basa sulla matematica, la QKD si basa sulla fisica quantistica (principio di indeterminazione di Heisenberg).
+   Funzionamento: Utilizza fotoni singoli inviati su fibra ottica per generare e condividere una chiave crittografica. Se un attaccante tenta di intercettare il fotone, ne altera irrimediabilmente lo stato quantistico. Le due parti se ne accorgono immediatamente e scartano la chiave.
+   Applicazione: È considerata la sicurezza crittografica assoluta (Information-Theoretic Security). Viene utilizzata per collegare Data Center critici ad altissima sicurezza (es. la rete EuroQCI in Europa).
