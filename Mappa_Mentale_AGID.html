@@ -1,0 +1,790 @@
+<title>AGID-01 — Mappa mentale della prova scritta</title>
+<style>
+  :root{
+    --bg:#E7EAEE;
+    --surface:#FBFBF8;
+    --surface-2:#F1F2ED;
+    --ink:#1B2330;
+    --ink-soft:#525A6B;
+    --ink-faint:#7A8194;
+    --line:rgba(27,35,48,0.15);
+    --line-strong:rgba(27,35,48,0.28);
+
+    --blue:#1F4C78;
+    --blue-soft:#DDE6EF;
+    --teal:#386659;
+    --teal-soft:#DEEAE4;
+    --violet:#5B4B78;
+    --violet-soft:#E4DFEC;
+    --gold:#8C5F13;
+    --gold-soft:#F0E4CC;
+    --red:#9C3B2E;
+    --red-soft:#F1DFDA;
+
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --font-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "Cascadia Code", Consolas, "SFMono-Regular", Menlo, monospace;
+
+    --radius: 3px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#12161D;
+      --surface:#1B212B;
+      --surface-2:#212734;
+      --ink:#E7E9EE;
+      --ink-soft:#AEB4C4;
+      --ink-faint:#7D8497;
+      --line:rgba(231,233,238,0.16);
+      --line-strong:rgba(231,233,238,0.30);
+
+      --blue:#7FAAD6;
+      --blue-soft:#213244;
+      --teal:#79B7A3;
+      --teal-soft:#1D2E29;
+      --violet:#A796C4;
+      --violet-soft:#291F36;
+      --gold:#D6A24A;
+      --gold-soft:#332711;
+      --red:#DD8F7C;
+      --red-soft:#33201C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161D; --surface:#1B212B; --surface-2:#212734;
+    --ink:#E7E9EE; --ink-soft:#AEB4C4; --ink-faint:#7D8497;
+    --line:rgba(231,233,238,0.16); --line-strong:rgba(231,233,238,0.30);
+    --blue:#7FAAD6; --blue-soft:#213244;
+    --teal:#79B7A3; --teal-soft:#1D2E29;
+    --violet:#A796C4; --violet-soft:#291F36;
+    --gold:#D6A24A; --gold-soft:#332711;
+    --red:#DD8F7C; --red-soft:#33201C;
+  }
+  :root[data-theme="light"]{
+    --bg:#E7EAEE; --surface:#FBFBF8; --surface-2:#F1F2ED;
+    --ink:#1B2330; --ink-soft:#525A6B; --ink-faint:#7A8194;
+    --line:rgba(27,35,48,0.15); --line-strong:rgba(27,35,48,0.28);
+    --blue:#1F4C78; --blue-soft:#DDE6EF;
+    --teal:#386659; --teal-soft:#DEEAE4;
+    --violet:#5B4B78; --violet-soft:#E4DFEC;
+    --gold:#8C5F13; --gold-soft:#F0E4CC;
+    --red:#9C3B2E; --red-soft:#F1DFDA;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--blue); }
+  :focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 20px 80px; }
+
+  /* ---------- Masthead ---------- */
+  header.masthead{
+    background:var(--ink);
+    color:var(--surface);
+    border-bottom:4px solid var(--blue);
+  }
+  @media (prefers-color-scheme: dark){ header.masthead{ background:#0A0D12; } }
+  :root[data-theme="dark"] header.masthead{ background:#0A0D12; }
+  header.masthead .wrap{ padding-top:44px; padding-bottom:32px; }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.75rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:#B9C2D6;
+    margin:0 0 14px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(1.9rem, 4.2vw, 2.7rem);
+    line-height:1.15;
+    margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .lede{
+    font-size:1.05rem;
+    color:#D7DCE8;
+    max-width:62ch;
+    margin:0 0 28px;
+  }
+  ul.stat-row{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  ul.stat-row li{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.16);
+    border-radius:var(--radius);
+    padding:8px 14px;
+    display:flex; flex-direction:column; gap:2px;
+    min-width:110px;
+  }
+  ul.stat-row li.stat-countdown{
+    background:var(--red);
+    border-color:var(--red);
+  }
+  .stat-label{
+    font-family:var(--font-mono);
+    font-size:0.65rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#AEB6C8;
+  }
+  .stat-countdown .stat-label{ color:#F3DAD4; }
+  .stat-value{
+    font-family:var(--font-display);
+    font-size:1.15rem;
+    font-variant-numeric:tabular-nums;
+    color:#fff;
+  }
+
+  /* ---------- Verify note ---------- */
+  .verify-note{
+    margin:32px 0 8px;
+    padding:16px 18px;
+    background:var(--surface-2);
+    border-left:3px solid var(--gold);
+    border-radius:0 var(--radius) var(--radius) 0;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+  .verify-note strong{ color:var(--ink); }
+  .verify-note code{
+    font-family:var(--font-mono);
+    font-size:0.85em;
+    background:var(--surface);
+    border:1px solid var(--line);
+    padding:0.05em 0.4em;
+    border-radius:2px;
+  }
+
+  /* ---------- Legend ---------- */
+  .legend{
+    display:flex; flex-wrap:wrap; gap:8px 18px;
+    margin:26px 0 6px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+  .legend .chip{ display:flex; align-items:center; gap:7px; }
+  .legend .dot{ width:9px; height:9px; border-radius:50%; flex:none; }
+
+  /* ---------- Section headings ---------- */
+  h2.section-title{
+    font-family:var(--font-display);
+    font-size:1.55rem;
+    margin:52px 0 6px;
+    text-wrap:balance;
+  }
+  .section-sub{
+    color:var(--ink-faint);
+    font-size:0.88rem;
+    margin:0 0 20px;
+  }
+
+  /* ---------- Spine / clusters ---------- */
+  .spine-wrap{
+    position:relative;
+    padding-left:22px;
+    margin-top:30px;
+  }
+  .spine-wrap::before{
+    content:"";
+    position:absolute;
+    left:6px; top:8px; bottom:8px;
+    width:2px;
+    background:linear-gradient(var(--line-strong), var(--line-strong)) ;
+    background-color:var(--line-strong);
+  }
+  .hub-node{
+    position:absolute;
+    left:0; top:-4px;
+    width:14px; height:14px;
+    border-radius:50%;
+    background:var(--blue);
+    border:2px solid var(--surface);
+    box-shadow:0 0 0 2px var(--blue);
+  }
+
+  details.cluster{
+    position:relative;
+    margin-bottom:16px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:5px solid var(--c-accent, var(--blue));
+    border-radius:var(--radius);
+  }
+  details.cluster::before{
+    /* connector nub to spine */
+    content:"";
+    position:absolute;
+    left:-22px; top:26px;
+    width:16px; height:2px;
+    background:var(--line-strong);
+  }
+  details.cluster > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:16px 20px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  details.cluster > summary::-webkit-details-marker{ display:none; }
+  details.cluster > summary::marker{ content:""; }
+  .cluster-heading{
+    display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+  }
+  .cluster-tag{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+    color:var(--c-accent, var(--blue));
+    border:1px solid var(--c-accent, var(--blue));
+    border-radius:20px;
+    padding:2px 10px;
+    white-space:nowrap;
+  }
+  .cluster-title{
+    font-family:var(--font-display);
+    font-size:1.22rem;
+    font-weight:600;
+  }
+  .cluster-materie{
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    font-family:var(--font-mono);
+  }
+  summary .chevron{
+    font-family:var(--font-mono);
+    color:var(--ink-faint);
+    font-size:0.85rem;
+    transition:transform 0.15s ease;
+  }
+  details[open] > summary .chevron{ transform:rotate(90deg); }
+  @media (prefers-reduced-motion: reduce){
+    summary .chevron{ transition:none; }
+  }
+
+  .cluster-body{
+    padding:0 20px 20px;
+    border-top:1px solid var(--line);
+  }
+  article.materia{
+    padding:18px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  article.materia:last-child{ border-bottom:none; padding-bottom:4px; }
+  .materia-head{
+    display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .materia-num{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--surface);
+    background:var(--c-accent, var(--blue));
+    border-radius:2px;
+    padding:1px 7px;
+  }
+  .materia-title{
+    font-weight:600;
+    font-size:1.02rem;
+  }
+  article.materia ul{
+    margin:0; padding-left:20px;
+    font-size:0.94rem;
+    color:var(--ink);
+  }
+  article.materia ul li{ margin-bottom:6px; }
+  article.materia ul ul{ margin-top:4px; }
+  .src{
+    font-family:var(--font-mono);
+    font-size:0.74rem;
+    color:var(--ink-faint);
+    background:var(--surface-2);
+    border-radius:2px;
+    padding:0 5px;
+    white-space:nowrap;
+  }
+  .note-line{
+    font-size:0.86rem;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-top:8px;
+  }
+
+  /* cluster color assignment */
+  .cluster-a{ --c-accent: var(--blue); }
+  .cluster-a .cluster-tag, .cluster-a .materia-num{ }
+  .cluster-b{ --c-accent: var(--teal); }
+  .cluster-c{ --c-accent: var(--violet); }
+  .cluster-d{ --c-accent: var(--gold); }
+  .cluster-e{ --c-accent: var(--red); }
+
+  /* ---------- Method panel ---------- */
+  .method-panel{
+    margin-top:52px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .method-steps{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:16px;
+    margin-top:16px;
+  }
+  @media (max-width:720px){
+    .method-steps{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:460px){
+    .method-steps{ grid-template-columns:1fr; }
+  }
+  .method-step{
+    border-top:3px solid var(--blue);
+    padding-top:10px;
+  }
+  .method-step .n{
+    font-family:var(--font-mono);
+    font-size:0.75rem;
+    color:var(--ink-faint);
+  }
+  .method-step h3{
+    font-family:var(--font-display);
+    font-size:1rem;
+    margin:4px 0 6px;
+  }
+  .method-step p{
+    font-size:0.86rem;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- Plan table ---------- */
+  .plan{ margin-top:52px; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); }
+  table.plan-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.88rem;
+    min-width:640px;
+  }
+  table.plan-table th, table.plan-table td{
+    text-align:left;
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table.plan-table thead th{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    background:var(--surface-2);
+  }
+  table.plan-table td.day{
+    font-family:var(--font-mono);
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    color:var(--ink-soft);
+  }
+  table.plan-table td.focus strong{ display:block; margin-bottom:2px;}
+  table.plan-table tr:last-child td{ border-bottom:none; }
+  table.plan-table tr.exam-row td{
+    background:var(--red-soft);
+    font-weight:600;
+  }
+
+  footer{
+    margin-top:60px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:0.8rem;
+    color:var(--ink-faint);
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Concorso pubblico &middot; Agenzia per l'Italia Digitale &middot; Codice AGID&#8209;01</p>
+    <h1 class="title">Mappa mentale della prova scritta</h1>
+    <p class="lede">Le 13 materie del bando (art. 7), riorganizzate in 5 rami tematici e incrociate con le fonti già raccolte in <code style="font-family:var(--font-mono); background:rgba(255,255,255,.08); padding:0 5px; border-radius:2px;">AGID/</code> e con la sintesi esistente — pensata per un ripasso a rami, non a pagine.</p>
+    <ul class="stat-row">
+      <li><span class="stat-label">Prova scritta</span><span class="stat-value">22 lug 2026</span></li>
+      <li><span class="stat-label">Durata</span><span class="stat-value">4 ore</span></li>
+      <li><span class="stat-label">Soglia</span><span class="stat-value">21&thinsp;/&thinsp;30</span></li>
+      <li><span class="stat-label">Materie</span><span class="stat-value">13</span></li>
+      <li class="stat-countdown"><span class="stat-label">Mancano</span><span class="stat-value" id="countdown">&hellip;</span></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="verify-note">
+    <strong>Nota di verifica.</strong> Ho confrontato <code>AGID_Sintesi_Preparazione_Concorso.md</code> con l'elenco ufficiale delle materie in <code>AGID/Bando di concorso.txt</code> (art. 7) e con <code>AGID/Pubblicazioni_e_Linee_Guida_AGID.md</code>. La sintesi copriva bene interoperabilità, cloud/migrazione, sviluppo sicuro, budget e appalti, ma trattava solo di sfuggita <strong>Materia 1</strong> (normazione tecnica), <strong>Materia 3</strong> (modellazione dati/ML, appena accennata dentro "Open Data e IA"), <strong>Materia 5</strong> (qualità e metriche del software, mai isolata) e riduceva la <strong>Materia 12 — CAD</strong> al solo documento informatico, senza identità digitale, firme eIDAS e continuità operativa. Questi quattro rami sono stati approfonditi qui sotto usando <code>agid.md</code> e le pubblicazioni AGID indicate.
+  </section>
+
+  <div class="legend">
+    <span class="chip"><span class="dot" style="background:var(--blue)"></span>Standard &amp; interoperabilità — mat. 1, 2</span>
+    <span class="chip"><span class="dot" style="background:var(--teal)"></span>Dati, metadati &amp; IA — mat. 3</span>
+    <span class="chip"><span class="dot" style="background:var(--violet)"></span>Architetture, cloud &amp; qualità — mat. 4, 5, 8</span>
+    <span class="chip"><span class="dot" style="background:var(--gold)"></span>Governo IT &amp; budget — mat. 6, 7, 10</span>
+    <span class="chip"><span class="dot" style="background:var(--red)"></span>CAD, appalti &amp; trasparenza — mat. 9, 11, 12, 13</span>
+  </div>
+
+  <h2 class="section-title">I cinque rami</h2>
+  <p class="section-sub">Ogni ramo è una materia del bando o un gruppo di materie affini. Clicca per aprire i "rametti" con i punti da ripassare.</p>
+
+  <div class="spine-wrap">
+    <div class="hub-node" aria-hidden="true"></div>
+
+    <details class="cluster cluster-a" open>
+      <summary>
+        <div class="cluster-heading">
+          <span class="cluster-tag">ramo A</span>
+          <span class="cluster-title">Standard &amp; Interoperabilità</span>
+          <span class="cluster-materie">materie 1 · 2</span>
+        </div>
+        <span class="chevron">&#10148;</span>
+      </summary>
+      <div class="cluster-body">
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 1</span>
+            <span class="materia-title">Normazione tecnica nazionale, comunitaria e internazionale</span>
+          </div>
+          <ul>
+            <li>Standard richiamati dal ModI: TLS 1.2/1.3, OAuth 2.0, OpenID Connect, OAS3/OpenAPI, X.509, XML Canonicalization/Digest/Signature <span class="src">AGID/pdf/05</span></li>
+            <li>Normativa UE: eIDAS (Reg. UE 910/2014), Direttiva 2014/55/UE fatturazione elettronica &amp; PEPPOL, GDPR (Reg. UE 2016/679), AI Act (Reg. UE 2024/1689)</li>
+            <li>Attuazione nazionale: Circolare AGID 2/2019 (NormeInRete) <span class="src">AGID/pdf</span>, Regole tecniche PAD v2 <span class="src">AGID/pdf/21</span></li>
+            <li>Enti di normazione: ISO/IEC, ETSI, IETF (RFC), W3C, OASIS — AGID come PEPPOL Authority nazionale</li>
+            <li>Accessibilità come standard tecnico: WCAG 2.1 / EN 301 549, recepiti da EAA (D.Lgs. 82/2022)</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 2</span>
+            <span class="materia-title">Modelli di interoperabilità (ModI &amp; PDND)</span>
+          </div>
+          <ul>
+            <li>ModI: regole tecniche di scambio dati via API REST e SOAP <span class="src">AGID/pdf/03-04</span>, con 4 allegati: pattern di interazione, pattern di sicurezza, profili, raccomandazioni di implementazione</li>
+            <li>Sicurezza: autenticazione con certificati X.509, mTLS server-to-server, autorizzazione OAuth 2.0 <span class="src">AGID/pdf/05</span></li>
+            <li>PDND (Piattaforma Digitale Nazionale Dati): Catalogo E-Service, adesione, voucher, eventi, scambio dati asincrono <span class="src">AGID/pdf/06</span></li>
+            <li>Principio chiave: <strong>Once Only</strong> — nessuna PA richiede dati già in possesso di un'altra PA</li>
+          </ul>
+        </article>
+      </div>
+    </details>
+
+    <details class="cluster cluster-b">
+      <summary>
+        <div class="cluster-heading">
+          <span class="cluster-tag">ramo B</span>
+          <span class="cluster-title">Dati, Metadatazione &amp; Intelligenza Artificiale</span>
+          <span class="cluster-materie">materia 3</span>
+        </div>
+        <span class="chevron">&#10148;</span>
+      </summary>
+      <div class="cluster-body">
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 3</span>
+            <span class="materia-title">Modellazione dati, metadatazione e machine learning</span>
+          </div>
+          <ul>
+            <li>Modellazione semantica: ontologie e vocabolari condivisi della rete <strong>OntoPiA</strong>, cataloghi dati in <strong>DCAT-AP_IT</strong></li>
+            <li>Metadatazione: set minimo obbligatorio per il documento informatico (identificativo, data, oggetto, autore) <span class="src">AGID/pdf/18</span>; Repertorio Nazionale Dati Territoriali (RNDT)</li>
+            <li>Open Data: formati aperti machine-readable, dataset di elevato valore / High Value Datasets <span class="src">AGID/pdf/12-13</span></li>
+            <li>Strategia Italiana per l'IA 2024-2026 — 4 aree: Ricerca, PA, Impresa, Formazione</li>
+            <li>Bozza LG Adozione IA nella PA <span class="src">AGID/pdf/14</span> e Bozza LG Sviluppo sistemi di IA <span class="src">AGID/pdf/15</span> (copre anche il procurement IA)</li>
+            <li>Vincoli AI Act: trasparenza algoritmica, gestione del bias, supervisione umana sulle decisioni ad alto rischio (approccio human-centered, L. 132/2023)</li>
+          </ul>
+        </article>
+      </div>
+    </details>
+
+    <details class="cluster cluster-c">
+      <summary>
+        <div class="cluster-heading">
+          <span class="cluster-tag">ramo C</span>
+          <span class="cluster-title">Architetture, Cloud, Migrazione &amp; Qualità del Software</span>
+          <span class="cluster-materie">materie 4 · 5 · 8</span>
+        </div>
+        <span class="chevron">&#10148;</span>
+      </summary>
+      <div class="cluster-body">
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 4</span>
+            <span class="materia-title">Modelli di architetture applicative e sistemi IT</span>
+          </div>
+          <ul>
+            <li>Piano Triennale, Parte 2 — Componenti tecnologiche: Servizi, Piattaforme, Dati e IA, Infrastrutture, Sicurezza trasversale <span class="src">AGID/pdf/01</span></li>
+            <li>Sviluppo sicuro (Secure by Design) <span class="src">AGID/pdf/08-11</span>: ciclo di vita sicuro (All. A), coding sicuro (All. B), hardening configurazioni (All. C), threat modeling (All. D)</li>
+            <li>SAST/DAST continui in ottica DevSecOps; prevenzione OWASP Top 10 (injection, broken authentication, ecc.)</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 8</span>
+            <span class="materia-title">Metodologie di migrazione e consolidamento infrastrutture</span>
+          </div>
+          <ul>
+            <li>Principio Cloud first: SaaS &gt; PaaS &gt; IaaS</li>
+            <li>Classificazione dati/servizi: Ordinari, Critici, Strategici → i Critici/Strategici richiedono il Polo Strategico Nazionale (PSN)</li>
+            <li>Percorsi di migrazione <span class="src">AGID/pdf/16-17</span>: <strong>Rehost</strong> (lift&amp;shift, IaaS) → <strong>Replatform</strong> (DBaaS, minime modifiche) → <strong>Rearchitect/Refactor</strong> (cloud-native: microservizi, container, serverless)</li>
+            <li>Consolidamento dei data center della PA nel PSN</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 5</span>
+            <span class="materia-title">Qualità e metriche del software</span>
+          </div>
+          <ul>
+            <li>Modello di qualità <strong>ISO/IEC 25010</strong>: funzionalità, affidabilità, usabilità, sicurezza, manutenibilità, portabilità</li>
+            <li>Metriche operative: function point, densità difetti, code coverage, tempo medio di remediation delle vulnerabilità</li>
+            <li>Qualificazione CSP/SaaS per il Cloud della PA: framework metodologico storico AGID <span class="src">AGID/pdf/16-17</span> — competenza <strong>trasferita ad ACN dal 2023</strong> (attribuirla correttamente in sede d'esame)</li>
+            <li>Manuale applicativo appalto pubblico di forniture ICT (v3.5) — criteri di qualità in gara</li>
+          </ul>
+          <p class="note-line">Punto debole della sintesi originale: qui la qualità era solo implicita nello sviluppo sicuro (mat. 4) — vale la pena isolarla come materia a sé in una risposta d'esame.</p>
+        </article>
+      </div>
+    </details>
+
+    <details class="cluster cluster-d">
+      <summary>
+        <div class="cluster-heading">
+          <span class="cluster-tag">ramo D</span>
+          <span class="cluster-title">Governo IT: Programmazione, Progetti &amp; Budget</span>
+          <span class="cluster-materie">materie 6 · 7 · 10</span>
+        </div>
+        <span class="chevron">&#10148;</span>
+      </summary>
+      <div class="cluster-body">
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 6</span>
+            <span class="materia-title">Metodologie e strumenti di gestione progettuale</span>
+          </div>
+          <ul>
+            <li>Framework: PRINCE2, PMBOK/PMP, metodologie Agile — scelta in base a criticità e rigidità dei requisiti</li>
+            <li>Ruolo del RTD (Responsabile della Transizione Digitale) nel rafforzamento delle competenze di project management</li>
+            <li>Contract monitoring integrato con le best practice di PM</li>
+            <li>KPI misurabili, essenziali per la rendicontazione dei fondi PNRR</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 7</span>
+            <span class="materia-title">Interventi di programmazione e innovazione ICT</span>
+          </div>
+          <ul>
+            <li>Piano Triennale per l'Informatica 2024-2026, Agg. 2026 <span class="src">AGID/pdf/01-02</span>: tre parti (Strategia, Tecnologie, Strumenti)</li>
+            <li>10 principi guida: Digital &amp; mobile first, Cloud first, API-first, Once Only, Data driven, Agile, servizi progettati sull'utente, security &amp; privacy by design, riuso, codice aperto</li>
+            <li>Parte 3 — Strumenti: modelli e casi di buona pratica (es. Strumento 1, Approvvigionamento ICT)</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 10</span>
+            <span class="materia-title">Formazione del budget</span>
+          </div>
+          <ul>
+            <li>Spesa ICT da "centro di costo" a "investimento": logica <strong>TCO</strong> (Total Cost of Ownership), incluso lock-in, formazione, energy saving (Green IT)</li>
+            <li>Pareri di congruità tecnico-economica (art. 14-bis CAD): non vincolante sopra 1-2 M€, vincolante per Consip/soggetti aggregatori su acquisti strategici</li>
+            <li>Rapporti sulla spesa ICT PA come riferimento per trend e benchmarking <span class="src">AGID/pdf/19-20</span></li>
+          </ul>
+        </article>
+      </div>
+    </details>
+
+    <details class="cluster cluster-e">
+      <summary>
+        <div class="cluster-heading">
+          <span class="cluster-tag">ramo E</span>
+          <span class="cluster-title">CAD, Appalti &amp; Trasparenza</span>
+          <span class="cluster-materie">materie 9 · 11 · 12 · 13</span>
+        </div>
+        <span class="chevron">&#10148;</span>
+      </summary>
+      <div class="cluster-body">
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 12</span>
+            <span class="materia-title">Codice dell'Amministrazione Digitale (CAD, D.Lgs. 82/2005)</span>
+          </div>
+          <ul>
+            <li>Identità e domicilio digitale: SPID, CIE, INAD, OpenID Connect in SPID</li>
+            <li>Firme elettroniche eIDAS: <strong>FES</strong> (semplice), <strong>FEA</strong> (avanzata), <strong>FEQ</strong> (qualificata/digitale — non ripudio e integrità)</li>
+            <li>Documento informatico: formazione, gestione, conservazione <span class="src">AGID/pdf/18</span> — metadati minimi, fascicolazione elettronica, contrassegno elettronico (art. 23-ter c.5)</li>
+            <li>Continuità operativa e disaster recovery; compiti di AGID come organo tecnico di indirizzo e vigilanza sull'informatica pubblica</li>
+            <li>Accessibilità dei servizi digitali (EAA, D.Lgs. 82/2022): WCAG 2.1, coerenza UX/UI con Designers Italia</li>
+          </ul>
+          <p class="note-line">Punto debole della sintesi originale: era ridotta al solo documento informatico — qui aggiunti identità digitale, firme e continuità operativa, i tre temi CAD più citati in <code>agid.md</code>.</p>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 9</span>
+            <span class="materia-title">Disciplina normativa delle gare pubbliche di ICT</span>
+          </div>
+          <ul>
+            <li>Codice dei contratti pubblici (D.Lgs. 36/2023): ciclo di gara digitale end-to-end, Fascicolo Virtuale Operatore Economico (FVOE)</li>
+            <li>E-procurement: Regole tecniche PAD v2 <span class="src">AGID/pdf/21</span>, DGUE, Circolare AGID 3/2016</li>
+            <li>Acquisti IT via Consip/MePA; AGID come PEPPOL Authority; subappalto liberalizzato ma sotto attenzione lato cyber</li>
+            <li>Ordine di preferenza (artt. 68-69 CAD) <span class="src">AGID/pdf/07</span>: open source → riuso → sviluppo ex novo → proprietario</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 13</span>
+            <span class="materia-title">Codice degli appalti pubblici</span>
+          </div>
+          <ul>
+            <li>D.Lgs. 36/2023 come riferimento primario — non emanato da AGID, ma attuato tecnicamente tramite PAD</li>
+            <li>Procedure di affidamento, accordi quadro Consip, figura del RUP</li>
+            <li>Integrare col testo di legge in <code>fonti/</code> — AGID pubblica soprattutto norme tecniche attuative, non i codici primari</li>
+          </ul>
+        </article>
+        <article class="materia">
+          <div class="materia-head">
+            <span class="materia-num">Mat. 11</span>
+            <span class="materia-title">Performance e trasparenza amministrativa</span>
+          </div>
+          <ul>
+            <li>Amministrazione Trasparente (D.Lgs. 33/2013): obbligo di pubblicazione di bandi, appalti, bilanci, performance dirigenziali</li>
+            <li>Ciclo della performance (D.Lgs. 150/2009)</li>
+            <li>La sezione Amministrazione Trasparente di AGID è un buon modello applicativo degli obblighi</li>
+          </ul>
+        </article>
+      </div>
+    </details>
+  </div>
+
+  <section class="method-panel">
+    <h2 class="section-title" style="margin-top:0;">Il metodo in 4 mosse per i casi gestionali</h2>
+    <p class="section-sub" style="margin-bottom:0;">Da usare per ogni traccia pratica (es. "migrare un sistema legacy in cloud garantendo l'interoperabilità"): tocca sempre questi quattro punti, in quest'ordine.</p>
+    <div class="method-steps">
+      <div class="method-step">
+        <div class="n">01</div>
+        <h3>Inquadramento normativo</h3>
+        <p>Cita CAD, Piano Triennale e Strategia Cloud Italia — poi i D.Lgs. specifici del caso (36/2023, 33/2013&hellip;).</p>
+      </div>
+      <div class="method-step">
+        <div class="n">02</div>
+        <h3>Metodo progettuale</h3>
+        <p>Fasi dichiarate (analisi, migrazione, test, deployment) con una metodologia esplicita: Agile o waterfall modificato.</p>
+      </div>
+      <div class="method-step">
+        <div class="n">03</div>
+        <h3>Soluzione tecnica</h3>
+        <p>Percorso di migrazione (rehost/replatform/rearchitect), interoperabilità via PDND/API, cifratura at-rest e in-transit, threat modeling.</p>
+      </div>
+      <div class="method-step">
+        <div class="n">04</div>
+        <h3>Rischio &amp; budget</h3>
+        <p>Rischi (lock-in, downtime), adempimenti del Codice Contratti, pareri di congruità tecnico-economica, TCO.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="plan">
+    <h2 class="section-title">Piano di studio &mdash; 9 giorni</h2>
+    <p class="section-sub">Un ramo (o mezzo ramo) al giorno, con simulazione a metà settimana e ripasso leggero in chiusura.</p>
+    <div class="table-scroll">
+      <table class="plan-table">
+        <thead>
+          <tr><th>Giorno</th><th>Data</th><th>Focus</th><th>Azione</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="day">1</td><td class="day">13/07</td>
+            <td class="focus"><strong>Ramo A</strong> — Standard &amp; interoperabilità</td>
+            <td>Leggi <span class="src">AGID/pdf/03, 05, 06</span> + Sintesi §1</td>
+          </tr>
+          <tr>
+            <td class="day">2</td><td class="day">14/07</td>
+            <td class="focus"><strong>Ramo C (1/2)</strong> — Architetture &amp; cloud/migrazione</td>
+            <td>Leggi <span class="src">AGID/pdf/01, 08-11, 16-17</span> + Sintesi §2-3</td>
+          </tr>
+          <tr>
+            <td class="day">3</td><td class="day">15/07</td>
+            <td class="focus"><strong>Ramo C (2/2)</strong> — Qualità e metriche del software</td>
+            <td>Isola la materia 5 dagli appunti sullo sviluppo sicuro; ripassa ISO/IEC 25010</td>
+          </tr>
+          <tr>
+            <td class="day">4</td><td class="day">16/07</td>
+            <td class="focus"><strong>Ramo B</strong> — Dati, metadati &amp; IA</td>
+            <td>Leggi <span class="src">AGID/pdf/12-15</span></td>
+          </tr>
+          <tr>
+            <td class="day">5</td><td class="day">17/07</td>
+            <td class="focus"><strong>Ramo D</strong> — PM, programmazione, budget</td>
+            <td>Leggi <span class="src">AGID/pdf/01, 02, 19, 20</span></td>
+          </tr>
+          <tr>
+            <td class="day">6</td><td class="day">18/07</td>
+            <td class="focus"><strong>Ramo E (1/2)</strong> — CAD: identità, firme, continuità operativa</td>
+            <td>Ripassa identità digitale/eIDAS/documento informatico</td>
+          </tr>
+          <tr>
+            <td class="day">7</td><td class="day">19/07</td>
+            <td class="focus"><strong>Ramo E (2/2)</strong> — Appalti ICT, codice contratti, trasparenza</td>
+            <td>Integra con <span class="src">fonti/</span> (Business Continuity, Zero Trust) per i casi gestionali di sicurezza</td>
+          </tr>
+          <tr>
+            <td class="day">8</td><td class="day">20/07</td>
+            <td class="focus"><strong>Simulazione a tempo</strong> (4h)</td>
+            <td>1 quesito sintetico + 1 caso gestionale; poi autocorrezione col metodo in 4 mosse</td>
+          </tr>
+          <tr>
+            <td class="day">9</td><td class="day">21/07</td>
+            <td class="focus">Ripasso mirato dei punti deboli emersi</td>
+            <td>Rileggi solo questa mappa; niente materiale nuovo, riposo la sera</td>
+          </tr>
+          <tr class="exam-row">
+            <td class="day">&mdash;</td><td class="day">22/07</td>
+            <td class="focus">Prova scritta AGID-01</td>
+            <td>4 ore &middot; soglia 21/30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Fonti: <code>AGID/Bando di concorso.txt</code> (art. 7) &middot; <code>AGID/Pubblicazioni_e_Linee_Guida_AGID.md</code> &middot; <code>AGID_Sintesi_Preparazione_Concorso.md</code> &middot; <code>agid.md</code> &middot; <code>AGID/pdf/01-21</code>. Verificare sempre la versione più recente delle Linee Guida su agid.gov.it/it/linee-guida prima della prova.
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  var el = document.getElementById('countdown');
+  if(!el) return;
+  var exam = new Date(2026,6,22);
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var diff = Math.round((exam - today) / 86400000);
+  el.textContent = diff > 0 ? diff + ' giorni' : (diff === 0 ? 'oggi' : 'prova conclusa');
+})();
+</script>
