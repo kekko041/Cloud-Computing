@@ -49,4 +49,25 @@
 
 ---
 
+## Quesito sintetico — PDND (Piattaforma Digitale Nazionale Dati)
+### Materie 1 · 2 · ⏱ 15'
+
+> Il candidato descriva il funzionamento di PDND, chiarendo perché non è un data lake centrale, quali sono gli attori e i concetti principali (e-service, finalità, accordo di fruizione, voucher) e come il modello realizza il principio Once Only.
+
+### Griglia di autocorrezione
+
+| Punto da toccare | ✓ |
+|---|---|
+| Chiarisce che PDND è un **control-plane/broker di fiducia**: i dati non transitano da PDND, la chiamata avviene direttamente tra fruitore ed erogatore | ☐ |
+| Elenca gli attori: ente erogatore, ente fruitore, PDND | ☐ |
+| Descrive il Catalogo E-Service come punto di pubblicazione/scoperta degli e-service esposti dagli enti erogatori | ☐ |
+| Spiega il ruolo della **Finalità**: il fruitore dichiara il motivo dell'accesso, attuando la limitazione di finalità (privacy by design) | ☐ |
+| Descrive l'**Accordo di fruizione** come sottoscrizione attiva tra fruitore ed erogatore, legata a una finalità | ☐ |
+| Spiega il **Voucher**: token a breve durata rilasciato da PDND dopo aver verificato un client assertion JWT firmato dal fruitore con la propria chiave privata (schema coerente con RFC 7523) | ☐ |
+| Collega il modello al principio **Once Only**: nessun dato duplicato in un archivio centrale, la PA richiede il dato in tempo reale invece di chiederlo al cittadino | ☐ |
+
+**Soglia orientativa:** 5/7 voci toccate = risposta solida per una domanda sintetica di questo tipo.
+
+---
+
 *(altri quesiti sintetici sul ramo A verranno aggiunti qui in fase di ripasso)*
