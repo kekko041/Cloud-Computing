@@ -17,6 +17,12 @@
 ### Quesito 2
 > Il candidato descriva sinteticamente gli obblighi di pubblicazione previsti dal D.Lgs. 33/2013 ("Amministrazione Trasparente") per una procedura di affidamento ICT, e il loro collegamento con il Fascicolo Virtuale dell'Operatore Economico (FVOE) introdotto dal D.Lgs. 36/2023.
 
+### Quesito 3
+> Il candidato illustri l'istituto dell'affidamento diretto ai sensi del D.Lgs. 36/2023, indicandone la soglia economica, i principi a cui risponde e le garanzie procedurali che una PA deve comunque rispettare per un acquisto ICT sotto soglia.
+
+### Quesito 4
+> Il candidato descriva le fasi del ciclo della performance previsto dal D.Lgs. 150/2009 e spieghi come tale ciclo si applichi concretamente al monitoraggio di un progetto ICT, distinguendolo dagli obblighi di pubblicazione previsti dal D.Lgs. 33/2013.
+
 ---
 
 ## Caso gestionale
@@ -50,6 +56,16 @@ Usala per punteggiare (0/1/2) ciascuna voce dopo aver scritto la tua risposta.
 - [ ] Cita gli obblighi minimi del D.Lgs. 33/2013 per gli affidamenti: struttura proponente, oggetto, importo, aggiudicatario, tempi di completamento, importi liquidati
 - [ ] Spiega il FVOE come fascicolo digitale che raccoglie la documentazione dell'operatore economico, riducendo gli oneri documentali ripetuti in più gare (logica *once only* applicata al procurement)
 - [ ] Collega i due obblighi: la trasparenza sull'esito riusa i dati già strutturati nel fascicolo/piattaforma di approvvigionamento digitale (PAD)
+
+**Quesito 3**
+- [ ] Indica correttamente la soglia (< 140.000€ per forniture e servizi, incluso l'ICT)
+- [ ] Collega l'istituto al Principio del Risultato (tempestività, miglior rapporto qualità/prezzo) e al Principio dell'Accesso al mercato
+- [ ] Cita le garanzie procedurali: rotazione degli affidatari, motivazione/congruità del prezzo, tracciabilità digitale (BDNCP/FVOE), obbligo di veicolare l'acquisto tramite Consip/MePA salvo eccezioni motivate
+
+**Quesito 4**
+- [ ] Descrive correttamente le fasi del ciclo della performance: definizione obiettivi (Piano della Performance) → misurazione/monitoraggio in corso d'anno → valutazione finale → rendicontazione (Relazione sulla Performance)
+- [ ] Applica il ciclo a un progetto ICT concreto tramite KPI di progetto/servizio (es. tempi di completamento, qualità del servizio digitale)
+- [ ] Distingue correttamente: D.Lgs. 150/2009 = misurazione/valutazione della performance (organizzativa e individuale); D.Lgs. 33/2013 = obblighi di pubblicazione proattiva dei dati (compresi quelli sugli affidamenti e sulla performance dirigenziale)
 
 **Caso gestionale**
 

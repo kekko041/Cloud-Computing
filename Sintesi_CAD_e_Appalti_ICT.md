@@ -1,6 +1,6 @@
-# Sintesi: CAD e Codice degli Appalti per l'ICT
+# Sintesi: CAD, Codice degli Appalti, E-Procurement ICT, Performance e Trasparenza
 
-Questo documento fornisce una sintesi mirata dei due riferimenti normativi principali per i concorsi pubblici in ambito informatico, focalizzandosi sugli aspetti chiave richiesti dal Profilo A e C di Banca d'Italia.
+Questo documento fornisce una sintesi mirata dei riferimenti normativi principali per i concorsi pubblici in ambito informatico, focalizzandosi sugli aspetti chiave richiesti dal Profilo A e C di Banca d'Italia e — nelle sezioni 3 e 4 — dalle **Materie 9, 11, 12, 13** del bando AGID-01 (Ramo E della [mappa mentale del concorso](Mappa_Mentale_AGID.html)).
 
 ---
 
@@ -51,5 +51,38 @@ Questa è la vera novità del Codice 36/2023 per l'ICT:
 *   **Procedura Negoziata senza bando:** Usata consultando un numero minimo di operatori per importi tra i 140.000€ e le soglie di rilevanza europea (es. 215.000€ per le amministrazioni centrali).
 *   **Procedure Aperte o Ristrette:** Obbligatorie per i grandi appalti ICT (es. sviluppo grandi piattaforme o datacenter) al di sopra delle soglie europee.
 
+#### Focus: l'Affidamento Diretto
+La stazione appaltante individua direttamente l'operatore economico senza gara formale, nel limite dei 140.000€. È la procedura più snella e coerente con il *Principio del Risultato* (tempestività), ma resta soggetta a garanzie procedurali:
+*   **Rotazione degli affidatari:** va evitata la concentrazione sistematica degli affidamenti sullo stesso fornitore, a tutela della concorrenza (Principio dell'Accesso al mercato).
+*   **Motivazione e congruità del prezzo:** anche senza gara, la scelta va documentata (tipicamente tramite indagine di mercato informale o confronto preventivi).
+*   **Tracciabilità digitale:** rientra comunque nel ciclo di vita nativamente digitale del contratto (artt. 19-36) e transita per BDNCP e, se applicabile, per il FVOE gestito da ANAC.
+*   **Obbligo Consip/MePA:** per l'ICT va comunque veicolato tramite gli strumenti di e-procurement (Convenzioni, Accordi Quadro, MePA), salvo eccezioni motivate — non è un affidamento libero sul mercato aperto.
+
 ### Il Subappalto (ICT e Sicurezza)
 Il nuovo codice liberalizza il subappalto, rimuovendo i limiti percentuali rigidi (es. il vecchio limite del 30%), a patto che non vi sia intermediazione fittizia. Nel settore ICT, la PA deve valutare molto attentamente l'autorizzazione al subappalto, specialmente se comporta il trattamento di dati sensibili o l'accesso a sistemi critici, per mantenere la conformità al GDPR e alle normative sulla cybersicurezza (es. DORA o Perimetro di Sicurezza Nazionale Cibernetica).
+
+---
+
+## 3. Disciplina Normativa delle Gare Pubbliche di ICT — E-Procurement (Materia 9)
+
+Questa materia riguarda l'attuazione **tecnica** del Codice Appalti (§2) alle gare ICT, tramite gli strumenti digitali di e-procurement definiti da AGID.
+
+*   **Regole Tecniche delle Piattaforme di Approvvigionamento Digitale (PAD) v2** (`AGID/pdf/21`): standard tecnico che disciplina le piattaforme telematiche su cui si svolgono le gare pubbliche digitali (modelli di interoperabilità, checklist di conformità, quadro normativo-tecnico di riferimento).
+*   **DGUE (Documento di Gara Unico Europeo)**: autodichiarazione standardizzata a livello UE con cui l'operatore economico attesta il possesso dei requisiti di partecipazione, integrata nel ciclo digitale della gara insieme al FVOE (§2).
+*   **Circolare AGID n. 3/2016**: regole tecniche storiche di interoperabilità per l'e-procurement, tuttora richiamate come base del sistema.
+*   **AGID come PEPPOL Authority nazionale**: AGID coordina l'adesione italiana alla rete PEPPOL per la fatturazione elettronica e lo scambio di documenti di gara in formato standardizzato a livello europeo (collegamento con la materia 1 — Direttiva 2014/55/UE).
+*   **Ordine di preferenza nell'acquisizione software (artt. 68-69 CAD)** (`AGID/pdf/07`): anche nella fase di gara ICT, la PA deve seguire la gerarchia — **open source → riuso → sviluppo ex novo → software proprietario** — motivando l'eventuale scelta di un'opzione meno prioritaria (vedi §1, Acquisizione, Riuso e Open Source).
+*   **Acquisti IT via Consip/MePA**: canale obbligatorio (salvo eccezioni motivate) anche per gli affidamenti diretti sotto soglia (§2, Focus Affidamento Diretto).
+
+> **Perché è una materia distinta dal Codice Appalti generale (§2/§4 sotto)**: la materia 9 verifica la conoscenza degli **strumenti e delle piattaforme digitali specifiche per l'ICT** (PAD, DGUE, PEPPOL), non solo delle procedure di affidamento in astratto — è il punto di raccordo tra normativa sugli appalti e competenza tecnica AGID.
+
+---
+
+## 4. Performance e Trasparenza Amministrativa (Materia 11)
+
+*   **Amministrazione Trasparente (D.Lgs. 33/2013)**: impone alle PA l'obbligo di pubblicazione proattiva di una serie di dati, tra cui — per quanto riguarda gli affidamenti ICT — struttura proponente, oggetto del bando, importo, aggiudicatario, tempi di completamento e importi liquidati. Il mancato rispetto di questi obblighi è sanzionabile e vigilato da ANAC (vedi risposta precedente su ANAC).
+*   **Ciclo della Performance (D.Lgs. 150/2009)**: disciplina il sistema di misurazione e valutazione della performance organizzativa e individuale nella PA, articolato in fasi: (1) definizione degli obiettivi (Piano della Performance), (2) misurazione e monitoraggio in corso d'anno, (3) valutazione finale, (4) rendicontazione (Relazione sulla Performance). Per un progetto ICT, questo si traduce nella definizione di **KPI di progetto/servizio** coerenti con gli obiettivi strategici dell'amministrazione (collegamento con la materia 6 — KPI di project management, specialmente per la rendicontazione PNRR).
+*   **Amministrazione Trasparente di AGID** (`trasparenza.agid.gov.it`): la sezione dedicata sul sito istituzionale AGID è citata come **modello applicativo di riferimento** degli obblighi di trasparenza — utile da menzionare in un caso gestionale come esempio di buona pratica concreta.
+*   **Collegamento con l'e-procurement digitale (§3)**: la trasparenza sull'esito di una gara ICT riusa i dati già strutturati nelle piattaforme di approvvigionamento digitale (PAD) e nel FVOE, secondo la logica "pubblica una volta, riusa ovunque" coerente con il principio Once Only.
+
+> **Attenzione**: D.Lgs. 33/2013 e D.Lgs. 150/2009 sono normativa primaria **generale**, non emanata da AGID — AGID ne è un soggetto attuatore (come ogni PA) e fornisce un buon caso di studio applicativo, ma per il testo normativo pieno va integrata la consultazione con `fonti/`.

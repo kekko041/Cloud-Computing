@@ -285,6 +285,24 @@
     padding:0 20px 20px;
     border-top:1px solid var(--line);
   }
+  .cluster-resources{
+    display:flex; gap:8px; flex-wrap:wrap;
+    padding:14px 0 2px;
+  }
+  .cluster-resources a{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    text-decoration:none;
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    padding:4px 12px;
+    color:var(--ink-soft);
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .cluster-resources a:hover{
+    border-color:var(--c-accent, var(--blue));
+    color:var(--c-accent, var(--blue));
+  }
   article.materia{
     padding:18px 0;
     border-bottom:1px dashed var(--line);
@@ -467,6 +485,10 @@
         <span class="chevron">&#10148;</span>
       </summary>
       <div class="cluster-body">
+        <div class="cluster-resources">
+          <a href="Sintesi_Normazione_Interoperabilita.md">&#128214; Sintesi</a>
+          <a href="AGID_Simulazione_Ramo_A.md">&#128221; Simulazione (3 quesiti + caso gestionale)</a>
+        </div>
         <article class="materia">
           <div class="materia-head">
             <span class="materia-num">Mat. 1</span>
@@ -505,6 +527,10 @@
         <span class="chevron">&#10148;</span>
       </summary>
       <div class="cluster-body">
+        <div class="cluster-resources">
+          <a href="Sintesi_Dati_Metadatazione_ML.md">&#128214; Sintesi</a>
+          <a href="AGID_Simulazione_Ramo_B.md">&#128221; Simulazione (3 quesiti + caso gestionale)</a>
+        </div>
         <article class="materia">
           <div class="materia-head">
             <span class="materia-num">Mat. 3</span>
@@ -532,6 +558,10 @@
         <span class="chevron">&#10148;</span>
       </summary>
       <div class="cluster-body">
+        <div class="cluster-resources">
+          <a href="Sintesi_Architetture_Qualita_Migrazione.md">&#128214; Sintesi</a>
+          <a href="AGID_Simulazione_Ramo_C.md">&#128221; Simulazione (3 quesiti + caso gestionale)</a>
+        </div>
         <article class="materia">
           <div class="materia-head">
             <span class="materia-num">Mat. 4</span>
@@ -581,6 +611,10 @@
         <span class="chevron">&#10148;</span>
       </summary>
       <div class="cluster-body">
+        <div class="cluster-resources">
+          <a href="Sintesi_PM_Programmazione_Budget.md">&#128214; Sintesi</a>
+          <a href="AGID_Simulazione_Ramo_D.md">&#128221; Simulazione (3 quesiti + caso gestionale)</a>
+        </div>
         <article class="materia">
           <div class="materia-head">
             <span class="materia-num">Mat. 6</span>
@@ -628,6 +662,10 @@
         <span class="chevron">&#10148;</span>
       </summary>
       <div class="cluster-body">
+        <div class="cluster-resources">
+          <a href="Sintesi_CAD_e_Appalti_ICT.md">&#128214; Sintesi (CAD, Appalti, E-Procurement, Performance &amp; Trasparenza)</a>
+          <a href="AGID_Simulazione_Ramo_E.md">&#128221; Simulazione (4 quesiti + caso gestionale)</a>
+        </div>
         <article class="materia">
           <div class="materia-head">
             <span class="materia-num">Mat. 12</span>
@@ -719,42 +757,42 @@
           <tr>
             <td class="day">1</td><td class="day">13/07</td>
             <td class="focus"><strong>Ramo A</strong> — Standard &amp; interoperabilità</td>
-            <td>Leggi <span class="src">AGID/pdf/03, 05, 06</span> + Sintesi §1</td>
+            <td>Leggi <span class="src">AGID/pdf/03, 05, 06</span> + <a href="Sintesi_Normazione_Interoperabilita.md">Sintesi</a>; poi <a href="AGID_Simulazione_Ramo_A.md">Simulazione</a></td>
           </tr>
           <tr>
             <td class="day">2</td><td class="day">14/07</td>
             <td class="focus"><strong>Ramo C (1/2)</strong> — Architetture &amp; cloud/migrazione</td>
-            <td>Leggi <span class="src">AGID/pdf/01, 08-11, 16-17</span> + Sintesi §2-3</td>
+            <td>Leggi <span class="src">AGID/pdf/01, 08-11, 16-17</span> + <a href="Sintesi_Architetture_Qualita_Migrazione.md">Sintesi</a> §1 e §3</td>
           </tr>
           <tr>
             <td class="day">3</td><td class="day">15/07</td>
             <td class="focus"><strong>Ramo C (2/2)</strong> — Qualità e metriche del software</td>
-            <td>Isola la materia 5 dagli appunti sullo sviluppo sicuro; ripassa ISO/IEC 25010</td>
+            <td><a href="Sintesi_Architetture_Qualita_Migrazione.md">Sintesi</a> §2; ripassa ISO/IEC 25010; poi <a href="AGID_Simulazione_Ramo_C.md">Simulazione</a></td>
           </tr>
           <tr>
             <td class="day">4</td><td class="day">16/07</td>
             <td class="focus"><strong>Ramo B</strong> — Dati, metadati &amp; IA</td>
-            <td>Leggi <span class="src">AGID/pdf/12-15</span></td>
+            <td>Leggi <span class="src">AGID/pdf/12-15</span> + <a href="Sintesi_Dati_Metadatazione_ML.md">Sintesi</a>; poi <a href="AGID_Simulazione_Ramo_B.md">Simulazione</a></td>
           </tr>
           <tr>
             <td class="day">5</td><td class="day">17/07</td>
             <td class="focus"><strong>Ramo D</strong> — PM, programmazione, budget</td>
-            <td>Leggi <span class="src">AGID/pdf/01, 02, 19, 20</span></td>
+            <td>Leggi <span class="src">AGID/pdf/01, 02, 19, 20</span> + <a href="Sintesi_PM_Programmazione_Budget.md">Sintesi</a>; poi <a href="AGID_Simulazione_Ramo_D.md">Simulazione</a></td>
           </tr>
           <tr>
             <td class="day">6</td><td class="day">18/07</td>
             <td class="focus"><strong>Ramo E (1/2)</strong> — CAD: identità, firme, continuità operativa</td>
-            <td>Ripassa identità digitale/eIDAS/documento informatico</td>
+            <td>Ripassa identità digitale/eIDAS/documento informatico — <a href="Sintesi_CAD_e_Appalti_ICT.md">Sintesi</a> §1</td>
           </tr>
           <tr>
             <td class="day">7</td><td class="day">19/07</td>
-            <td class="focus"><strong>Ramo E (2/2)</strong> — Appalti ICT, codice contratti, trasparenza</td>
-            <td>Integra con <span class="src">fonti/</span> (Business Continuity, Zero Trust) per i casi gestionali di sicurezza</td>
+            <td class="focus"><strong>Ramo E (2/2)</strong> — Appalti, e-procurement, performance &amp; trasparenza</td>
+            <td><a href="Sintesi_CAD_e_Appalti_ICT.md">Sintesi</a> §2-4; integra con <span class="src">fonti/</span> (Business Continuity, Zero Trust); poi <a href="AGID_Simulazione_Ramo_E.md">Simulazione</a></td>
           </tr>
           <tr>
             <td class="day">8</td><td class="day">20/07</td>
             <td class="focus"><strong>Simulazione a tempo</strong> (4h)</td>
-            <td>1 quesito sintetico + 1 caso gestionale; poi autocorrezione col metodo in 4 mosse</td>
+            <td>Componi la prova mescolando quesiti/casi gestionali dalle 5 simulazioni di ramo; poi autocorrezione col metodo in 4 mosse</td>
           </tr>
           <tr>
             <td class="day">9</td><td class="day">21/07</td>
@@ -773,6 +811,10 @@
 
   <footer>
     Fonti: <code>AGID/Bando di concorso.txt</code> (art. 7) &middot; <code>AGID/Pubblicazioni_e_Linee_Guida_AGID.md</code> &middot; <code>AGID_Sintesi_Preparazione_Concorso.md</code> &middot; <code>agid.md</code> &middot; <code>AGID/pdf/01-21</code>. Verificare sempre la versione più recente delle Linee Guida su agid.gov.it/it/linee-guida prima della prova.
+    <br><br>
+    Sintesi per ramo: <a href="Sintesi_Normazione_Interoperabilita.md">Ramo A</a> &middot; <a href="Sintesi_Dati_Metadatazione_ML.md">Ramo B</a> &middot; <a href="Sintesi_Architetture_Qualita_Migrazione.md">Ramo C</a> &middot; <a href="Sintesi_PM_Programmazione_Budget.md">Ramo D</a> &middot; <a href="Sintesi_CAD_e_Appalti_ICT.md">Ramo E</a>.
+    <br>
+    Simulazioni per ramo: <a href="AGID_Simulazione_Ramo_A.md">Ramo A</a> &middot; <a href="AGID_Simulazione_Ramo_B.md">Ramo B</a> &middot; <a href="AGID_Simulazione_Ramo_C.md">Ramo C</a> &middot; <a href="AGID_Simulazione_Ramo_D.md">Ramo D</a> &middot; <a href="AGID_Simulazione_Ramo_E.md">Ramo E</a>.
   </footer>
 
 </main>

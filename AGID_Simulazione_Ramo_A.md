@@ -1,9 +1,11 @@
 # Simulazione — Ramo A: Standard & Interoperabilità
 ### Concorso AGID-01 · Materie 1, 2 del bando (art. 7)
 
-> **Formato.** Quesiti a risposta sintetica sul ramo Standard & Interoperabilità (normazione tecnica nazionale/comunitaria/internazionale + modelli di interoperabilità ModI/PDND). Da integrare progressivamente con altri quesiti man mano che emergono in fase di ripasso.
+> **Formato.** Come da bando, la prova reale è composta da uno o più quesiti a risposta sintetica e uno o più casi gestionali, in 4 ore complessive su tutte le materie. Questa è una simulazione **parziale**, mirata al solo Ramo A — usala come allenamento a tempo, non come prova completa.
 >
-> Vedi anche la [mappa mentale del concorso] — ramo A — e `AGID_Simulazione_Ramo_E.md` per il formato del caso gestionale.
+> **Fonti di riferimento:** [Sintesi_Normazione_Interoperabilita.md](Sintesi_Normazione_Interoperabilita.md), `AGID/Pubblicazioni_e_Linee_Guida_AGID.md` §1-2, `AGID/pdf/03-06` e `21`.
+>
+> Vedi anche la [mappa mentale del concorso](Mappa_Mentale_AGID.html) — ramo A.
 
 ---
 
@@ -71,3 +73,35 @@
 ---
 
 *(altri quesiti sintetici sul ramo A verranno aggiunti qui in fase di ripasso)*
+
+---
+
+## Caso gestionale
+
+> Due amministrazioni — un Ministero e un Comune capoluogo — devono realizzare un nuovo servizio digitale che consente al cittadino di richiedere online un contributo economico. Il servizio deve recuperare automaticamente, dal sistema del Ministero, alcuni dati reddituali già in possesso dell'amministrazione centrale, senza chiederli nuovamente al cittadino. Il Comune non ha mai integrato sistemi esterni tramite PDND ed è preoccupato sia per la sicurezza dell'integrazione sia per la conformità agli standard tecnici richiesti da AGID.
+>
+> Il candidato, assumendo il ruolo di responsabile ICT del Comune:
+>
+> **(a)** individui il modello di interoperabilità da adottare (PDND, e-service, accordo di fruizione), motivando la scelta rispetto a un'integrazione punto-punto ad hoc tra i due enti;
+>
+> **(b)** descriva i meccanismi di sicurezza da implementare nello scambio (autenticazione del sistema chiamante, autorizzazione, cifratura in transito), citando gli standard tecnici e le Linee Guida AGID di riferimento;
+>
+> **(c)** spieghi come la soluzione realizza il principio Once Only e quali garanzie di finalità/minimizzazione del dato vanno rispettate lato privacy;
+>
+> **(d)** individui i principali rischi tecnici e organizzativi dell'integrazione (es. indisponibilità del sistema erogatore, gestione del ciclo di vita dei certificati, revoca degli accessi) e le relative misure di mitigazione.
+>
+> Si motivino le scelte e si segnalino eventuali criticità residue.
+
+### Griglia di autocorrezione — Caso gestionale
+
+| Punto | Cosa deve comparire nella risposta | ✓ |
+|---|---|---|
+| (a) Modello | PDND come control-plane/broker di fiducia (non data lake); Catalogo E-Service per la scoperta dell'e-service del Ministero; accordo di fruizione legato a una finalità dichiarata; preferenza rispetto a integrazione punto-punto (minore accoppiamento, standardizzazione, tracciabilità) | ☐ |
+| (b) Sicurezza | mTLS/X.509 per l'autenticazione del sistema chiamante, OAuth 2.0/voucher PDND per l'autorizzazione, TLS 1.2/1.3 per la cifratura in transito; riferimento alle Linee Guida AGID sicurezza API (`AGID/pdf/05`) | ☐ |
+| (c) Once Only & privacy | Nessuna richiesta duplicata del dato reddituale al cittadino; finalità dichiarata nell'accordo di fruizione; minimizzazione (solo i dati necessari al calcolo del contributo) | ☐ |
+| (d) Rischi | Indisponibilità del sistema erogatore (gestione fallback/timeout), rotazione e revoca dei certificati client, gestione del voucher (TTL breve, rinnovo), audit/logging degli accessi | ☐ |
+| Metodo | La risposta segue le 4 mosse (norma → metodo → soluzione tecnica → rischio/budget) invece di elencare i fatti senza struttura | ☐ |
+
+---
+
+> **Come proseguire.** Scrivi la tua risposta al caso gestionale (anche solo per punti) e incollala in chat: te la correggo voce per voce sulla griglia sopra, segnalando cosa manca e cosa è già solido.
