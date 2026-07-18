@@ -23,6 +23,9 @@
 ### Quesito 4
 > Il candidato descriva le fasi del ciclo della performance previsto dal D.Lgs. 150/2009 e spieghi come tale ciclo si applichi concretamente al monitoraggio di un progetto ICT, distinguendolo dagli obblighi di pubblicazione previsti dal D.Lgs. 33/2013.
 
+### Quesito 5
+> Il candidato illustri i principali istituti della L. 241/1990 in tema di partecipazione al procedimento e di semplificazione amministrativa (comunicazione di avvio, preavviso di rigetto, art. 18), spiegando in che modo il CAD ne costituisce l'attuazione digitale e come l'art. 18 fondi giuridicamente il principio Once Only.
+
 ---
 
 ## Caso gestionale
@@ -66,6 +69,12 @@ Usala per punteggiare (0/1/2) ciascuna voce dopo aver scritto la tua risposta.
 - [ ] Descrive correttamente le fasi del ciclo della performance: definizione obiettivi (Piano della Performance) → misurazione/monitoraggio in corso d'anno → valutazione finale → rendicontazione (Relazione sulla Performance)
 - [ ] Applica il ciclo a un progetto ICT concreto tramite KPI di progetto/servizio (es. tempi di completamento, qualità del servizio digitale)
 - [ ] Distingue correttamente: D.Lgs. 150/2009 = misurazione/valutazione della performance (organizzativa e individuale); D.Lgs. 33/2013 = obblighi di pubblicazione proattiva dei dati (compresi quelli sugli affidamenti e sulla performance dirigenziale)
+
+**Quesito 5**
+- [ ] Descrive la comunicazione di avvio del procedimento (artt. 7-8) e il preavviso di rigetto (art. 10-bis) come garanzie di contraddittorio per l'interessato prima dell'adozione del provvedimento
+- [ ] Cita l'art. 18 (divieto per la PA di richiedere dati/documenti già in proprio possesso o disponibili presso altra amministrazione) come base giuridica generale del principio Once Only
+- [ ] Collega correttamente il CAD: identità digitale, domicilio digitale (comunicazioni), conservazione documentale sono l'attuazione tecnologica degli istituti della 241/90 (comunicazione, provvedimento, fascicolo del procedimento), non una normativa alternativa o sostitutiva
+- [ ] Cita almeno un'attuazione tecnica concreta dell'art. 18 nel mondo AGID (PDND per l'interoperabilità dati tra PA, FVOE per i dati delle imprese in gara)
 
 **Caso gestionale**
 
