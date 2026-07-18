@@ -22,6 +22,9 @@
 ### Quesito 3
 > Il candidato descriva i tre percorsi di migrazione al Cloud (Rehost, Replatform, Rearchitect/Refactor), indicando per ciascuno il livello di sforzo, il beneficio atteso e un esempio di caso d'uso in cui sarebbe la scelta più appropriata.
 
+### Quesito 4
+> Il candidato descriva cos'è il Polo Strategico Nazionale (PSN), per quali servizi ne è obbligatorio l'utilizzo e da chi è retto — indicando i soggetti coinvolti nell'indirizzo strategico, nella sicurezza, nella qualificazione tecnica e nella gestione operativa dell'infrastruttura.
+
 ---
 
 ## Caso gestionale
@@ -60,6 +63,12 @@ Usala per punteggiare (0/1/2) ciascuna voce dopo aver scritto la tua risposta.
 - [ ] Descrive correttamente i tre percorsi (Rehost = lift&shift IaaS; Replatform = modifiche minime, es. DBaaS; Rearchitect/Refactor = cloud-native, microservizi/container/serverless)
 - [ ] Indica correttamente la relazione sforzo/beneficio crescente da Rehost a Rearchitect
 - [ ] Propone un caso d'uso plausibile e coerente per almeno due dei tre percorsi
+
+**Quesito 4**
+- [ ] Definisce il PSN come infrastruttura cloud sovrana obbligatoria per i servizi/dati classificati Critici e Strategici (non un ente pubblico, ma un'infrastruttura in concessione)
+- [ ] Indica correttamente l'indirizzo strategico (Presidenza del Consiglio – Dip. Trasformazione Digitale) e il ruolo dell'ACN nei requisiti di sicurezza/classificazione, distinto dal ruolo di AGID nella qualificazione dei cloud provider
+- [ ] Cita Difesa Servizi S.p.A. come stazione appaltante della concessione (per la rilevanza securitaria) e PSN S.p.A. (consorzio TIM-CDP Equity-Sogei-Leonardo) come concessionario gestore per 15 anni
+- [ ] Non confonde i piani: indirizzo politico ≠ vigilanza di sicurezza ≠ qualificazione tecnica ≠ gestione operativa privata in concessione
 
 **Caso gestionale**
 

@@ -99,7 +99,7 @@ Questa è la vera novità del Codice 36/2023 per l'ICT:
 
 ### Tipi di Procedure (Sopra e Sotto Soglia)
 *   **Affidamento diretto:** Previsto per importi inferiori a 140.000€ per forniture e servizi (incluso l'ICT). Molto usato per acquisti agili di licenze o sviluppo software di piccola entità.
-*   **Procedura Negoziata senza bando:** Usata consultando un numero minimo di operatori per importi tra i 140.000€ e le soglie di rilevanza europea (es. 215.000€ per le amministrazioni centrali).
+*   **Procedura Negoziata senza bando:** Usata consultando un numero minimo di operatori per importi tra i 140.000€ e le soglie di rilevanza europea (aggiornate periodicamente, es. dal 2024 sono 143.000€ per le amministrazioni centrali e 221.000€ per quelle sub-centrali).
 *   **Procedure Aperte o Ristrette:** Obbligatorie per i grandi appalti ICT (es. sviluppo grandi piattaforme o datacenter) al di sopra delle soglie europee.
 
 #### Focus: l'Affidamento Diretto
