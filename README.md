@@ -1,1 +1,7 @@
-# Miei appunti su concorsi vari, partito da Concorso Banca d'Italia per poi passare AGid. prossimo passo per concorso MIT e poi ACN. valutare se fare diversi REPO...
+Miei appunti su concorsi vari:
+- Concorso Banca d'Italia
+- AGid in corso
+- MIT da fare
+- ACN da fare 
+
+valutare se fare diversi REPO per concorso
