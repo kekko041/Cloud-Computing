@@ -25,6 +25,9 @@
 ### Quesito 4
 > Il candidato descriva cos'è il Polo Strategico Nazionale (PSN), per quali servizi ne è obbligatorio l'utilizzo e da chi è retto — indicando i soggetti coinvolti nell'indirizzo strategico, nella sicurezza, nella qualificazione tecnica e nella gestione operativa dell'infrastruttura.
 
+### Quesito 5
+> Il candidato, dopo aver illustrato il modello di qualità ISO/IEC 25010, discuta come le caratteristiche di **sicurezza** e **manutenibilità** possano essere tradotte in clausole contrattuali verificabili in un appalto pubblico di sviluppo software, motivando la scelta di eventuali penali e il relativo impatto su TCO e rischio di lock-in del fornitore.
+
 ---
 
 ## Caso gestionale
@@ -69,6 +72,12 @@ Usala per punteggiare (0/1/2) ciascuna voce dopo aver scritto la tua risposta.
 - [ ] Indica correttamente l'indirizzo strategico (Presidenza del Consiglio – Dip. Trasformazione Digitale) e il ruolo dell'ACN nei requisiti di sicurezza/classificazione, distinto dal ruolo di AGID nella qualificazione dei cloud provider
 - [ ] Cita Difesa Servizi S.p.A. come stazione appaltante della concessione (per la rilevanza securitaria) e PSN S.p.A. (consorzio TIM-CDP Equity-Sogei-Leonardo) come concessionario gestore per 15 anni
 - [ ] Non confonde i piani: indirizzo politico ≠ vigilanza di sicurezza ≠ qualificazione tecnica ≠ gestione operativa privata in concessione
+
+**Quesito 5**
+- [ ] Definisce correttamente sicurezza (riservatezza, integrità, non ripudio, autenticità) e manutenibilità (modularità, testabilità, analizzabilità) secondo ISO/IEC 25010
+- [ ] Propone almeno 2 metriche verificabili per ciascuna caratteristica (es. sicurezza → tempo di remediation per severità; manutenibilità → code coverage e densità difetti)
+- [ ] Collega le metriche a clausole contrattuali con penali graduate per gravità/ritardo
+- [ ] Discute il trade-off tra soglie troppo stringenti (aumento costi/tempi del fornitore) e soglie troppo blande (rischio qualità non presidiato), con impatto su TCO e lock-in
 
 **Caso gestionale**
 

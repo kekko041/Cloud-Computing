@@ -46,6 +46,18 @@ Il punto centrale da non confondere in una risposta d'esame è quindi: indirizzo
 
 ---
 
+## Quesito 5 — Sicurezza e manutenibilità (ISO/IEC 25010) in clausole contrattuali
+
+Nel modello **ISO/IEC 25010**, la **sicurezza** comprende le sotto-caratteristiche di riservatezza, integrità, non ripudio, autenticità (e responsabilità/accountability), mentre la **manutenibilità** comprende modularità, testabilità e analizzabilità (facilità di individuare la causa di un difetto o l'impatto di una modifica).
+
+Entrambe sono traducibili in **clausole contrattuali verificabili**, non in requisiti generici:
+- la **sicurezza** si traduce in un **tempo massimo di remediation** delle vulnerabilità rilevate (da SAST/DAST o da attività di vulnerability assessment periodico), differenziato per severità — ad esempio critica entro 15 giorni, alta entro 30, media entro 90 — con obbligo di notifica tempestiva delle vulnerabilità scoperte;
+- la **manutenibilità** si traduce in una soglia minima di **code coverage** dei test automatizzati (es. ≥80% sul codice nuovo/modificato) e in un limite massimo di **densità di difetti** per rilascio (es. per KLOC), verificabili tramite strumenti di analisi statica integrati in pipeline.
+
+Queste metriche vanno accompagnate da **penali graduate**: proporzionate alla gravità e alla durata del ritardo (es. penale crescente per ogni giorno oltre la soglia di remediation su una vulnerabilità critica), in modo da rendere l'obbligo economicamente significativo senza essere sproporzionato per scostamenti minimi. Penali eccessivamente punitive fin dal primo giorno di ritardo, o soglie di qualità irrealistiche (es. code coverage 100%), rischiano di alzare il prezzo dell'offerta o scoraggiare la partecipazione alla gara, aumentando il **TCO** complessivo senza un beneficio proporzionale sulla qualità reale; soglie troppo permissive, all'opposto, lasciano il rischio di qualità sostanzialmente non presidiato. Va inoltre valutato il legame con il **lock-in**: richiedere modularità/testabilità elevate e documentazione tecnica completa come parte della manutenibilità contrattuale facilita, in caso di cambio fornitore a fine contratto, la presa in carico del codice da parte di un nuovo affidatario, riducendo la dipendenza dal fornitore uscente.
+
+---
+
 ## Caso gestionale
 
 *Metodo (4 mosse): (1) inquadramento normativo, (2) metodo progettuale, (3) soluzione tecnica, (4) rischio & budget.*
