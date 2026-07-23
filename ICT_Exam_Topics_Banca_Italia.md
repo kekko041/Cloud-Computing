@@ -1,7 +1,7 @@
 # Concorso Banca d'Italia - Esperti ICT
 ## Guida alla Preparazione della Prova Scritta: Temi e Soluzioni Architetturali
 
-Questa guida è stata elaborata analizzando le fonti presenti nella cartella `fonti`, che comprendono il manuale ufficiale di preparazione (edizione 2026), i whitepaper di settore e gli standard internazionali. I temi proposti riflettono la natura delle prove scritte della Banca d'Italia, caratterizzate da domande aperte che richiedono la progettazione di architetture sicure, scalabili e conformi alle severe normative del settore finanziario europeo.
+Questa guida è stata elaborata analizzando le fonti presenti nella cartella `fonti_banca_italia`, che comprendono il manuale ufficiale di preparazione (edizione 2026), i whitepaper di settore e gli standard internazionali. I temi proposti riflettono la natura delle prove scritte della Banca d'Italia, caratterizzate da domande aperte che richiedono la progettazione di architetture sicure, scalabili e conformi alle severe normative del settore finanziario europeo.
 
 ---
 

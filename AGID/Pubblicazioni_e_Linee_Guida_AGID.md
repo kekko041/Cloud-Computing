@@ -77,7 +77,7 @@ Fonte: [agid.gov.it](https://www.agid.gov.it/it) — ricerca svolta sulle sezion
 
 ## 11. Disciplina normativa in tema di performance e trasparenza amministrativa
 - [Amministrazione Trasparente AgID](https://trasparenza.agid.gov.it/) — sezione con determinazioni, circolari, provvedimenti (utile come modello di applicazione degli obblighi di trasparenza)
-- Nota: la disciplina primaria (D.Lgs. 33/2013 trasparenza, D.Lgs. 150/2009 performance) è normativa generale non emanata da AgID: verificare nelle fonti già presenti in `fonti/`
+- Nota: la disciplina primaria (D.Lgs. 33/2013 trasparenza, D.Lgs. 150/2009 performance) è normativa generale non emanata da AgID: verificare nelle fonti già presenti in `fonti_banca_italia/`
 
 ## 12. Codice dell'Amministrazione Digitale (CAD)
 Linee guida attuative di articoli specifici del CAD (D.Lgs. 82/2005):
@@ -102,4 +102,4 @@ I 21 documenti principali sono stati scaricati in `AGID/pdf/` (numerati secondo 
 ## Note metodologiche
 - Molte Linee Guida AgID sono state riorganizzate/riadottate nel 2024-2026: verificare sempre la versione più recente sulla pagina ufficiale [agid.gov.it/it/linee-guida](https://www.agid.gov.it/it/linee-guida) prima dell'esame.
 - La qualificazione dei servizi Cloud (CSP/SaaS) è stata trasferita all'**ACN** (Agenzia per la Cybersicurezza Nazionale) dal 2023: utile conoscere il framework metodologico AgID ma citare la competenza attuale correttamente in sede d'esame.
-- Per i temi normativi generali (CAD integrale, Codice contratti pubblici, D.Lgs. 33/2013, D.Lgs. 150/2009) integrare con i testi di legge presenti in `fonti/`, poiché AgID pubblica principalmente le norme tecniche attuative e non i codici primari.
+- Per i temi normativi generali (CAD integrale, Codice contratti pubblici, D.Lgs. 33/2013, D.Lgs. 150/2009) integrare con i testi di legge presenti in `fonti_banca_italia/`, poiché AgID pubblica principalmente le norme tecniche attuative e non i codici primari.
