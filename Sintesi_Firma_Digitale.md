@@ -27,14 +27,13 @@ L'obiettivo è avere un'unica scheda di ripasso completa (normativa + tecnica + 
 
 ## 2. Le tre firme elettroniche (FES / FEA / FEQ) e la Firma Digitale
 
-Tabella integrata: definizione giuridica (repo, coerente con eIDAS/CAD) + precisazioni operative dell'articolo.
+Tabella integrata: definizione giuridica (repo, coerente con eIDAS/CAD) + precisazioni operative dell'articolo. Coerentemente con il modello a **tre livelli** già usato in [`Sintesi_CAD_e_Appalti_ICT.md`](Sintesi_CAD_e_Appalti_ICT.md) §2 e in `Mappa_Mentale_AGID.html` (Mat. 12), FEQ e Firma Digitale sono trattate come lo **stesso livello**: la "Firma Digitale" è la species tecnica italiana con cui il CAD attua la FEQ prevista da eIDAS, non un quarto livello a sé stante.
 
 | Tipo | Definizione | Requisiti | Valore probatorio |
 |---|---|---|---|
 | **FES** — Firma Elettronica Semplice | Dati elettronici allegati/connessi ad altri dati, usati come metodo di identificazione (es. PIN, username/password, checkbox, firma scansionata) | Nessun requisito particolare di identificazione del firmatario | Liberamente valutabile dal giudice in base a qualità, sicurezza e integrità (valore probatorio più debole) |
-| **FEA** — Firma Elettronica Avanzata | Connessa unicamente al firmatario, creata con mezzi sotto il suo controllo esclusivo, in grado di rilevare modifiche successive al documento (es. firma grafometrica su tablet) | Identificazione univoca del firmatario + integrità del documento, ma **senza** certificato qualificato | In Italia, se rispetta requisiti tecnici specifici (AgID), può **equivalere alla FEQ**; altrimenti resta liberamente valutabile ma con presunzione più forte della FES |
-| **FEQ** — Firma Elettronica Qualificata | FEA basata su un **certificato qualificato** rilasciato da un prestatore di servizi fiduciari accreditato e creata con un **dispositivo sicuro** di firma | Certificato qualificato + dispositivo sicuro (smart card, token, HSM in remoto) | **Piena efficacia probatoria**, equivalente alla firma autografa (art. 2702 c.c.) |
-| **Firma Digitale** | In Italia è la **species tecnica italiana della FEQ**: basata su crittografia asimmetrica (coppia di chiavi pubblica/privata) | Come FEQ | Stesso valore legale della FEQ/firma autografa |
+| **FEA** — Firma Elettronica Avanzata | Connessa unicamente al firmatario, creata con mezzi sotto il suo controllo esclusivo, in grado di rilevare modifiche successive al documento (es. firma grafometrica su tablet) | Identificazione univoca del firmatario + integrità del documento, ma **senza** certificato qualificato | In Italia, se rispetta requisiti tecnici specifici (AgID), può produrre gli stessi effetti probatori della FEQ; altrimenti resta liberamente valutabile ma con presunzione più forte della FES |
+| **FEQ / Firma Digitale** — Firma Elettronica Qualificata | FEA basata su un **certificato qualificato** rilasciato da un prestatore di servizi fiduciari accreditato e creata con un **dispositivo sicuro** di firma; in Italia la "Firma Digitale" è la sua declinazione tecnica basata su crittografia asimmetrica (coppia di chiavi pubblica/privata) | Certificato qualificato + dispositivo sicuro (smart card, token, HSM in remoto) | **Piena efficacia probatoria**, equivalente alla firma autografa (art. 2702 c.c.) |
 
 **Quando è obbligatoria la FEQ** (da [`AGID_Simulazione_Ramo_E_Soluzioni.md`](AGID_Simulazione_Ramo_E_Soluzioni.md), Quesito 1): quando l'atto produce effetti giuridici pieni e richiede valore probatorio pieno e non ripudio — tipicamente sottoscrizione di **contratti pubblici** e **provvedimenti amministrativi formali**. Per istanze informali o a basso impatto può bastare una FEA o una semplice identificazione via SPID/CIE con FES.
 
@@ -124,6 +123,8 @@ Tutti i formati hanno pari validità legale sia in modalità locale sia remota.
 1. Rivolgersi a un **prestatore di servizi fiduciari qualificato**, vigilato dall'**AgID** (in Italia sono attualmente autorizzati **18 soggetti certificatori** — coerente con il ruolo AgID come "braccio tecnico-operativo" descritto in [`AGID_Sintesi_Preparazione_Concorso.md` §7](AGID_Sintesi_Preparazione_Concorso.md)).
 2. **Identificazione**: di persona con documento d'identità, oppure da remoto tramite **SPID** o **CIE** (coerente con il ruolo di SPID/CIE come "unici strumenti di identificazione" nel CAD, v. [`Sintesi_CAD_e_Appalti_ICT.md` §2](Sintesi_CAD_e_Appalti_ICT.md)).
 3. Costi indicativi: firma remota ~25-30 €+IVA, token USB ~60-80 €+IVA, firma one-shot via SPID ~2,99 €; **gratuita** per iscritti a ordini professionali e Camere di Commercio.
+
+> **Nota di aggiornamento**: il numero di certificatori accreditati (18) e i costi indicati sono una fotografia puntuale ripresa dall'articolo di Agenda Digitale, non un dato normativo stabile — prima dell'esame verificare l'elenco aggiornato dei prestatori di servizi fiduciari qualificati sul sito AgID, con lo stesso criterio prudenziale già adottato in [`AGID/Pubblicazioni_e_Linee_Guida_AGID.md`](AGID/Pubblicazioni_e_Linee_Guida_AGID.md) (§ Note metodologiche) per le Linee Guida riorganizzate nel 2024-2026.
 
 ---
 

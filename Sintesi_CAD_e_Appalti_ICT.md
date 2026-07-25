@@ -70,7 +70,7 @@ Il CAD è il corpo normativo che regola il processo di digitalizzazione della Pu
 *   **Firme Elettroniche (in conformità al Regolamento eIDAS):**
     *   *Firma Elettronica Semplice (FES):* Dati in forma elettronica allegati o connessi tramite associazione logica ad altri dati elettronici (es. pin, username/password). Valore probatorio valutabile dal giudice.
     *   *Firma Elettronica Avanzata (FEA):* Connessa unicamente al firmatario, ne consente l'identificazione, creata con mezzi sotto il controllo esclusivo del firmatario (es. firma grafometrica su tablet).
-    *   *Firma Elettronica Qualificata (FEQ) / Firma Digitale:* Un particolare tipo di FEA basata su un sistema di chiavi crittografiche asimmetriche (pubblica/privata) e un certificato qualificato rilasciato da un prestatore di servizi fiduciari. Ha l'efficacia della scrittura privata (Art. 2702 c.c.).
+    *   *Firma Elettronica Qualificata (FEQ) / Firma Digitale:* Un particolare tipo di FEA basata su un sistema di chiavi crittografiche asimmetriche (pubblica/privata) e un certificato qualificato rilasciato da un prestatore di servizi fiduciari. Ha l'efficacia della scrittura privata (Art. 2702 c.c.). Approfondimento su funzionamento tecnico, dispositivi e procedura di ottenimento in [`Sintesi_Firma_Digitale.md`](Sintesi_Firma_Digitale.md).
 
 ### Acquisizione, Riuso e Open Source (Artt. 68-69)
 *   **Art. 68 (Valutazione comparativa):** Le PA devono acquisire software tramite valutazione comparativa tecnica ed economica tra: software libero/open source, software a riuso, software proprietario. Il software open source e il riuso hanno priorità.
