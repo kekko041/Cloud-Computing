@@ -19,6 +19,8 @@ Il CAD è la norma cardine che regola la digitalizzazione della PA italiana: non
 
 *Sintesi per l'esame*: se un quesito chiede "prima di acquistare una licenza software, cosa deve fare la PA?", la risposta corretta cita sempre la gerarchia degli artt. 68-69, non un generico confronto di prezzo.
 
+* **Art. 16 — Funzioni del Presidente del Consiglio dei Ministri** *(dalla prova scritta reale)*: la **definizione, con proprie direttive, delle linee strategiche, della pianificazione e delle aree di intervento dell'innovazione tecnologica** nelle Pubbliche Amministrazioni centrali spetta al **Presidente del Consiglio dei Ministri o al Ministro delegato per l'innovazione e la tecnologia** — non all'AGID (che resta il braccio tecnico-operativo, vedi Materia 11 §2) né al Ministro delle Imprese e del Made in Italy. È un dettaglio puntuale da ricordare: il CAD attribuisce l'**indirizzo politico-strategico** al vertice PCM, coerentemente con la governance DTD/AGID/ACN approfondita in [`11_trasformazione_digitale_pa.md`](11_trasformazione_digitale_pa.md) §2.
+
 ---
 
 ## 2. Documento informatico e firme elettroniche
@@ -34,6 +36,7 @@ Il documento informatico (rappresentazione informatica di atti, fatti o dati giu
 | **FEQ / Firma Digitale** — Firma Elettronica Qualificata | FEA basata su certificato qualificato + dispositivo sicuro; in Italia la "Firma Digitale" ne è la declinazione tecnica su crittografia asimmetrica | Certificato qualificato rilasciato da prestatore di servizi fiduciari accreditato + dispositivo sicuro (smart card, token, HSM remoto) | **Piena efficacia probatoria**, equivalente alla firma autografa (art. 2702 c.c.) |
 
 * **Obbligo di FEQ**: per atti con effetti giuridici pieni — contratti pubblici, provvedimenti amministrativi formali. Per istanze informali basta FEA/FES con identificazione via SPID/CIE.
+* **Base normativa precisa** *(dalla prova scritta reale)*: è l'**art. 25, par. 2, del Regolamento (UE) n. 910/2014 (eIDAS)** — di recente aggiornato dal **Regolamento (UE) 2024/1183 (c.d. "eIDAS 2.0")** — a stabilire che **solo la Firma Elettronica Qualificata (FEQ)** ha effetti giuridici equivalenti a quelli di una firma autografa; la FEA, pur rafforzata, non raggiunge da sola questo livello di equivalenza.
 * **Funzionamento tecnico** (in sintesi): hash del documento → cifratura dell'hash con la chiave privata del firmatario (contenuta in un dispositivo sicuro, attivato da PIN) → il destinatario verifica decifrando con la chiave pubblica del certificato e confrontando gli hash.
 * **Limite importante**: la sola firma digitale **non conferisce data certa** — serve una marca temporale o l'invio tramite PEC per l'opponibilità a terzi.
 * Approfondimento completo (dispositivi, formati PAdES/CAdES/XAdES/ASiC, procedura di ottenimento, crittografia post-quantum) in [`Sintesi_Firma_Digitale.md`](../../Sintesi_Firma_Digitale.md).
@@ -143,3 +146,17 @@ Il documento informatico (rappresentazione informatica di atti, fatti o dati giu
    c) PDND
    d) Registro delle Imprese
    **Risposta: b)** — INAD è dedicato a cittadini/professionisti/imprese; IPA è l'indice equivalente per le PA.
+
+7. Secondo l'art. 16 del D.Lgs. 82/2005 (CAD), a chi spetta la definizione, con proprie direttive, delle linee strategiche dell'innovazione tecnologica nelle PA centrali?
+   a) All'Agenzia per l'Italia Digitale
+   b) Al Presidente del Consiglio dei Ministri o al Ministro delegato per l'innovazione e la tecnologia
+   c) Al Ministro delle Imprese e del Made in Italy
+   d) Al Dipartimento della Funzione Pubblica
+   **Risposta: b)** — è l'indirizzo politico-strategico, in capo al vertice PCM; AGID resta il braccio tecnico-operativo che attua le direttive.
+
+8. Ai sensi dell'art. 25, par. 2, del Regolamento (UE) n. 910/2014 (eIDAS), aggiornato dal Regolamento (UE) 2024/1183, quale tipo di firma ha effetti giuridici equivalenti a quelli di una firma autografa?
+   a) Firma elettronica semplice (FES)
+   b) Firma elettronica avanzata (FEA)
+   c) Firma elettronica qualificata (FEQ)
+   d) Qualsiasi firma elettronica, indipendentemente dal livello
+   **Risposta: c)** — solo la FEQ raggiunge la piena equivalenza giuridica con la firma autografa (art. 2702 c.c.).

@@ -16,6 +16,18 @@ Un database relazionale organizza i dati in **tabelle** (relazioni) composte da 
   * **Isolation (Isolamento):** transazioni concorrenti non si influenzano a vicenda come se fossero eseguite in sequenza (livelli di isolamento: Read Uncommitted, Read Committed, Repeatable Read, Serializable).
   * **Durability (Durabilità):** una volta confermata (commit), una transazione sopravvive a crash di sistema (scritta su storage persistente, es. tramite write-ahead log).
 
+#### 1.1.1 I livelli di isolamento in dettaglio (dalla prova scritta reale)
+Dal più permissivo (più veloce, meno sicuro) al più restrittivo (più lento, massima correttezza):
+
+| Livello | Anomalie ancora possibili | Note |
+|---|---|---|
+| **Read Uncommitted** | Dirty read, non-repeatable read, phantom read | Può leggere dati non confermati da altre transazioni |
+| **Read Committed** | Non-repeatable read, phantom read | Legge solo dati confermati, ma una stessa riga può cambiare tra due letture nella stessa transazione |
+| **Repeatable Read** | Phantom read | Le righe lette restano stabili per tutta la transazione, ma possono comparire nuove righe che soddisfano un filtro ripetuto |
+| **Serializable** | Nessuna | L'esito dell'esecuzione concorrente deve essere **equivalente a quello di un qualche ordine seriale** (sequenziale) delle transazioni — previene ogni anomalia dei livelli più deboli |
+
+*Sintesi per l'esame*: **Serializable non è semplicemente "assenza di dirty read"** (quello lo garantisce già Read Committed) — è la garanzia più forte possibile: il risultato finale deve essere **equivalente a una qualche esecuzione sequenziale** delle transazioni, qualunque sia l'effettivo interleaving con cui sono state eseguite in parallelo. Non significa nemmeno che le transazioni vengano eseguite "senza mai attese o abort": per garantire la serializzabilità il motore può comunque bloccare o abortire transazioni in conflitto.
+
 ### 1.2 Il modello NoSQL
 Nato per rispondere a esigenze di scalabilità orizzontale e schema flessibile che il modello relazionale gestisce con difficoltà su grandi volumi distribuiti. Quattro famiglie principali:
 
@@ -63,6 +75,17 @@ La normalizzazione riduce ridondanza e anomalie di aggiornamento/inserimento/can
 * **3NF (Terza Forma Normale):** 2NF + nessun attributo non-chiave dipende da un altro attributo non-chiave (elimina le dipendenze transitive). Risultato finale: tre tabelle — `Ordini` (OrdineID, Cliente), `RigheOrdine` (OrdineID, Prodotto, QuantitàOrdinata), `Prodotti` (Prodotto, PrezzoProdotto).
 
 *Sintesi per l'esame*: normalizzare riduce la ridondanza ma può aumentare il numero di JOIN necessari nelle query (trade-off tra integrità e performance). La **denormalizzazione controllata** è spesso usata nei data warehouse per velocizzare le letture analitiche.
+
+### 3.1 3NF vs BCNF: la distinzione precisa (dalla prova scritta reale)
+I quiz tendono a far confondere i confini esatti tra le forme normali — fissa queste tre definizioni **non intercambiabili**:
+
+| Forma normale | Requisito specifico (oltre a quella precedente) |
+|---|---|
+| **2NF** | Elimina le **dipendenze parziali**: un attributo non-chiave non può dipendere solo da una parte di una chiave primaria composta |
+| **3NF** | Elimina le **dipendenze transitive**: un attributo non-chiave non può dipendere da un altro attributo non-chiave (deve dipendere solo dalla chiave) |
+| **BCNF (Boyce-Codd)** | Condizione **più restrittiva** della 3NF: richiede che **ogni determinante** di una dipendenza funzionale non banale sia una **superchiave** (anche quando l'attributo determinato è parte di una chiave candidata — caso limite che la sola 3NF non copre) |
+
+*Sintesi per l'esame*: se un'opzione descrive "eliminare dipendenze parziali di attributi non chiave da una parte di una chiave composta" sta descrivendo la **2NF**, non la 3NF. Se descrive "ogni determinante deve essere una superchiave" sta descrivendo la **BCNF**, una condizione più stringente della 3NF — non confonderle tra loro nelle opzioni di risposta.
 
 ## 4. Indici e query plan
 * **Indice:** struttura dati ausiliaria (tipicamente B-Tree o hash) che velocizza la ricerca di righe evitando la scansione completa della tabella (*full table scan*). Ha un costo in termini di spazio e di rallentamento delle scritture (ogni INSERT/UPDATE deve aggiornare anche l'indice).
@@ -139,3 +162,17 @@ flowchart LR
 
 6. **Un data lake, rispetto a un data warehouse, si caratterizza per:**
    a) schema-on-write rigido b) **schema-on-read e capacità di ospitare dati non strutturati** c) costi di storage sempre più alti d) essere utilizzabile solo da analisti di business — corretto: il data lake applica lo schema al momento della lettura/analisi, non al caricamento.
+
+7. **Quale effetto caratterizza il livello di isolamento Serializable?**
+   a) Garantisce solo l'assenza di dirty read, ma può ancora permettere risultati non serializzabili
+   b) **L'esito dell'esecuzione concorrente deve essere equivalente a un qualche ordine seriale delle transazioni, prevenendo tutte le anomalie dei livelli più deboli**
+   c) Assegna un ordine temporale fisso alle transazioni, eseguendole sempre senza attese o abort
+   d) Coincide esattamente con Repeatable Read
+   **Risposta: b)** — è la garanzia più forte tra tutti i livelli di isolamento ACID.
+
+8. **In un database relazionale, quale condizione specifica distingue la BCNF dalla 3NF?**
+   a) La BCNF elimina le dipendenze parziali, la 3NF no
+   b) Sono esattamente la stessa cosa con nomi diversi
+   c) **La BCNF richiede che ogni determinante di una dipendenza funzionale non banale sia una superchiave, condizione più restrittiva della 3NF**
+   d) La 3NF si applica solo ai database NoSQL
+   **Risposta: c)** — la BCNF copre un caso limite (dipendenze da un attributo che fa parte di una chiave candidata) non coperto dalla sola 3NF.

@@ -40,6 +40,16 @@ Sottoinsieme del ML basato su **reti neurali artificiali** multi-strato (deep = 
 - **RNN/LSTM**: specializzate in dati sequenziali/temporali (es. serie storiche di traffico, sensori IoT).
 - **Transformer**: architettura alla base dei moderni modelli linguistici (LLM), basata sul meccanismo di *attention*.
 
+#### 1.4.1 Funzioni di attivazione (dalla prova scritta reale)
+| Funzione | Output | Caratteristica | Uso tipico |
+|---|---|---|---|
+| **ReLU** (Rectified Linear Unit) | 0 per input negativi, **identità** (= l'input stesso) per input positivi | Semplice, veloce da calcolare, mitiga il problema del gradiente che svanisce | Layer nascosti delle reti profonde (scelta di default) |
+| **Sigmoide** | Compresso tra **0 e 1**, curva a "S" | Interpretabile come probabilità per un singolo output | Classificazione binaria (output layer) |
+| **Softmax** | Vettore di valori che sommano a **1** | Normalizza i punteggi di più classi in una distribuzione di probabilità | Output layer nella classificazione multiclasse |
+| **Tanh** | Compresso tra **-1 e 1** | Simile alla sigmoide ma centrata su zero | Layer nascosti (meno usata di ReLU oggi) |
+
+*Sintesi per l'esame*: "restituisce zero per gli input negativi e l'identità per quelli positivi" → **ReLU**, in modo univoco (non va confusa con sigmoide/softmax, che hanno output limitati e forma a curva).
+
 ## 2. Overfitting, underfitting e validazione
 
 - **Underfitting**: il modello è troppo semplice per catturare la struttura dei dati → basse prestazioni sia su training set sia su test set.
@@ -51,6 +61,25 @@ Sottoinsieme del ML basato su **reti neurali artificiali** multi-strato (deep = 
 - **Validation set**: un terzo sottoinsieme usato per il tuning degli iperparametri, separato dal test set finale.
 - **Cross-validation (k-fold)**: il dataset viene diviso in *k* parti (fold); il modello viene addestrato *k* volte, ogni volta usando *k-1* fold per il training e 1 fold per la validazione, poi si mediano i risultati. Riduce la dipendenza dei risultati da una singola suddivisione casuale dei dati.
 - **Regolarizzazione** (L1/Lasso, L2/Ridge, dropout nelle reti neurali): tecniche che penalizzano la complessità del modello per ridurre l'overfitting.
+
+### 2.1 Matrice di confusione (dalla prova scritta reale)
+Strumento per valutare un modello di **classificazione binaria**, confrontando le predizioni con i valori reali:
+
+| | Predetto Positivo | Predetto Negativo |
+|---|---|---|
+| **Reale Positivo** | **TP** (Vero Positivo) | **FN** (Falso Negativo — un positivo reale classificato erroneamente come negativo: un "miss") |
+| **Reale Negativo** | **FP** (Falso Positivo — un negativo reale classificato erroneamente come positivo: un "falso allarme") | **TN** (Vero Negativo) |
+
+Da qui si derivano due metriche fondamentali:
+- **Precision** = TP / (TP + FP) — "di tutti quelli che ho detto positivi, quanti lo erano davvero?"
+- **Recall** (sensibilità) = TP / (TP + FN) — "di tutti quelli davvero positivi, quanti ne ho trovati?"
+
+*Sintesi per l'esame*: un **Falso Positivo (FP)** è un caso **negativo** classificato erroneamente come **positivo** — non il contrario (quello è un Falso Negativo).
+
+### 2.2 Data leakage
+Il **data leakage** si verifica quando informazioni che **non sarebbero disponibili al momento della previsione reale** finiscono, per errore, nelle feature o nel preprocessing usato per addestrare il modello — ad esempio calcolando statistiche di normalizzazione sull'**intero** dataset (training + test) invece che solo sul training set, oppure includendo una feature che codifica indirettamente la variabile target.
+
+Conseguenza tipica: il modello mostra **prestazioni di test irrealisticamente elevate** in fase di sviluppo, che poi **crollano in produzione** perché quelle informazioni "trapelate" non sono disponibili al momento della previsione reale. È uno degli errori metodologici più insidiosi nel machine learning, perché non produce errori evidenti — solo risultati "troppo belli per essere veri".
 
 ## 3. IoT (Internet of Things)
 
@@ -136,3 +165,24 @@ L'**AI Act** (Regolamento UE sull'Intelligenza Artificiale) adotta un approccio 
    c) Exploration-exploitation trade-off
    d) Precision-recall trade-off
    **Risposta: c)** — è il trade-off fondamentale della policy di un agente di reinforcement learning.
+
+7. Quale funzione di attivazione restituisce zero per gli input negativi e l'identità per quelli positivi?
+   a) La funzione ReLU
+   b) La funzione softmax
+   c) La funzione sigmoide
+   d) La funzione tanh
+   **Risposta: a)** — è la definizione esatta di ReLU; sigmoide e tanh hanno output compresso in un intervallo limitato, softmax normalizza un vettore di classi.
+
+8. In una matrice di confusione, che cosa rappresenta un falso positivo?
+   a) Un caso positivo classificato erroneamente come negativo
+   b) Un caso negativo classificato erroneamente come positivo
+   c) Un caso positivo classificato correttamente come positivo
+   d) Un caso negativo classificato correttamente come negativo
+   **Risposta: b)** — un falso positivo è un "falso allarme": il reale è negativo ma il modello predice positivo.
+
+9. In un progetto di machine learning, che cosa rappresenta un caso di data leakage?
+   a) La suddivisione casuale del dataset in training e test
+   b) La standardizzazione delle feature usando parametri calcolati solo sul training set
+   c) Informazioni non disponibili al momento della previsione reale che entrano nelle feature o nel preprocessing, gonfiando artificialmente le prestazioni di test
+   d) L'uso della cross-validation per stimare la generalizzazione
+   **Risposta: c)** — è l'errore metodologico che produce prestazioni di test ingannevolmente elevate, non replicabili in produzione.

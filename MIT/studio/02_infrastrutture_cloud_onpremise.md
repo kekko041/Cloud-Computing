@@ -72,6 +72,42 @@ Il NIST individua 5 caratteristiche che definiscono il cloud computing:
 * **VPN e connettività ibrida**: **Site-to-Site VPN** o connessioni dedicate (es. AWS Direct Connect, Azure ExpressRoute) per collegare in modo sicuro data center on-premise e ambienti cloud, evitando l'esposizione diretta a Internet pubblico.
 * **Zero Trust**: modello di sicurezza che abbandona il concetto di "perimetro fidato" — ogni richiesta di accesso (interna o esterna) viene autenticata, autorizzata e verificata continuamente ("never trust, always verify"), indipendentemente dalla posizione di rete da cui proviene.
 
+## 2.7 Integrazioni dalla prova scritta reale del 6/10/2026 (codice EPI)
+
+### 2.7.1 Tipologie di storage: object, block, file
+Tre modelli di storage con caratteristiche e casi d'uso molto diversi:
+
+| Tipo | Come organizza i dati | Accesso | Esempio |
+|---|---|---|---|
+| **File storage** | Namespace **gerarchico** di file e directory, semantiche POSIX o SMB | Protocolli condivisi (NFS, SMB/CIFS) | NAS aziendale, file server |
+| **Block storage** | Volumi indirizzabili a **blocchi**; il sistema operativo del client crea sopra il proprio filesystem | Letture/scritture a livello di settore/blocco | Dischi virtuali (AWS EBS, dischi VM) |
+| **Object storage** | Oggetti identificati da **chiavi** in uno spazio dei nomi **piatto** (nessuna gerarchia di directory); ogni oggetto include dati **+ metadati** | API HTTP/REST (GET/PUT su chiave) | Amazon S3, Azure Blob Storage |
+
+*Sintesi per l'esame*: l'object storage si riconosce dalla combinazione "chiavi in uno spazio dei nomi" + "nessuna gerarchia POSIX di directory" + "metadati inclusi" — è l'opposto del file storage (gerarchico, POSIX/SMB) e del block storage (volumi a blocchi su cui il client crea un proprio filesystem).
+
+### 2.7.2 Servizi stateless per la scalabilità cloud
+Un servizio **stateless** non mantiene alcuno stato di sessione al proprio interno (lo stato, se serve, viene esternalizzato su un database/cache condivisa, o incapsulato in un token come un JWT). Vantaggio diretto: **qualsiasi istanza può gestire qualsiasi richiesta**, senza bisogno di "sticky session" che leghino un client sempre alla stessa istanza — questo è ciò che rende davvero semplice ed efficace lo scaling orizzontale e il load balancing.
+
+### 2.7.3 Load balancer: Livello 4 vs Livello 7
+| | Load Balancer L4 (trasporto) | Load Balancer L7 (applicazione) |
+|---|---|---|
+| Informazioni usate per instradare | Indirizzo IP e porta TCP/UDP della connessione | Elementi applicativi: **hostname, path URL, header HTTP**, cookie |
+| Visibilità sul contenuto | Nessuna ispezione del payload applicativo | Ispeziona il contenuto della richiesta HTTP |
+| Esempio di regola | "instrada tutto il traffico sulla porta 443 verso il pool X" | "instrada `/api/*` verso il backend A, `/static/*` verso il backend B" |
+
+*Sintesi per l'esame*: solo un load balancer **L7** può instradare in base a elementi del protocollo applicativo (host, path, header HTTP); un L4 vede solo IP/porta della connessione TCP/UDP, non il contenuto della richiesta.
+
+### 2.7.4 Reverse proxy e terminazione TLS
+Un **reverse proxy** posto davanti ai server applicativi può fare da **punto di terminazione TLS**: gestisce l'handshake e la cifratura/decifratura con il client, poi inoltra il traffico ai backend — eventualmente aprendo una **nuova sessione TLS separata** verso i backend (non è obbligato a riusare lo stesso certificato/chiave privata del frontend; può anche inoltrare in chiaro su una rete interna fidata, ma la soluzione più robusta è una seconda terminazione TLS interna indipendente).
+
+### 2.7.5 Monitoraggio dell'affidabilità: SLI, SLO e "golden signals" (SRE)
+Per valutare l'affidabilità **percepita** di un servizio, l'approccio SRE (Site Reliability Engineering) prevede di:
+1. Definire **SLI (Service Level Indicator)**: metriche effettivamente misurate — tipicamente **latenza, tasso di errori, disponibilità osservata** (i "golden signals" di Google SRE aggiungono anche la **saturazione** delle risorse).
+2. Confrontarle con **SLO (Service Level Objective)**: obiettivi interni misurabili nel tempo (es. "99,9% delle richieste con latenza < 200ms").
+3. Lo **SLA** (visto in §2.5) è l'impegno contrattuale verso il cliente, spesso meno stringente dello SLO interno (per lasciare margine di errore).
+
+*Sintesi per l'esame*: monitorare solo CPU/memoria dei nodi (assumendo che l'assenza di saturazione equivalga a buona qualità percepita) o solo i log di errore (senza misurare disponibilità/latenza nel tempo) sono entrambi approcci incompleti — l'approccio corretto collega metriche di servizio (golden signals) a obiettivi misurabili nel tempo.
+
 ---
 
 ## Domande di autoverifica
@@ -117,3 +153,38 @@ Il NIST individua 5 caratteristiche che definiscono il cloud computing:
    c) Ridurre a zero i costi infrastrutturali
    d) Sostituire la necessità di disaster recovery
    **Risposta: b)** — è la motivazione architetturale tipica dell'approccio ibrido nella PA.
+
+7. **Quale caratteristica è tipica di un object storage rispetto a un file system tradizionale?**
+   a) Espone un namespace gerarchico di file e directory con semantiche POSIX o SMB
+   b) Presenta volumi indirizzabili a blocchi, su cui il sistema operativo crea un proprio filesystem
+   c) Gli oggetti sono identificati tramite chiavi in uno spazio dei nomi piatto e includono dati e metadati, senza gerarchia POSIX
+   d) Richiede sempre un controller RAID dedicato
+   **Risposta: c)** — è la definizione distintiva dell'object storage (es. Amazon S3), opposta al file storage gerarchico.
+
+8. **Perché nella progettazione di applicazioni cloud scalabili è preferibile realizzare servizi stateless?**
+   a) Perché ogni richiesta deve essere gestita sempre dalla medesima istanza
+   b) Perché qualsiasi istanza può gestire qualsiasi richiesta, facilitando lo scaling orizzontale
+   c) Perché lo stato va sempre salvato solo sul disco locale dell'istanza
+   d) Perché elimina la necessità di un load balancer
+   **Risposta: b)** — l'assenza di stato locale consente a qualunque istanza di servire qualunque richiesta.
+
+9. **Un load balancer di Livello 7 (applicazione), rispetto a uno di Livello 4, può instradare le richieste in base a:**
+   a) Solo indirizzo IP e porta TCP/UDP della connessione
+   b) Solo il record DNS risolto dal client
+   c) Elementi applicativi come hostname, path URL o header HTTP
+   d) Nessuna informazione aggiuntiva rispetto a un L4
+   **Risposta: c)** — il L7 ispeziona il contenuto della richiesta HTTP, il L4 vede solo la connessione di trasporto.
+
+10. **Cosa comporta la terminazione TLS su un reverse proxy davanti ai server applicativi?**
+    a) Il traffico TLS cifrato viene inoltrato intatto e l'handshake avviene direttamente sul backend
+    b) Il proxy deve obbligatoriamente riusare lo stesso certificato e la stessa chiave privata verso i backend
+    c) Il proxy gestisce l'handshake e la cifratura con il client, e può poi inoltrare il traffico ai backend eventualmente con una nuova sessione TLS interna
+    d) La terminazione TLS elimina la necessità di certificati sui backend in ogni caso
+    **Risposta: c)** — il proxy decifra il traffico dal client e può reinstaurare una sessione TLS separata verso i backend.
+
+11. **Secondo l'approccio SRE, quali indicatori (SLI) sono più utili per valutare l'affidabilità percepita di un servizio?**
+    a) Solo l'uso di CPU e memoria dei nodi
+    b) Solo i log applicativi di errore
+    c) Latenza, tasso di errori e disponibilità osservata, collegati a obiettivi misurabili (SLO) nel tempo
+    d) Il numero di deploy effettuati nell'ultimo mese
+    **Risposta: c)** — sono i "golden signals" SRE, da confrontare con SLO definiti.

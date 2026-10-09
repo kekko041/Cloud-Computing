@@ -50,9 +50,26 @@
 * **Permessi (rwx):** ogni file/directory ha permessi separati per **utente proprietario (u)**, **gruppo (g)** e **altri (o)**, ciascuno con read (r=4), write (w=2), execute (x=1). Es. `chmod 750 file` → proprietario rwx, gruppo r-x, altri nessun permesso.
 * **Utenti speciali:** `root` (superuser, UID 0, permessi illimitati); l'uso di `sudo` permette esecuzione di comandi privilegiati con tracciabilità (audit log), preferibile al login diretto come root.
 
+#### 5.1.1 Permessi speciali Unix: SetUID, SetGID, Sticky bit (dalla prova scritta reale)
+Da non confondere tra loro — tre bit speciali con effetti molto diversi:
+
+| Bit speciale | Effetto | Esempio tipico |
+|---|---|---|
+| **SetUID** | Un file eseguibile gira con i privilegi del suo **proprietario**, non dell'utente che lo lancia | `/usr/bin/passwd` deve poter scrivere su `/etc/shadow` anche se lanciato da un utente normale |
+| **SetGID** | Analogo ma con i privilegi del **gruppo** proprietario; su una directory, i nuovi file creati al suo interno ereditano automaticamente lo stesso gruppo della directory | Directory condivise di progetto |
+| **Sticky bit** | Su una directory, impedisce a un utente di cancellare o rinominare file **di cui non è proprietario**, anche se ha permesso di scrittura sulla directory | `/tmp` (scrivibile da tutti, ma ognuno cancella solo i propri file) |
+
+*Nota*: la **umask** non è un permesso speciale di questo tipo — è la maschera che determina i permessi **di default** assegnati a un nuovo file/directory al momento della creazione.
+
 ### 5.2 Gestione processi e servizi
-* **systemd:** sistema di init moderno nella maggior parte delle distribuzioni Linux; gestisce l'avvio, l'arresto e il monitoraggio dei servizi tramite **unit file** (`.service`); comandi chiave: `systemctl start/stop/status/enable <servizio>`.
+* **systemd:** sistema di init moderno nella maggior parte delle distribuzioni Linux; gestisce l'avvio, l'arresto e il monitoraggio dei servizi tramite **unit file** (`.service`).
+* **`systemctl start/stop/enable/disable/status <servizio>` — da non confondere (frequente nei quiz):**
+  * **`start`**: avvia il servizio **subito**, una tantum — non sopravvive a un riavvio del sistema.
+  * **`enable`**: crea i symlink necessari perché il servizio parta **automaticamente al prossimo boot** — non lo avvia immediatamente (a meno di usare `enable --now`, che fa entrambe le cose).
+  * **`stop`** / **`disable`**: operazioni inverse (ferma subito / rimuove l'avvio automatico al boot).
+  * **`status`**: mostra lo stato corrente del servizio (attivo/inattivo, log recenti), senza modificarne lo stato.
 * **Gestione processi:** `ps`, `top`/`htop` per monitoraggio; segnali (`kill -9` = SIGKILL forzato, `kill -15` = SIGTERM, terminazione controllata).
+* **Pianificazione task con `cron`:** una riga di crontab ha la sintassi `minuto ora giorno-del-mese mese giorno-della-settimana comando` — **5 campi** prima del comando (cron **non** gestisce i secondi, granularità minima di 1 minuto). Es. `0 3 * * 1` = ogni lunedì alle 3:00.
 
 ### 5.3 Gestione pacchetti
 * **Debian/Ubuntu:** `apt` (Advanced Package Tool), pacchetti `.deb`.
@@ -66,6 +83,9 @@
 ### 5.5 Logging
 * **syslog:** protocollo/standard per la raccolta centralizzata dei log di sistema, spesso instradato verso un sistema SIEM (Security Information and Event Management) centrale per correlazione e analisi degli incidenti.
 * File di log tipici: `/var/log/auth.log` (accessi), `/var/log/syslog` o `/var/log/messages` (log di sistema generali).
+
+### 5.6 LVM (Logical Volume Manager)
+**LVM** introduce un livello di astrazione tra i dischi fisici e i filesystem: aggrega uno o più dischi/partizioni fisiche in un **volume group**, da cui si ritagliano **volumi logici** su cui vengono creati i filesystem. Vantaggio principale: **ridimensionare i volumi logici (estendere o ridurre) senza dover ripartizionare fisicamente i dischi** — utile per far crescere uno storage "a caldo" quando lo spazio inizia a scarseggiare. Permette anche di aggregare dischi fisici eterogenei in un unico spazio e di fare snapshot dei volumi.
 
 ## 6. Amministrazione di Windows Server
 
@@ -106,3 +126,15 @@
 
 6. **Cosa garantisce un backup "immutabile" (WORM)?**
    a) Viene compresso automaticamente b) **Non può essere modificato o cancellato per un periodo definito, proteggendo da attacchi ransomware** c) È sempre incrementale d) Sostituisce la necessità di test di restore — corretto: l'immutabilità impedisce la cifratura/cancellazione del backup da parte di un attaccante che ha compromesso il sistema.
+
+7. **Su un sistema Unix, quale permesso speciale consente di eseguire un file con i privilegi del suo proprietario anziché con quelli dell'utente che lo lancia?**
+   a) La umask b) Lo sticky bit c) **Il SetUID** d) Il SetGID — corretto: il SetUID eleva l'esecuzione ai privilegi del proprietario del file; lo sticky bit protegge invece i file altrui in una directory condivisa.
+
+8. **Su un sistema Linux con systemd, qual è la differenza tra `systemctl start` e `systemctl enable`?**
+   a) Sono comandi equivalenti b) **`start` avvia subito il servizio senza renderlo persistente al riavvio; `enable` lo abilita all'avvio automatico al prossimo boot, senza avviarlo immediatamente** c) `enable` avvia subito il servizio, `start` lo disabilita d) Entrambi richiedono sempre un riavvio del sistema — corretto: sono due operazioni distinte e complementari, spesso combinate con `enable --now`.
+
+9. **Quale vantaggio offre l'uso di LVM (Logical Volume Manager) su Linux?**
+   a) Cifrare automaticamente tutto il traffico di rete b) **Ridimensionare i volumi logici senza dover ripartizionare fisicamente i dischi** c) Eseguire automaticamente il backup incrementale su un server remoto d) Sostituire la necessità di RAID — corretto: LVM astrae i volumi logici dai dischi fisici sottostanti, permettendo di estenderli "a caldo".
+
+10. **Nella sintassi di una riga di crontab, che cosa rappresentano i cinque campi che precedono il comando da eseguire?**
+    a) Ora, giorno del mese, settimana, mese e anno b) **Minuto, ora, giorno del mese, mese e giorno della settimana** c) Secondo, minuto, ora, giorno del mese e mese d) Anno, mese, giorno, ora, minuto — corretto: cron ha granularità minima di un minuto, non gestisce i secondi.

@@ -64,6 +64,14 @@ La **firma digitale** combina hash e crittografia asimmetrica: si calcola l'hash
 
 Per la memorizzazione delle **password**, non si usa l'hash puro ma un **hashing salted iterativo** (es. bcrypt, PBKDF2, Argon2): il salt (valore casuale univoco per utente) impedisce l'uso di rainbow table precalcolate, e l'iterazione rallenta gli attacchi a forza bruta. *(Fonte: AGID, Linee Guida Modellazione delle Minacce, §5.2.2.1 — best practice "Memorizzare le password utente utilizzando un algoritmo forte di salted hashing iterativo")*
 
+### 4.2 Fondamenti matematici: RSA e Diffie-Hellman (dalla prova scritta reale)
+Due algoritmi a chiave pubblica con scopi e basi matematiche diverse, spesso richiesti in modo puntuale nei quiz:
+
+* **RSA**: la sua sicurezza si fonda sulla **difficoltà di fattorizzare il prodotto di due numeri primi grandi** — è computazionalmente facile moltiplicare due numeri primi molto grandi, ma estremamente difficile risalire ai due fattori primi originari a partire dal solo prodotto. Usato per cifratura a chiave pubblica e firma digitale.
+* **Diffie-Hellman (DH)**: non è un algoritmo di cifratura, ma un **protocollo di scambio di chiavi**: permette a due parti di concordare una **chiave segreta condivisa su un canale di comunicazione insicuro**, senza mai trasmettere la chiave stessa in chiaro — si basa sulla difficoltà del problema del **logaritmo discreto**. È il meccanismo con cui, tipicamente, TLS stabilisce la chiave di sessione simmetrica dopo l'autenticazione.
+
+*Sintesi per l'esame*: "fattorizzazione di numeri primi grandi" → **RSA**; "due parti concordano una chiave segreta su un canale insicuro" → **Diffie-Hellman**. Non sono la stessa cosa: RSA cifra/firma, DH scambia chiavi.
+
 ## 5. PKI (Public Key Infrastructure) e certificati X.509
 
 Una PKI è l'insieme di tecnologie, processi e attori che gestiscono l'emissione, distribuzione, verifica e revoca dei **certificati digitali**.
@@ -134,6 +142,15 @@ Framework statunitense ampiamente adottato come riferimento concettuale anche in
 
 Questo ciclo è concettualmente complementare al processo di Incident Response richiesto dalla NIS2 (notifica entro 24h/72h al CSIRT Italia).
 
+## 10. Strumenti e attori della sicurezza: IDS/IPS, SIEM, ENISA (dalla prova scritta reale)
+
+* **IDS (Intrusion Detection System)**: analizza il traffico di rete (o l'attività di un host) per **rilevare e segnalare** attività sospette/pattern di attacco, generando alert — ma **non blocca attivamente** il traffico.
+* **IPS (Intrusion Prevention System)**: funzionalmente simile all'IDS, ma agisce **in-line** sul traffico e può **bloccare attivamente** le richieste malevole rilevate — l'IDS osserva e segnala, l'IPS osserva e interviene.
+* **SIEM (Security Information and Event Management)**: raccoglie e **correla i log di sicurezza da più fonti eterogenee** (firewall, IDS, server, applicazioni) in una piattaforma centralizzata, per consentire monitoraggio, alerting e analisi forense unificati — è lo strumento di riferimento per l'Incident Response centralizzata.
+* **ENISA (European Union Agency for Cybersecurity)**: è l'**Agenzia dell'Unione Europea per la cybersicurezza** — livello **europeo/sovranazionale**, da non confondere con l'**ACN** (Agenzia per la Cybersicurezza Nazionale), che opera a livello **nazionale italiano**. ENISA contribuisce alla definizione di politiche e standard UE (es. schemi di certificazione nell'ambito del Cybersecurity Act), supporta gli Stati membri e coordina la risposta a crisi cyber transfrontaliere — non è un tribunale né un'autorità che rilascia identità digitali ai cittadini.
+
+*Sintesi per l'esame*: livello UE → **ENISA**; livello nazionale italiano → **ACN**. IDS **segnala**, IPS **blocca**. Il SIEM è lo strumento che **aggrega e correla** i log da più fonti per il monitoraggio centralizzato.
+
 ## Domande di autoverifica
 
 1. Quale proprietà di sicurezza viene violata da un attacco di tipo "Tampering" secondo la classificazione STRIDE?
@@ -177,3 +194,31 @@ Questo ciclo è concettualmente complementare al processo di Incident Response r
    c) Affected Users
    d) Reproducibility
    **Risposta: c)** — "Affected Users" quantifica l'estensione dell'impatto della minaccia in termini di utenti coinvolti.
+
+7. Su quale problema matematico si fonda la sicurezza dell'algoritmo RSA?
+   a) La difficoltà di comprimere dati senza perdita
+   b) La difficoltà di ordinare un insieme di numeri interi
+   c) La difficoltà di fattorizzare il prodotto di due numeri primi grandi
+   d) La difficoltà del logaritmo discreto
+   **Risposta: c)** — è la base matematica di RSA; il logaritmo discreto è invece alla base di Diffie-Hellman.
+
+8. Quale algoritmo permette a due parti di concordare una chiave segreta su un canale insicuro, senza mai trasmetterla in chiaro?
+   a) AES-256
+   b) Diffie-Hellman
+   c) MD5
+   d) RSA
+   **Risposta: b)** — Diffie-Hellman è un protocollo di scambio chiavi, non un algoritmo di cifratura.
+
+9. Qual è la differenza principale tra un IDS e un IPS?
+   a) Sono sinonimi dello stesso strumento
+   b) L'IDS rileva e segnala attività sospette, l'IPS interviene attivamente bloccando il traffico malevolo
+   c) L'IPS si usa solo su reti wireless
+   d) L'IDS blocca il traffico, l'IPS si limita a registrarlo nei log
+   **Risposta: b)** — l'IDS è "detection-only", l'IPS agisce in-line e può bloccare.
+
+10. Nel quadro europeo della cybersicurezza, qual è il ruolo dell'ENISA?
+    a) È il tribunale europeo competente per i reati informatici
+    b) È l'autorità che rilascia le identità digitali ai cittadini europei
+    c) È l'Agenzia dell'Unione Europea per la cybersicurezza
+    d) È l'equivalente europeo del CSIRT Italia, a cui si sostituisce
+    **Risposta: c)** — ENISA opera a livello UE; l'ACN è il suo omologo a livello nazionale italiano, non ne è sostituita.

@@ -121,6 +121,75 @@ Principio cardine (anche giuridico, art. 25 GDPR — *Data Protection by Design 
 * **Privacy by Design — principi chiave** (Cavoukian, recepiti nel GDPR): proattività non reattività; privacy come impostazione predefinita (*by Default*); privacy incorporata nel design (non aggiunta dopo); piena funzionalità (non un compromesso a somma zero tra privacy e altre esigenze); sicurezza end-to-end; visibilità e trasparenza; rispetto della privacy dell'utente.
 * **Minimizzazione dei dati**: raccogliere solo i dati strettamente necessari allo scopo dichiarato — principio sia di security (minor superficie di attacco) sia di data protection normativa.
 
+## 1.7 Integrazioni dalla prova scritta reale del 6/10/2026 (codice EPI)
+
+Questa sezione integra argomenti emersi nella prova scritta effettivamente sostenuta, non ancora dettagliati sopra.
+
+### 1.7.1 Status code HTTP nelle API REST
+Una risposta API deve usare il codice HTTP semanticamente corretto, non un generico 200 per tutto:
+
+| Codice | Significato | Quando usarlo |
+|---|---|---|
+| **200 OK** | Successo generico | GET riuscita, PUT/PATCH che restituiscono la risorsa aggiornata |
+| **201 Created** | Risorsa creata con successo | Risposta a una **POST** che crea una nuova risorsa — convenzione: includere nell'header **`Location`** l'URI della risorsa appena creata |
+| **202 Accepted** | Richiesta accettata ma elaborazione **non ancora completata** (asincrona) | Operazioni lunghe gestite in background, mai per una creazione già conclusa in modo sincrono |
+| **204 No Content** | Successo, nessun corpo nella risposta | DELETE riuscita |
+| **400 Bad Request** | Richiesta malformata lato client | Payload non valido, parametri mancanti |
+| **401 Unauthorized** | Autenticazione mancante/non valida | Token assente o scaduto |
+| **403 Forbidden** | Autenticato ma non autorizzato | L'utente non ha i permessi per l'operazione |
+| **404 Not Found** | Risorsa inesistente | |
+| **500 Internal Server Error** | Errore lato server | |
+
+*Sintesi per l'esame*: **POST che crea → 201 Created (+ header Location)**, mai un generico "200 OK sempre perché POST non ha un codice specifico" (distrattore tipico) né "202 Accepted" se l'operazione è già conclusa in modo sincrono (202 è riservato alle elaborazioni differite/asincrone).
+
+### 1.7.2 Pipeline CI con quality gate (sequenza corretta)
+La sequenza corretta di una pipeline di Continuous Integration con controlli di qualità automatici è:
+
+**Build riproducibile → test automatici → analisi statica (SAST) → controlli di sicurezza → promozione dell'artefatto**
+
+Tutti questi controlli vanno eseguiti **automaticamente prima** di promuovere l'artefatto verso l'ambiente successivo — non va bene "costruire a ogni modifica ma demandare test e analisi qualità a una revisione manuale periodica": quello nega lo scopo stesso della CI (feedback rapido e automatico a ogni commit, principio "shift-left").
+
+### 1.7.3 Test Pyramid
+La **test pyramid** descrive la distribuzione ottimale dei test automatici per bilanciare copertura, velocità e costo di manutenzione:
+
+```mermaid
+graph TD
+    E2E["Pochi test End-to-End<br/>(lenti, costosi, fragili)"]
+    INT["Un numero minore di test di Integrazione"]
+    UNIT["Molti test Unitari<br/>(rapidi, economici, alla base)"]
+    UNIT --> INT --> E2E
+```
+
+- **Unit test** (base, più numerosi): testano una singola unità di codice in isolamento, velocissimi.
+- **Integration test** (livello intermedio): verificano l'interazione tra più componenti (es. applicazione + database).
+- **End-to-end test** (vertice, pochi): simulano un intero flusso utente, più lenti e fragili da mantenere.
+
+*Sintesi per l'esame*: il distrattore classico è invertire la piramide (molti E2E, pochi unitari) o concentrare tutto sull'integrazione — entrambe violano il principio della test pyramid.
+
+### 1.7.4 Dependency Inversion Principle (la "D" di SOLID), in pratica
+Il principio afferma: **i moduli di alto livello non devono dipendere da moduli di basso livello — entrambi devono dipendere da astrazioni** (interfacce); l'implementazione concreta viene fornita dall'esterno tramite **dependency injection**.
+
+Applicazione corretta: un modulo di alto livello dipende da un'**interfaccia astratta**, e l'implementazione concreta (es. un adapter per un DB specifico) viene iniettata a runtime. È un'applicazione **scorretta** del principio se:
+- il modulo di alto livello riceve tramite injection una classe concreta e dipende direttamente dalla sua API (nessuna astrazione introdotta);
+- il modulo di alto livello dipende da un'interfaccia **definita dal modulo di basso livello** (l'inversione va nella direzione sbagliata: l'astrazione deve appartenere al dominio/modulo di alto livello, non essere dettata dai dettagli implementativi di basso livello).
+
+### 1.7.5 JWT (JSON Web Token) e validazione lato backend
+Un **JWT** è un token compatto, nel formato `header.payload.signature`, usato tipicamente per trasportare informazioni di autenticazione/autorizzazione firmate da un identity provider.
+
+Quando un backend riceve un JWT, per fidarsene **non basta verificarne la firma**: occorre controllare anche i **claim rilevanti**, tipicamente:
+- **`exp`** (expiration): il token non deve essere scaduto;
+- **`iss`** (issuer): deve corrispondere all'identity provider effettivamente atteso;
+- **`aud`** (audience): deve corrispondere al servizio/applicazione destinatario, non a un servizio diverso (altrimenti un token valido per un altro servizio potrebbe essere riutilizzato impropriamente — *token confusion*).
+
+*Sintesi per l'esame*: il controllo essenziale è "verificare la firma **e** i claim richiesti (scadenza, issuer, audience quando previsti)" — sono due controlli complementari, non alternativi: fidarsi solo della firma ignorando issuer/audience, o controllare i claim senza verificare la firma, sono entrambi errori.
+
+### 1.7.6 Alta coesione, basso accoppiamento
+Principio cardine della progettazione modulare, cardine per manutenibilità ed evoluzione di un sistema:
+- **Coesione (cohesion)**: quanto gli elementi **all'interno** di un modulo sono funzionalmente correlati tra loro. Alta coesione = il modulo ha una responsabilità ben delimitata e coerente (collegato al Single Responsibility Principle di SOLID).
+- **Accoppiamento (coupling)**: quanto un modulo dipende **da altri** moduli. Basso accoppiamento = dipendenze minime ed esplicite tra moduli.
+
+L'obiettivo di design è sempre **alta coesione interna + basso accoppiamento tra moduli**: un modulo coeso ma fortemente accoppiato ad altri (o viceversa, responsabilità sparse tra componenti indipendenti) peggiora comunque manutenibilità e testabilità.
+
 ---
 
 ## Domande di autoverifica
@@ -166,3 +235,45 @@ Principio cardine (anche giuridico, art. 25 GDPR — *Data Protection by Design 
    c) Controller
    d) Nessuno dei tre, è gestita dal database
    **Risposta: b)** — la View è responsabile della presentazione; il Model gestisce i dati, il Controller la logica di input/coordinamento.
+
+7. **Quando una API crea con successo una nuova risorsa tramite POST, quale risposta HTTP è generalmente più appropriata?**
+   a) 200 OK sempre, perché POST non prevede un codice specifico per la creazione
+   b) 201 Created, con l'header Location che indica l'URI della nuova risorsa
+   c) 202 Accepted, anche se la creazione è già stata completata in modo sincrono
+   d) 204 No Content
+   **Risposta: b)** — è la convenzione REST standard; 202 è riservato alle elaborazioni asincrone non ancora concluse.
+
+8. **Qual è la distribuzione corretta dei test secondo la "test pyramid"?**
+   a) Molti test end-to-end, pochi unitari
+   b) Concentrare la maggior parte dei test sul livello di integrazione
+   c) Molti test unitari rapidi, un numero minore di integrazione, pochi end-to-end lenti e costosi
+   d) Solo test end-to-end, per massima copertura realistica
+   **Risposta: c)** — la piramide privilegia una base ampia di unit test veloci ed economici.
+
+9. **Quale affermazione applica correttamente il Dependency Inversion Principle?**
+   a) Il modulo di alto livello dipende da un'interfaccia astratta, e l'implementazione concreta viene fornita tramite injection
+   b) Il modulo di alto livello dipende direttamente da una classe concreta ricevuta tramite injection
+   c) Il modulo di alto livello dipende da un'interfaccia definita e posseduta dal modulo di basso livello
+   d) Non è mai necessario introdurre astrazioni tra moduli di alto e basso livello
+   **Risposta: a)** — l'astrazione deve appartenere al modulo di alto livello (dominio), non essere dettata dal dettaglio implementativo di basso livello.
+
+10. **Quando un backend riceve un JWT firmato da un identity provider, cosa va controllato?**
+    a) Solo la firma, i claim provengono comunque da una fonte attendibile
+    b) Solo i claim (issuer, audience, scadenza), la firma non è necessaria se il provider è attendibile
+    c) La firma e i claim rilevanti (scadenza, issuer, audience quando previsti)
+    d) Nessun controllo è necessario se il token è stato trasmesso su HTTPS
+    **Risposta: c)** — firma e claim sono controlli complementari, non alternativi.
+
+11. **Quale combinazione favorisce maggiormente la manutenibilità di un sistema software?**
+    a) Alta coesione interna dei moduli e alto accoppiamento tra moduli
+    b) Bassa coesione interna e basso accoppiamento, distribuendo una responsabilità tra più componenti
+    c) Alta coesione interna dei moduli e basso accoppiamento tra moduli, con responsabilità ben delimitate
+    d) Il livello di coesione e accoppiamento non incide sulla manutenibilità
+    **Risposta: c)** — è il principio cardine della progettazione modulare.
+
+12. **Qual è la sequenza corretta di una pipeline CI con controlli di qualità automatici?**
+    a) Build automatica, distribuzione immediata in produzione, controlli di qualità successivi
+    b) Build riproducibile, test automatici, analisi statica e controlli di sicurezza, prima di promuovere l'artefatto
+    c) Build automatica a ogni modifica, ma test e analisi demandati a una revisione manuale periodica
+    d) Analisi di sicurezza manuale dopo il rilascio in produzione
+    **Risposta: b)** — tutti i controlli devono essere automatizzati e precedere la promozione dell'artefatto (shift-left).

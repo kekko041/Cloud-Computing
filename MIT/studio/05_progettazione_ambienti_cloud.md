@@ -62,6 +62,18 @@ graph TB
   * **Service discovery**: i Pod si trovano tra loro tramite DNS interno al cluster, senza indirizzi IP statici.
 * **Trade-off**: Kubernetes introduce notevole complessità operativa (curva di apprendimento, gestione del control plane, networking) — è giustificato per applicazioni a microservizi su scala significativa, meno per applicazioni semplici o monolitiche a basso traffico (dove il beneficio non compensa l'overhead gestionale).
 
+### 5.3.1 Rolling update vs Blue-Green deployment (dalla prova scritta reale)
+Sono due **pattern distinti** per rilasciare una nuova versione senza downtime — spesso confusi tra loro nei quiz:
+
+| | Rolling update | Blue-Green deployment |
+|---|---|---|
+| Come funziona | Sostituisce **gradualmente** le istanze della vecchia versione con quelle nuove, rispettando limiti configurati su indisponibilità massima e capacità aggiuntiva (in K8s: `maxUnavailable`/`maxSurge`) | Mantiene **due ambienti completi** (Blue = vecchio, Green = nuovo) attivi in parallelo, e sposta **tutto il traffico in un unico passaggio controllato** (es. cambio di load balancer/DNS) |
+| Capacità richiesta | Incrementale, non serve raddoppiare l'infrastruttura | Richiede **doppia capacità** durante la transizione (due ambienti completi) |
+| Rollback | Si inverte gradualmente la sostituzione | **Istantaneo**: basta ripuntare il traffico sull'ambiente Blue |
+| Rischio | Coesistenza temporanea di vecchia/nuova versione (serve compatibilità) | Nessuna coesistenza: lo switch è netto |
+
+*Sintesi per l'esame*: se la domanda descrive "sostituzione progressiva delle istanze, rispettando limiti di indisponibilità" → **Rolling update**. Se descrive "due ambienti paralleli completi con uno switch unico del traffico" → **Blue-Green**. Non sono sinonimi: attenzione ai quiz che descrivono il Blue-Green ma chiedono la definizione di "rolling update" (o viceversa).
+
 ## 5.4 Infrastructure as Code (IaC) per ambienti cloud
 
 * **Approccio dichiarativo** (si descrive lo stato finale desiderato, è il sistema a determinare come raggiungerlo — es. **Terraform**) vs **approccio imperativo** (si descrive la sequenza di comandi da eseguire — es. script bash tradizionali).
@@ -130,3 +142,10 @@ graph TB
    c) Solo gli amministratori hanno accesso al sistema
    d) I permessi non vanno mai rivisti dopo l'assegnazione iniziale
    **Risposta: b)** — è la definizione standard del principio, cardine anche della sicurezza Zero Trust.
+
+7. **Come funziona normalmente un rolling update di un deployment orchestrato?**
+   a) Mantiene due ambienti completi, vecchio e nuovo, spostando il traffico in un unico passaggio
+   b) Sostituisce gradualmente le istanze della vecchia versione con quelle nuove, rispettando limiti configurati su indisponibilità e capacità aggiuntiva
+   c) Termina tutte le istanze vecchie e poi crea quelle nuove, accettando una finestra di indisponibilità
+   d) Richiede sempre il raddoppio permanente dell'infrastruttura
+   **Risposta: b)** — è la definizione di rolling update; l'opzione (a) descrive invece il Blue-Green deployment, un pattern diverso.

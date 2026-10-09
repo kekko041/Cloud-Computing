@@ -63,9 +63,11 @@ Individua relazioni frequenti tra elementi in grandi insiemi di transazioni, esp
 * **Esempio pratico:** analisi delle richieste di accesso agli atti per individuare che chi richiede il documento X spesso richiede anche il documento Y, utile per ottimizzare i processi di erogazione dei servizi.
 
 ### 5.3 Classification (apprendimento supervisionato)
-Assegna un'osservazione a una categoria predefinita, sulla base di un modello addestrato su dati etichettati.
+Assegna un'osservazione a **una tra un insieme di classi predefinite**, sulla base di un modello addestrato su dati **etichettati** (supervisionato).
 * **Algoritmi tipici:** alberi decisionali, random forest, support vector machine (SVM), reti neurali.
 * **Esempio pratico:** classificare automaticamente le istanze/pratiche in ingresso per instradarle all'ufficio competente corretto, sulla base del testo e dei metadati.
+
+*Attenzione a non confondere Classification con Clustering* (errore frequente nei quiz): la **Classification** è **supervisionata** e assegna a categorie **già note a priori**; il **Clustering** (§5.5 qui sotto e Materia 6 §1.2) è **non supervisionato** e raggruppa record simili **senza conoscere in anticipo le classi**. Se la domanda dice "classi predefinite" → Classification; se dice "senza conoscere in anticipo le classi"/"raggruppare record simili" → Clustering.
 
 ### 5.4 Anomaly Detection (rilevamento anomalie)
 Identifica osservazioni che si discostano significativamente dal comportamento atteso.
@@ -83,6 +85,15 @@ Identifica osservazioni che si discostano significativamente dal comportamento a
 * Una **BI/data mining efficace dipende in modo critico dalla qualità dei dati in input** ("garbage in, garbage out"): un modello statistico o di ML costruito su dati di bassa qualità produce risultati inaffidabili indipendentemente dalla sofisticazione dell'algoritmo.
 
 *Sintesi per l'esame*: se una domanda chiede "qual è il prerequisito fondamentale per un'analisi di data mining affidabile", la risposta è la qualità/governance dei dati a monte, non la scelta dell'algoritmo.
+
+## 7. Correlazione non implica causalità (dalla prova scritta reale)
+
+Un'alta correlazione statistica tra due variabili **non dimostra da sola un rapporto causale** tra loro. Possibili spiegazioni alternative che un analista deve sempre considerare prima di inferire causalità:
+* **Variabili confondenti (confounding):** una terza variabile, non osservata, influenza entrambe le variabili correlate, creando un'associazione spuria (es. le vendite di gelati e gli annegamenti sono correlati, ma la causa comune è la temperatura estiva).
+* **Causalità inversa:** è B a causare A, non A a causare B (il verso della relazione è invertito rispetto a quanto si assume).
+* **Coincidenza/caso:** su grandi quantità di dati è statisticamente probabile trovare correlazioni puramente casuali e prive di significato.
+
+Per inferire un rapporto causale servono **evidenze aggiuntive** e un **disegno di analisi adeguato** (es. esperimenti controllati randomizzati, tecniche di inferenza causale) — non basta un coefficiente di correlazione elevato, qualunque sia la soglia (non esiste una soglia di correlazione, ad es. 0,8, che "promuova" automaticamente una relazione da correlazionale a causale). Allo stesso modo, l'**assenza** di correlazione *lineare* non dimostra l'assenza di qualunque relazione causale, che potrebbe essere non lineare o mediata da altre variabili.
 
 ---
 
@@ -105,3 +116,17 @@ Identifica osservazioni che si discostano significativamente dal comportamento a
 
 6. **Perché la data governance è considerata un prerequisito critico per la BI e il data mining?**
    a) Serve solo per la conformità legale, non per l'analisi b) **Perché la qualità dei dati in input determina l'affidabilità di qualsiasi analisi o modello successivo** c) Riguarda solo la sicurezza informatica d) È rilevante solo per i dati non strutturati — corretto: dati di bassa qualità producono risultati inaffidabili indipendentemente dalla sofisticazione degli strumenti di analisi.
+
+7. **Nel data mining, a quale scopo è finalizzata la tecnica di classificazione?**
+   a) A raggruppare i record simili senza conoscere in anticipo le classi
+   b) **Ad assegnare ogni record a una tra un insieme di classi predefinite**
+   c) A prevedere un valore numerico continuo a partire dai dati
+   d) A eliminare automaticamente i valori mancanti
+   **Risposta: b)** — la classificazione è supervisionata e usa classi note a priori; raggruppare senza classi note è invece il clustering (opzione a).
+
+8. **Perché una correlazione elevata tra due variabili non dimostra da sola un rapporto causale?**
+   a) Perché una correlazione statisticamente significativa dimostra causalità solo sopra una soglia come 0,8
+   b) **Può dipendere da variabili confondenti, causalità inversa o coincidenze, servono ulteriori evidenze e un disegno di analisi adeguato**
+   c) Perché l'assenza di correlazione lineare dimostra che non può esistere alcuna relazione causale
+   d) Perché la correlazione si applica solo a variabili categoriche
+   **Risposta: b)** — correlazione e causalità sono concetti distinti; servono disegni sperimentali o tecniche di inferenza causale per stabilire un nesso causale.
