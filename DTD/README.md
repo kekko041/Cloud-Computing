@@ -39,6 +39,7 @@ Il test MIT (`MIT/scritto/`) aveva 3 opzioni e **distrattori lunghi e "quasi ver
 ## 📚 Materiale del kit
 | # | File | Materie del bando |
 |---|---|---|
+| 0 | [Materie_8_9_PNRR_e_Ordinamento_PCM.md](Materie_8_9_PNRR_e_Ordinamento_PCM.md) | 8 e 9 – Guida integrata PNRR digitale & Ordinamento PCM |
 | 1 | [studio/01_Ordinamento_PCM_e_DTD.md](studio/01_Ordinamento_PCM_e_DTD.md) | 9 – Ordinamento PCM (+ governance del digitale) |
 | 2 | [studio/02_PNRR_Digitale.md](studio/02_PNRR_Digitale.md) | 8 – PNRR misure digitali |
 | 3 | [studio/03_Appalti_DLgs_36_2023.md](studio/03_Appalti_DLgs_36_2023.md) | 6 – Codice dei contratti |
