@@ -35,7 +35,8 @@
 - **Segretario generale**: nominato con DPCM; vertice amministrativo e responsabile del funzionamento del Segretariato generale e della gestione delle risorse umane e strumentali. Strutture: **Dipartimenti** (per funzioni di coordinamento), **Uffici** (anche autonomi), **Uffici di diretta collaborazione** del PdC.
 
 ## 4. Dipartimento per la trasformazione digitale (DTD)
-- **Istituito con DPCM 19 giugno 2019** (modifica del DPCM 1/10/2012) come struttura di supporto al PdC per **la promozione e il coordinamento delle azioni del Governo** volte a una **strategia unitaria** di trasformazione digitale e modernizzazione del Paese. Fino a **2 uffici di livello dirigenziale generale e 2 servizi**. Organizzazione interna con **decreto del Segretario generale (24 luglio 2019)**.
+- **Istituito con DPCM 19 giugno 2019**, che ha inserito l'**art. 24-ter** nel DPCM 1/10/2012, come struttura di supporto al PdC per **la promozione e il coordinamento delle azioni del Governo** volte a una **strategia unitaria** di trasformazione digitale e modernizzazione del Paese.
+- Articolazione: inizialmente 2 uffici e 2 servizi; con il **DPCM 13/05/2026**, **fino a 3 Uffici e 8 Servizi** (testo vigente e dettagli in `orale/04_Scheda_DPCM_2012_Strutture_PCM.md`).
 - **Erede del Team per la Trasformazione Digitale** (Commissario straordinario, 2016-2019).
 - **Senza personalità giuridica**: è un'articolazione della PCM, distinta da **AgID** e **ACN** (agenzie con personalità giuridica).
 - Opera per il **Ministro/Sottosegretario con delega all'innovazione tecnologica e alla transizione digitale** (oggi Sottosegretario alla PCM con delega).

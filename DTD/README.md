@@ -1,5 +1,12 @@
 # Concorso PCM–DTD 130 AF1 — Codice **DTD1** (Specialista di settore scientifico tecnologico)
 
+> ✅ **Scritto del 29/10/2026 superato con 43,5/60** (situazionali 12/12). Ora si prepara l'**orale del 19 novembre 2026** → cartella [`orale/`](orale/):
+> - [00 Analisi della prova scritta](orale/00_Analisi_Prova_Scritta.md) — esito per materia, correzione degli errori, indicazioni sulla commissione
+> - [01 Metodo per l'orale](orale/01_Metodo_Orale_DTD1.md) — regole, schema di risposta, STAR, competenze digitali, presentazione
+> - [02 Domande aperte](orale/02_Domande_Aperte_DTD1.md) — 9 materie + le 10 domande più probabili
+> - [03 English oral](orale/03_English_Oral_DTD1.md)
+> - [04 Scheda DPCM 1/10/2012](orale/04_Scheda_DPCM_2012_Strutture_PCM.md) — strutture PCM e art. 24-ter DTD (aggiornato al DPCM 13/05/2026)
+
 > Fonti: `DTD/Documenti/Bando PCM 130 AF1 DTD (1).pdf` (art. 7), `Istruzioni Candidato.pdf`, `Delibera n. 32 del 2026` (commissione A).
 
 ## 📅 Logistica
