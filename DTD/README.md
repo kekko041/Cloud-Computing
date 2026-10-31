@@ -6,6 +6,7 @@
 > - [02 Domande aperte](orale/02_Domande_Aperte_DTD1.md) — 9 materie + le 10 domande più probabili
 > - [03 English oral](orale/03_English_Oral_DTD1.md)
 > - [04 Scheda DPCM 1/10/2012](orale/04_Scheda_DPCM_2012_Strutture_PCM.md) — strutture PCM e art. 24-ter DTD (aggiornato al DPCM 13/05/2026)
+> - [05 Allenamento sui punti deboli](orale/05_Allenamento_Punti_Deboli.md) — PM, Appalti, PCM, PNRR: ganci mnemonici, copioni da 90", flashcard, mini-casi e protocollo giornaliero
 
 > Fonti: `DTD/Documenti/Bando PCM 130 AF1 DTD (1).pdf` (art. 7), `Istruzioni Candidato.pdf`, `Delibera n. 32 del 2026` (commissione A).
 
@@ -62,10 +63,23 @@ Il test MIT (`MIT/scritto/`) aveva 3 opzioni e **distrattori lunghi e "quasi ver
 | Sistemi, architetture, reti | `MIT/studio/02_*`, `05_*`, `Reti_e_Database_Distribuiti.md`, `Sintesi_Architetture_Qualita_Migrazione.md`, `Sintesi_Corso_Cloud_Computing.md` |
 | Data management | `MIT/studio/03_*`, `04_*`, `08_*`, `Sintesi_Dati_Metadatazione_ML.md`, `Big_Data_e_Data_Engineering.md` |
 | Programmazione/Web | `MIT/studio/01_ingegneria_software_devops.md`, `Algoritmi_Sistemi_Operativi.md` |
-| IA | `MIT/studio/06_*`, `IA_e_AI_Act.md`, `OWASP_Top_10_LLM_IA.md` |
+| IA | `MIT/studio/06_*` (manca la L. 132/2025: vedi `studio/04`), `IA_e_AI_Act.md`, `OWASP_Top_10_LLM_IA.md` |
 | Privacy e sicurezza | `MIT/studio/07_*`, `09_*`, `12_*`, `Sintesi_ACN_Cybersicurezza_PMI.md`, `Crittografia_Post_Quantum_e_Privacy.md` |
 | CAD, piattaforme, cloud PA | `Sintesi_CAD_e_Appalti_ICT.md`, `MIT/studio/10_*`, `11_*`, `AGID_Sintesi_Preparazione_Concorso.md` |
 | Quiz di allenamento | `MIT/simulazioni/Simulazione_01/02_*`, `AGID_Simulazione_Ramo_*` |
+
+### 🎤 Schede MIT da usare per l'orale (priorità)
+| Priorità | Scheda | Materia DTD1 | Perché |
+|---|---|---|---|
+| ⭐⭐⭐ | [`MIT/studio/11_trasformazione_digitale_pa.md`](../MIT/studio/11_trasformazione_digitale_pa.md) | 8 PNRR, 9 governance | governance PCM/DTD/AgID/ACN, Cloud First, M1. Domanda probabile: «differenza tra DTD e AgID». Verifica che il Piano Triennale citato sia l'edizione in vigore |
+| ⭐⭐⭐ | [`MIT/studio/10_normativa_amministrazione_digitale.md`](../MIT/studio/10_normativa_amministrazione_digitale.md) | competenze digitali | firme, SPID/CIE/eIDAS, domicilio digitale, ModI/PDND, *once only* |
+| ⭐⭐⭐ | [`MIT/studio/09_tutela_dati_personali.md`](../MIT/studio/09_tutela_dati_personali.md) | 7 privacy | allo scritto hai sbagliato gli artt. 9 e 14 |
+| ⭐⭐⭐ | [`MIT/studio/12_nis_network_information_security.md`](../MIT/studio/12_nis_network_information_security.md) | 7 sicurezza | con l'esperienza al COR, una domanda su NIS2/ACN/PSNC è molto probabile |
+| ⭐⭐ | `MIT/studio/02_*`, `05_*`, `07_*`, `03_*`, `08_*`, `06_*` | 2, 3, 5, 7 | materie tecniche già forti: solo ripasso |
+| ⭐ | `MIT/studio/04_*` | — | troppo operativa per l'orale |
+
+> ⚠️ Nessuna di queste schede copre i **punti deboli** (program management, appalti per articolo, DPCM 1/10/2012): per questi restano `orale/02` (sezioni 1, 6 e 9), `orale/04`, `studio/01-03` e l'allenamento in [`orale/05`](orale/05_Allenamento_Punti_Deboli.md).
+> **Ripartizione consigliata fino al 19/11:** circa **60%** PM, appalti e PCM · **25%** NIS2, GDPR e CAD (schede 09, 10, 12) · **15%** ripasso tecnico.
 
 ## 🗓️ Piano di 4 giorni (25 → 28 ottobre)
 | Giorno | Mattina | Pomeriggio | Sera |
