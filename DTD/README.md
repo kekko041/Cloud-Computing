@@ -7,6 +7,7 @@
 > - [03 English oral](orale/03_English_Oral_DTD1.md)
 > - [04 Scheda DPCM 1/10/2012](orale/04_Scheda_DPCM_2012_Strutture_PCM.md) — strutture PCM e art. 24-ter DTD (aggiornato al DPCM 13/05/2026)
 > - [05 Allenamento sui punti deboli](orale/05_Allenamento_Punti_Deboli.md) — PM, Appalti, PCM, PNRR: ganci mnemonici, copioni da 90", flashcard, mini-casi e protocollo giornaliero
+> - [06 Cyber Resilience Act](orale/06_Scheda_Cyber_Resilience_Act.md) — Reg. UE 2024/2847: scadenze (segnalazioni dall'11/09/2026), obblighi, categorie, ACN in Italia, impatto sugli acquisti della PA
 
 > Fonti: `DTD/Documenti/Bando PCM 130 AF1 DTD (1).pdf` (art. 7), `Istruzioni Candidato.pdf`, `Delibera n. 32 del 2026` (commissione A).
 

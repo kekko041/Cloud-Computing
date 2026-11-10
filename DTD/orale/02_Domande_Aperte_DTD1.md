@@ -100,7 +100,7 @@
 ---
 ## 4. Programmazione, sviluppo software, web
 **4.1 Ciclo di sviluppo sicuro (LG AgID sviluppo sicuro, `AGID/pdf/08-11`).**
-- *Security by design*: **threat modeling** (STRIDE); OWASP ASVS e Top 10; **SAST/DAST/SCA**; **SBOM** = inventario di componenti e dipendenze (Q56; richiesto anche dal **Cyber Resilience Act**); gestione dei segreti; pipeline **CI/CD** con *quality gate*.
+- *Security by design*: **threat modeling** (STRIDE); OWASP ASVS e Top 10; **SAST/DAST/SCA**; **SBOM** = inventario di componenti e dipendenze (Q56; richiesto anche dal **Cyber Resilience Act**, si veda `orale/06`); gestione dei segreti; pipeline **CI/CD** con *quality gate*.
 
 **4.2 Qualità del codice.** **Refactoring** = migliorare la struttura senza cambiare il comportamento (Q38), protetto dai test; debito tecnico; SOLID; code review; test pyramid; **Git** (branching, **rebase** vs merge, Q60).
 
