@@ -65,7 +65,7 @@ Risposta esatta **+0,50**, mancata **0**, errata **-0,10** (bando, art. 6, comma
 | 52 | 4. Amministrazione DB/OS | **d** | L'application pool di IIS isola i processi di app web diverse, contenendo i crash. |
 | 53 | 5. Progettazione ambienti cloud | **a** | Credenziali/chiavi API vanno gestite in un vault dedicato, mai hardcoded nel codice o nelle immagini. |
 | 54 | 6. ML/IoT/IA | **b** | La sorveglianza biometrica di massa in tempo reale in spazi pubblici è vietata (rischio inaccettabile, AI Act). |
-| 55 | 7. Cybersecurity | **c** | "Recover" nel NIST CSF riguarda il ripristino dei servizi dopo un incidente, con lezioni apprese. |
+| 55 | 7. Cybersecurity | **c** | "Recover" nel NIST CSF riguarda il ripristino dei servizi dopo un incidente, con lezioni apprese. Nota: risposta valida per la versione 1.1; nel **CSF 2.0** le lezioni apprese sono in **ID.IM** e Recover comprende ripristino e comunicazione (si veda `DTD/orale/08`). |
 | 56 | 8. BI/data mining | **d** | Il data steward è il responsabile operativo della qualità/gestione di uno specifico dominio di dati. |
 | 57 | 9. Tutela dati personali | **a** | Il Codice Privacy resta in vigore soprattutto per le sanzioni penali in materia di trattamento illecito. |
 | 58 | 10. Normativa amm. digitale | **b** | I 4 principi POUR: Percepibilità, Utilizzabilità, Comprensibilità, Robustezza. |

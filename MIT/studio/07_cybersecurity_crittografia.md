@@ -130,17 +130,18 @@ Il paradigma **Zero Trust** ("mai fidarsi, verifica sempre") supera il modello d
 
 Zero Trust è esplicitamente richiamato tra i controlli tecnici imposti dalla **NIS2** (vedi [`AGID_Sintesi_Preparazione_Concorso.md` §9](../../AGID_Sintesi_Preparazione_Concorso.md)).
 
-## 9. NIST Cybersecurity Framework (cenni)
+## 9. NIST Cybersecurity Framework 2.0 (cenni)
 
-Framework statunitense ampiamente adottato come riferimento concettuale anche in Europa, articolato in cinque funzioni core (nella versione 1.1; la versione 2.0 del 2024 ne aggiunge una sesta, *Govern*):
+Framework statunitense ampiamente adottato come riferimento concettuale anche in Europa. La versione vigente è la **CSF 2.0 (NIST CSWP 29, 26 febbraio 2024)**: **6 funzioni**, 22 categorie e 106 sottocategorie. La versione 1.1 del 2018 aveva 5 funzioni, 23 categorie e 108 sottocategorie.
 
-1. **Identify** — comprendere asset, rischi e contesto organizzativo.
-2. **Protect** — implementare le salvaguardie (controlli accessi, formazione, protezione dati).
-3. **Detect** — attività di monitoraggio per individuare tempestivamente gli incidenti.
-4. **Respond** — pianificazione e azioni di risposta a un incidente rilevato.
-5. **Recover** — ripristino dei servizi e delle capacità operative dopo un incidente, con lezioni apprese.
+0. **Govern** (*nuova*, al centro delle altre) — contesto, strategia di gestione del rischio, ruoli e responsabilità, politiche, supervisione, **rischio della supply chain** (GV.SC).
+1. **Identify** — asset, valutazione del rischio e **miglioramento** (ID.IM, che ora raccoglie anche le *lezioni apprese*).
+2. **Protect** — identità e accessi (PR.AA), formazione, sicurezza dei dati, delle piattaforme e resilienza dell'infrastruttura.
+3. **Detect** — monitoraggio continuo (DE.CM) e analisi degli eventi avversi (DE.AE) per individuare tempestivamente gli incidenti.
+4. **Respond** — gestione, analisi, comunicazione e mitigazione dell'incidente rilevato.
+5. **Recover** — ripristino dei servizi e delle capacità operative dopo un incidente, e relativa comunicazione. Nella 1.1 comprendeva anche le lezioni apprese.
 
-Questo ciclo è concettualmente complementare al processo di Incident Response richiesto dalla NIS2 (notifica entro 24h/72h al CSIRT Italia).
+Questo ciclo è concettualmente complementare al processo di Incident Response richiesto dalla NIS2 (notifica entro 24h/72h al CSIRT Italia). In Italia le **misure di base NIS** dell'ACN (determinazione **379907/2025**, che sostituisce la 164179/2025) usano il **Framework nazionale per la cybersecurity e la data protection, edizione 2025**, con la stessa struttura e gli stessi codici (es. GV.RR-02, ID.RA-05, PR.DS-11). Approfondimento: `DTD/orale/08_Scheda_NIST_CSF_2_0.md`.
 
 ## 10. Strumenti e attori della sicurezza: IDS/IPS, SIEM, ENISA (dalla prova scritta reale)
 

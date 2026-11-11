@@ -64,7 +64,7 @@ Esempio: 50 esatte, 5 errate, 5 non date → (50×0,50) + (5×-0,10) + (5×0) = 
 | 40 | 4. Amministrazione DB/OS | **d** | `sudo` lascia una traccia di audit (chi, cosa, quando), a differenza del login diretto come root. |
 | 41 | 5. Progettazione ambienti cloud | **a** | Il configuration drift è il disallineamento causato da modifiche manuali non versionate, che l'IaC previene. |
 | 42 | 6. ML/IoT/IA | **b** | Il fog computing è un livello intermedio tra edge e cloud, su nodi di rete come router/gateway locali. |
-| 43 | 7. Cybersecurity | **c** | "Detect" nel NIST CSF è la funzione dedicata al monitoraggio per l'individuazione tempestiva degli incidenti. |
+| 43 | 7. Cybersecurity | **c** | "Detect" nel NIST CSF è la funzione dedicata al monitoraggio per l'individuazione tempestiva degli incidenti. Nota: le funzioni erano **cinque** nella versione 1.1; nel **CSF 2.0** (2024) sono **sei**, con *Govern* (si veda `DTD/orale/08`). |
 | 44 | 8. BI/data mining | **d** | SMART: Specific, Measurable, Achievable, Relevant, Time-bound. |
 | 45 | 9. Tutela dati personali | **a** | Art. 32 GDPR richiede esplicitamente riservatezza, integrità, disponibilità e resilienza dei sistemi di trattamento. |
 | 46 | 10. Normativa amm. digitale | **b** | IPA = domicili digitali (PEC) delle PA; INAD = domicili digitali di cittadini/professionisti/imprese. |

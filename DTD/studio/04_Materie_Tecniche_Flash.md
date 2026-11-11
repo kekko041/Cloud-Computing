@@ -223,7 +223,7 @@
   - **vulnerability assessment** (individua) vs **penetration test** (**sfrutta**); **CVE** (identificativo) / **CVSS** (gravità).
 - **Quadri di riferimento**:
   - **ISO/IEC 27001:2022** (SGSI, **93 controlli in 4 temi**: organizzativi, persone, fisici, tecnologici), 27002, 27005 (rischio), 27701 (privacy);
-  - **NIST CSF 2.0**: **Govern**, Identify, Protect, Detect, Respond, Recover; **Framework Nazionale per la Cybersecurity e la Data Protection**;
+  - **NIST CSF 2.0** (26/02/2024): **Govern**, Identify, Protect, Detect, Respond, Recover; **Framework Nazionale per la Cybersecurity e la Data Protection** (ed. 2025, base delle misure NIS dell'ACN; si veda `orale/08`);
   - **Misure minime di sicurezza ICT per le PA** (circolare AgID 2/2017: livelli minimo, standard, avanzato).
 - **Normativa cyber**:
   - **ACN** (D.L. 82/2021); **Perimetro di Sicurezza Nazionale Cibernetica** (D.L. 105/2019);
