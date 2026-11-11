@@ -36,7 +36,7 @@ Le domande tipiche: *"Mi racconti una situazione in cui…"* (conflitto, scadenz
 | 1 | Gestione di un conflitto o di uno stakeholder difficile | |
 | 2 | Lavorare sotto scadenza / decidere con informazioni incomplete | |
 | 3 | Coordinare un gruppo o fare da mentore a un collega | |
-| 4 | Gestire un incidente o un errore (anche tuo) | |
+| 4 | Gestire un incidente o un errore (anche tuo) — struttura il racconto sulle 5 fasi ISO/IEC 27035 (`orale/07`), senza dettagli classificati | |
 | 5 | Introdurre un cambiamento o innovazione e farlo adottare | |
 
 **Competenze del modello per i funzionari PA** (DFP – *modello delle competenze trasversali*): orientamento al risultato, problem solving, comunicazione, lavoro di gruppo, gestione delle relazioni, flessibilità e apprendimento, orientamento all'utente, integrità ed etica pubblica. Nomina questi termini in modo naturale.

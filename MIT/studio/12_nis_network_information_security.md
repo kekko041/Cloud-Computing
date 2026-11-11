@@ -55,13 +55,13 @@ flowchart LR
   * **Zero Trust**: nessuna fiducia implicita basata sulla sola posizione di rete; ogni accesso va verificato in base a identità, dispositivo e contesto.
   * **Privilegio minimo / RBAC / separation of duties**: nessun utente generico deve avere diritti amministrativi; account privilegiati de-privilegiati per l'uso quotidiano, con procedura eccezionale tracciata ("Break the Glass").
   * **Analisi del rischio e monitoraggio continuo**, tipicamente tramite **SIEM**, con inventario degli asset critici come prerequisito.
-* **Modello di gestione incidenti a 5 fasi** (coerente con NIST/ISO 27035): (1) Pianificazione → (2) Identificazione dell'evento → (3) Gestione (rilevamento/contenimento/eliminazione-recovery) → (4) Notifica (autorità competenti) → (5) Miglioramento continuo.
+* **Modello di gestione incidenti a 5 fasi** (guida ACN; corrispondenza con le 5 fasi della **ISO/IEC 27035-1:2023** e con il NIST SP 800-61 in `DTD/orale/07_Scheda_ISO_IEC_27035_Incident_Management.md` §4): (1) Pianificazione → (2) Identificazione dell'evento → (3) Gestione (rilevamento/contenimento/eliminazione-recovery) → (4) Notifica (autorità competenti) → (5) Miglioramento continuo.
 
 ---
 
 ## 5. NIS2 e PSNC (Perimetro di Sicurezza Nazionale Cibernetica)
 
-* **PSNC** (D.Lgs. 105/2019, conv. L. 133/2019): normativa italiana **preesistente e complementare** alla NIS2, riservata alle infrastrutture **iper-critiche** dello Stato (i cosiddetti "beni ICT" di rilevanza strategica per la sicurezza nazionale).
+* **PSNC** (D.L. 105/2019, conv. L. 133/2019): normativa italiana **preesistente e complementare** alla NIS2, riservata alle infrastrutture **iper-critiche** dello Stato (i cosiddetti "beni ICT" di rilevanza strategica per la sicurezza nazionale).
 * **Obblighi specifici PSNC**: analisi del rischio **annuale** sui beni ICT strategici, notifica degli incidenti al **CSIRT**, comunicazione al **CVCN** (Centro di Valutazione e Certificazione Nazionale) per gli acquisti di beni/servizi ICT critici destinati a infrastrutture del perimetro (DPCM 15/6/2021).
 * **Rapporto con NIS2**: il PSNC non è sostituito dalla NIS2, ma la **affianca** con un livello di controllo più stringente riservato ai soggetti più critici; un ente può ricadere contemporaneamente nel perimetro NIS2 (per il proprio settore) e nel PSNC (se gestisce beni ICT di rilevanza strategica nazionale) — in tal caso si applicano cumulativamente entrambi i set di obblighi.
 

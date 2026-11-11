@@ -165,7 +165,7 @@
 - **ACN** (D.L. 82/2021); **NIS2** (D.Lgs. 138/2024: soggetti essenziali e importanti, misure di base, notifiche 24 h / 72 h / 1 mese, **responsabilità degli organi di vertice**, piattaforma ACN); **L. 90/2024** (PA: struttura e **referente per la cybersicurezza**, notifica degli incidenti); PSNC; Strategia nazionale di cybersicurezza 2022-2026.
 - Misure: **MFA**, Zero Trust, segmentazione, patching, EDR, SIEM/SOC, backup **3-2-1** immutabili con **test di ripristino** e credenziali separate (Q14); formazione contro il phishing.
 
-**7.5 Caso: un dipendente segnala un ransomware.** Isolare le macchine dalla rete; attivare il piano di risposta agli incidenti (CSIRT interno → **CSIRT Italia**); preservare le evidenze; valutare il **data breach** (DPO → Garante entro 72 h); ripristinare da backup puliti; analisi della causa radice; comunicazione; *lessons learned*. **Non pagare il riscatto.**
+**7.5 Caso: un dipendente segnala un ransomware** (svolto per fasi ISO/IEC 27035 in `orale/07`). Isolare le macchine dalla rete; attivare il piano di risposta agli incidenti (CSIRT interno → **CSIRT Italia**); preservare le evidenze; valutare il **data breach** (DPO → Garante entro 72 h); ripristinare da backup puliti; analisi della causa radice; comunicazione; *lessons learned*. **Non pagare il riscatto.**
 
 ---
 ## 8. PNRR — 0/2 allo scritto ⇒ priorità

@@ -37,7 +37,7 @@ Le tre guide condividono la stessa introduzione (contesto NIS2, statistiche PMI)
 | # | Azione | Punti salienti |
 |---|---|---|
 | 1 | Stabilire obiettivi e diffondere la cultura della cybersicurezza | Obiettivi di sicurezza allineati alla strategia, rivisti almeno annualmente e nei momenti chiave (avvio attività, nuove tecnologie, dopo un incidente) |
-| 2 | Conoscere il quadro normativo di riferimento | **NIS2** (D.Lgs. 138/2024, recepisce Direttiva UE 2022/2555): soglie dimensionali (medie/grandi imprese nei settori Allegati I-II), obblighi di notifica; **PSNC** (D.Lgs. 105/2019 conv. L. 133/2019): analisi del rischio annuale sui "beni ICT" strategici, notifica al CSIRT, comunicazione al CVCN per acquisti critici (DPCM 15/6/2021); **GDPR** (Reg. UE 2016/679): controlli di sicurezza sui dati personali, valutazione obbligo DPO (art. 37); **eIDAS** (Reg. UE 910/2014) per i fornitori di servizi fiduciari |
+| 2 | Conoscere il quadro normativo di riferimento | **NIS2** (D.Lgs. 138/2024, recepisce Direttiva UE 2022/2555): soglie dimensionali (medie/grandi imprese nei settori Allegati I-II), obblighi di notifica; **PSNC** (D.L. 105/2019 conv. L. 133/2019): analisi del rischio annuale sui "beni ICT" strategici, notifica al CSIRT, comunicazione al CVCN per acquisti critici (DPCM 15/6/2021); **GDPR** (Reg. UE 2016/679): controlli di sicurezza sui dati personali, valutazione obbligo DPO (art. 37); **eIDAS** (Reg. UE 910/2014) per i fornitori di servizi fiduciari |
 | 3 | Consapevolezza sugli asset critici (interni ed esterni) | Non tutto va protetto allo stesso livello; analisi del rischio estesa anche agli asset gestiti dai fornitori |
 | 4 | Nominare e supportare un responsabile per la cybersicurezza | Figura interna o esterna, con budget/risorse dedicate; allineamenti periodici (almeno trimestrali) |
 | 5 | Formazione e awareness, estesa alla supply chain | Valutazione delle competenze acquisite, non solo erogazione dei corsi; fornitori e clienti devono raggiungere un livello di consapevolezza analogo |
@@ -71,7 +71,7 @@ Le tre guide condividono la stessa introduzione (contesto NIS2, statistiche PMI)
 | Normativa | Riferimento | Oggetto |
 |---|---|---|
 | **NIS2** | D.Lgs. 138/2024 (recepisce Direttiva UE 2022/2555) | Sicurezza informatica per entità essenziali/importanti; sostituisce la Direttiva NIS (D.Lgs. 65/2018, Direttiva UE 2016/1148) |
-| **PSNC** | D.Lgs. 105/2019, conv. L. 133/2019 | Perimetro di Sicurezza Nazionale Cibernetica: beni ICT strategici, notifica al CSIRT, CVCN |
+| **PSNC** | D.L. 105/2019, conv. L. 133/2019 | Perimetro di Sicurezza Nazionale Cibernetica: beni ICT strategici, notifica al CSIRT, CVCN |
 | **GDPR** | Reg. UE 2016/679 | Protezione dati personali; notifica data breach al Garante |
 | **eIDAS** | Reg. UE 910/2014 | Identità digitale e servizi fiduciari (firma digitale, PEC) |
 
@@ -81,5 +81,5 @@ Le tre guide condividono la stessa introduzione (contesto NIS2, statistiche PMI)
 
 - **Zero Trust / MFA / privilegio minimo / RBAC** → si integrano con OAuth 2.0 e mTLS del ModI AGID (v. `AGID_Simulazione_Ramo_A.md`).
 - **ISO/IEC 27001** come criterio di qualificazione fornitori → collegabile alla qualificazione CSP/SaaS AGID/ACN (v. `Sintesi_Architetture_Qualita_Migrazione.md` §2).
-- **Modello di gestione incidenti a 5 fasi** → confrontabile con il ciclo NIST/ISO 27035 e con gli obblighi di notifica DORA (24h) vs NIS2 vs GDPR (72h), già mappati in `Guida Tecnica ai Framework di Governance IA e Resilienza Digitale UE.md`.
+- **Modello di gestione incidenti a 5 fasi** → corrispondenza fase per fase con la **ISO/IEC 27035-1:2023** (prepara · rileva · valuta · risponde · lezioni apprese) e con il NIST SP 800-61 Rev. 3 in `DTD/orale/07_Scheda_ISO_IEC_27035_Incident_Management.md`; confrontabile con gli obblighi di notifica DORA (24h) vs NIS2 vs GDPR (72h), già mappati in `Guida Tecnica ai Framework di Governance IA e Resilienza Digitale UE.md`.
 - **CSIRT Italia / ACN** → stesso soggetto istituzionale già incontrato come autorità di vigilanza sulla qualificazione cloud della PA (v. `Sintesi_Architetture_Qualita_Migrazione.md` §2) e come autorità di sicurezza nella governance del PSN (v. §3 dello stesso documento).
