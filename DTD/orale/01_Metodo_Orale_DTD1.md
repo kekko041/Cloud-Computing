@@ -49,7 +49,7 @@ Riferimento: **Syllabus "Competenze digitali per la PA"** (Dipartimento della Fu
 4. **Servizi on-line** (SPID/CIE, pagoPA, IO, ANPR, SEND, fascicolo sanitario);
 5. **Trasformazione digitale** (Piano Triennale, CAD, IA, open data).
 
-Possibili prove pratiche: spiegare l'uso di un foglio di calcolo (formule, tabelle pivot), firma digitale **CAdES (.p7m) / PAdES (PDF)** / XAdES, PEC vs e-mail, gestione di un documento informatico (LG AgID: formazione, gestione, conservazione), riconoscere un'e-mail di phishing.
+Possibili prove pratiche: spiegare l'uso di un foglio di calcolo (formule, tabelle pivot), firma digitale **CAdES (.p7m) / PAdES (PDF)** / XAdES (confronto, livelli B-B…B-LTA e sicurezza in `Sintesi_Firma_Digitale.md` §4.2-4.5), PEC vs e-mail, gestione di un documento informatico (LG AgID: formazione, gestione, conservazione), riconoscere un'e-mail di phishing.
 
 ## 6. Presentazione iniziale (60-90 secondi) — da personalizzare
 > "Mi chiamo Santo Penna, sono [formazione/laurea]. Lavoro da [N] anni in [amministrazione/ruolo], dove mi occupo di [2 attività concrete: es. gestione di progetti ICT, sicurezza, infrastrutture]. In questo periodo ho [1 risultato misurabile]. Mi candido al DTD perché è il punto in cui la strategia digitale del Paese diventa esecuzione: dopo il PNRR, il **D.L. 19/2026** ha rafforzato il Dipartimento proprio per garantire la continuità dei programmi di trasformazione digitale e gli obiettivi del **Decennio digitale 2030**, anche con personale da allocare presso gli enti territoriali. Mi piacerebbe portare la mia esperienza tecnica nell'accompagnamento delle amministrazioni, dalla progettazione alla messa in esercizio."

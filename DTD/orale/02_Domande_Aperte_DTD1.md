@@ -33,7 +33,13 @@
   - **Vision statement** e **Blueprint** (*target operating model*);
   - **Benefits Map**, **Benefits Realization Plan**, profili dei benefici con KPI, owner e baseline;
   - roadmap a **tranche**, registro dei rischi e delle issue, **Communications Management Plan**, piano degli stakeholder.
-- **Gestione delle modifiche**: soglie di tolleranza. Il CCB di progetto decide le modifiche locali; **escala** al **CCB di programma** se le modifiche toccano interdipendenze, budget di programma o benefici (Q37 dello scritto).
+- **Gestione delle modifiche (Change Management federato e soglie di tolleranza)**:
+  - **Principio di governance**: applicazione della *gestione per eccezioni* (PRINCE2 / MSP) basata su soglie di tolleranza delegate (costi, tempi, ambito, rischi, benefici).
+  - **CCB di Progetto (Livello Locale)**: approva o respinge le modifiche confinate all'interno del singolo progetto che rientrano nelle tolleranze assegnate e non intaccano le baseline globali.
+  - **Escalation al CCB di Programma (Livello Strategico)**: scatta tramite *Exception Report* quando la modifica tocca almeno uno dei tre vincoli sistemici (Q37 dello scritto):
+    1. **Interdipendenze tra progetti** (es. ritardo di un componente/API a cui sono agganciati altri progetti a valle, risorse critiche condivise);
+    2. **Budget di programma** (necessità di attingere a riserve di programma o riallocare fondi tra tranche/progetti diversi);
+    3. **Mappa dei benefici** (variazioni di requisiti/scope che riducono le *capability*, compromettono i benefici attesi o impattano i target di rendicontazione PNRR).
 
 **1.3 Gestire un cambiamento normativo che rende obsoleti dei target.**
 - **Analisi d'impatto** sul **Benefits Realization Plan** → proposta allo **Sponsoring Group** di **riallineare formalmente** Charter e baseline → rimodulare, chiudere o avviare progetti (Q20).
@@ -131,7 +137,9 @@
 ## 6. Appalti pubblici (D.Lgs. 36/2023) — 2 errori su 3 allo scritto ⇒ priorità
 **6.1 Principi.** **Risultato** (art. 1), **fiducia** (art. 2), **accesso al mercato** (art. 3) come criterio interpretativo (art. 4); buona fede; auto-organizzazione (in house); equilibrio contrattuale; tassatività delle cause di esclusione.
 
-**6.2 RUP.** Responsabile **unico del progetto** (art. 15, **All. I.2**): nominato nella fase di avvio, fra i dipendenti con competenze adeguate. **c.4**: si possono nominare un responsabile di procedimento per **programmazione, progettazione ed esecuzione** e uno per l'**affidamento** (Q33). Il RUP **resta responsabile** del coordinamento complessivo.
+**6.2 RUP.** Responsabile **unico del progetto** (art. 15, **All. I.2**): figura di project management pubblico nominata nella fase di avvio, tra i dipendenti con competenze adeguate.
+- **Unicità e articolazione organizzativa (art. 15 c.4 - Q33)**: il RUP *resta unico*, ma nei modelli organizzativi delle SA si possono nominare **due responsabili di procedimento per fase**: uno per **programmazione, progettazione ed esecuzione** (specialista tecnico/ICT) e uno per l'**affidamento** (ufficio gare/amministrativo).
+- **Ripartizione delle responsabilità**: ciascun responsabile di fase risponde direttamente e in via esclusiva degli atti compiuti nella propria fase; il RUP generale mantiene le funzioni inderogabili di **supervisione, indirizzo e coordinamento complessivo**.
 
 **6.3 Digitalizzazione (artt. 19-36).**
 - **Principi digitali dell'art. 19**: tra questi l'**unicità dell'invio** — ogni dato è fornito **una sola volta a un solo sistema informativo**, non può essere richiesto da altri sistemi ed è reso disponibile dal sistema ricevente (Q48).
@@ -196,6 +204,7 @@
 - Con il DPCM 13/05/2026: fino a **3 Uffici e 8 Servizi**.
 - Opera per l'**autorità politica delegata** all'innovazione tecnologica e alla transizione digitale.
 - **Differenza con AgID**: AgID è un'**agenzia** con personalità giuridica che **attua** (linee guida, Piano Triennale, regole tecniche); il DTD è una **struttura interna** della PCM che **indirizza** e **coordina** (oltre a essere titolare delle misure PNRR). Con l'**ACN**, il DTD condivide la Strategia Cloud.
+- **Tutti i compiti** (aree, Unità di missione PNRR, piattaforme) e **architettura di pagoPA e IO**: [`09`](09_Scheda_Compiti_DTD_PagoPA_IO.md).
 
 **9.2 Fonti dell'ordinamento PCM.** Artt. 92-96 Cost.; **L. 400/1988**; **D.Lgs. 303/1999** (autonomia organizzativa, contabile e di bilancio: il PdC individua con propri decreti le aree funzionali e il numero di uffici e servizi; l'organizzazione interna spetta al Segretario generale o ai Ministri e Sottosegretari delegati); **DPCM 1/10/2012** (strutture generali); **DPCM 10/04/2024** (autonomia finanziaria e contabile).
 

@@ -10,6 +10,7 @@
 > - [06 Cyber Resilience Act](orale/06_Scheda_Cyber_Resilience_Act.md) — Reg. UE 2024/2847: scadenze (segnalazioni dall'11/09/2026), obblighi, categorie, ACN in Italia, impatto sugli acquisti della PA
 > - [07 ISO/IEC 27035](orale/07_Scheda_ISO_IEC_27035_Incident_Management.md) — gestione degli incidenti in 5 fasi, raccordo con ISO 27001:2022, NIST 800-61 r3 e modello ACN, matrice delle notifiche (NIS2, L. 90/2024, PSNC, GDPR, CRA, DORA)
 > - [08 NIST CSF 2.0](orale/08_Scheda_NIST_CSF_2_0.md) — 6 funzioni e 22 categorie, novità rispetto alla 1.1, profili e tier, Framework nazionale 2025 e misure di base NIS (determinazione ACN 379907/2025)
+> - [09 Compiti del DTD, pagoPA e App IO](orale/09_Scheda_Compiti_DTD_PagoPA_IO.md) — tutte le competenze (norme, Unità di missione PNRR, uffici, piattaforme), architettura del Nodo pagoPA (attori, GPD, avviso e QR, modello unico, rendicontazione), App IO (backend, API per gli enti, Lollipop) e IT-Wallet
 
 > Fonti: `DTD/Documenti/Bando PCM 130 AF1 DTD (1).pdf` (art. 7), `Istruzioni Candidato.pdf`, `Delibera n. 32 del 2026` (commissione A).
 
