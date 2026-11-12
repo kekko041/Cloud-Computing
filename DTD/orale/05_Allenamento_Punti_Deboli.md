@@ -51,7 +51,7 @@
 | Chi realizza i benefici negli enti utenti? | Il **Business Change Manager** |
 | Documento che descrive lo stato futuro | **Blueprint** (*target operating model*); la **Vision** descrive il "perché" |
 | Contenuto di un profilo di beneficio | KPI, **baseline**, **target**, **owner**, data di misura |
-| Il CCB di progetto non può decidere una modifica che tocca altri progetti: che cosa fa? | **Escala** al **CCB di programma** |
+| Quando il CCB di progetto escala al CCB di programma? | Quando la modifica supera le tolleranze locali e impatta su: 1) **interdipendenze** tra progetti, 2) **budget di programma**, 3) **mappa dei benefici** (principio di *gestione per eccezioni* di PRINCE2/MSP) |
 | Una norma nuova rende obsoleti i target: che cosa fai? | Analisi d'impatto sul **Benefits Realization Plan** → proposta allo **Sponsoring Group** → riallineo formale di Charter e baseline |
 | Resource leveling vs smoothing | Il **leveling** rispetta il vincolo della risorsa e **può allungare** il percorso critico; lo **smoothing** usa solo il **float** |
 | Una risorsa scarsa è condivisa tra più progetti: chi decide? | Il **programma**, non i singoli PM |
@@ -97,7 +97,7 @@
 | Primi tre principi e articoli | **1 risultato · 2 fiducia · 3 accesso al mercato** |
 | Soglia UE per servizi e forniture della **PCM** | **140.000 €** (amministrazione centrale); 216.000 € per le altre SA; lavori 5.404.000 € |
 | Che cosa significa RUP oggi? | Responsabile **Unico del Progetto** (art. 15, All. I.2) |
-| Art. 15 c.4 | Si possono nominare un responsabile per **programmazione, progettazione ed esecuzione** e uno per l'**affidamento**; il RUP resta responsabile del coordinamento |
+| Art. 15 c.4 (Modello RUP e fasi) | Il RUP **resta unico** (supervisione e coordinamento), ma nei modelli organizzativi si possono nominare due distinti responsabili di fase: 1) **programmazione, progettazione ed esecuzione**; 2) **affidamento**. Ciascuno risponde degli atti della propria fase |
 | Stand still | **35 giorni** (art. 18); **non** si applica sotto soglia (art. 55) |
 | Unicità dell'invio | Art. **19**: dato fornito **una volta a un solo sistema**, poi reso disponibile agli altri |
 | BDNCP e FVOE | Artt. **23-24**, gestiti da **ANAC** |

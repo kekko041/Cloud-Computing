@@ -10,6 +10,13 @@ Sintesi mirata alle **Materie 6, 7 e 10** del bando AGID-01 (art. 7) — corrisp
 *   **RTD — Responsabile della Transizione Digitale**: figura prevista dal CAD in ogni PA, responsabile della digitalizzazione dell'ente. Il Piano Triennale prevede un rafforzamento delle competenze di project management proprio in capo agli RTD.
 *   **Contract Monitoring**: il monitoraggio dell'esecuzione contrattuale (previsto anche dal Codice Appalti, materia 9/13) va integrato con le best practice di PM — non è un adempimento amministrativo separato dalla gestione tecnica del progetto.
 *   **KPI misurabili**: indicatori chiave di prestazione, essenziali non solo per il controllo di progetto interno ma per la **rendicontazione dei fondi PNRR**, dove il mancato raggiungimento di milestone/target comporta conseguenze finanziarie dirette.
+*   **Governance del Cambiamento: CCB di Progetto vs CCB di Programma**:
+    *   **Gestione per Eccezioni (PRINCE2 / MSP)**: la governance opera per **soglie di tolleranza** (tempo, costo, ambito, qualità, rischio, beneficio). Finché una variazione rimane all'interno della tolleranza assegnata, il livello operativo decide autonomamente evitando colli di bottiglia decisionali.
+    *   **CCB di Progetto (Livello Locale)**: approva o respinge le Change Request (CR) confinate alle dinamiche interne del singolo progetto, senza impatto sulle baseline complessive.
+    *   **Criteri di Escalation al CCB di Programma**: il CCB locale deve obbligatoriamente rimettere la decisione al CCB di programma (tramite *Exception Report*) ogni qualvolta la modifica tocca:
+        1.  **Interdipendenze tra progetti** (deliverable condivisi, interfacce applicative/API, vincoli di sequenza critica);
+        2.  **Budget di programma** (esaurimento delle riserve locali con necessità di attingere alle riserve di programma o storni di spesa tra progetti);
+        3.  **Mappa dei benefici (Benefits Realization Plan)**: riduzione o alterazione di funzionalità/scope che compromettono il conseguimento degli obiettivi strategici, delle *capability* o delle milestone vincolanti (es. PNRR).
 
 ---
 

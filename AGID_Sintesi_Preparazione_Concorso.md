@@ -52,6 +52,7 @@ L'azione della PA deve essere programmata, misurabile e finanziariamente sosteni
 ## 6. Appalti e Trasparenza 
 L'infrastruttura amministrativa che permette la realizzazione tecnica dei progetti.
 *   **Codice degli Appalti (D.Lgs. 36/2023):** Tutto il ciclo di gara (ICT e non) è interamente digitale (e-Procurement, Fascicolo Virtuale Operatore Economico). Acquisti IT gestiti tramite Consip/MePA. Liberalizzato (ma attenzionato lato cyber) il subappalto.
+    *   *Governance del RUP (art. 15 e All. I.2):* Il RUP (Responsabile Unico del Progetto) **resta unico** a garanzia di supervisione, indirizzo e coordinamento strategico, ma nei modelli organizzativi è possibile nominare due distinti responsabili di fase/procedimento: uno per **programmazione, progettazione ed esecuzione** (competenza tecnica ICT) e uno per l'**affidamento** (competenza gius-amministrativa/gare), con responsabilità ripartite in base ai compiti di fase.
 *   **Performance e Trasparenza:** 
     *   *Accessibilità:* I servizi digitali (Web/App) devono seguire le linee guida **WCAG 2.1** (Legge Stanca), garantendo usabilità a persone con disabilità visive, motorie o cognitive.
     *   *Design:* Coerenza visiva e centralità dell'utente (UX/UI standardizzate da *Designers Italia*).

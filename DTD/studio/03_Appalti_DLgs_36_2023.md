@@ -50,7 +50,13 @@
 - **Strumenti di acquisto**: **MePA** (Consip) obbligatorio per i beni e servizi tra **5.000 €** e la soglia UE (L. 296/2006, c. 450); per l'**ICT**, obbligo di usare **Consip/soggetti aggregatori** (L. 208/2015, c. 512).
 
 ## 5. Soggetti e fasi
-- **RUP = Responsabile Unico del Progetto** (art. 15, **Allegato I.2**): nominato nel primo atto di avvio dell'intervento, tra i dipendenti; se manca la nomina, il ruolo spetta al **responsabile dell'unità organizzativa**. Può essere affiancato da un **responsabile di fase** (programmazione/progettazione/esecuzione e affidamento).
+- **RUP = Responsabile Unico del Progetto** (art. 15, **Allegato I.2**):
+  - Subentra alla vecchia nozione di "Responsabile del Procedimento" (D.Lgs. 50/2016), incarnando una visione orientata al **Project Management** e al **Principio del Risultato** (art. 1) lungo tutto il ciclo di vita dell'intervento.
+  - È nominato nel primo atto di avvio tra i dipendenti di ruolo con competenze adeguate; in assenza di nomina formale, il ruolo è assunto dal **responsabile dell'unità organizzativa**.
+  - **Unicità del RUP e articolazione di fase (art. 15 c.4)**: *il RUP resta unico*, ma la stazione appaltante può adottare modelli organizzativi che prevedono la nomina di:
+    1. Un responsabile di procedimento per le fasi di **programmazione, progettazione ed esecuzione** (profilo tipicamente tecnico/ICT);
+    2. Un responsabile di procedimento per la fase di **affidamento** (profilo tipicamente giuridico-amministrativo/ufficio gare).
+  - **Ripartizione delle responsabilità**: le responsabilità sono ripartite in base ai compiti assegnati a ciascuna fase (i responsabili di fase rispondono degli atti compiuti nella propria fase), ferme restando le funzioni generali di **supervisione, indirizzo e coordinamento complessivo** in capo al RUP.
 - **Conflitto d'interessi** (art. 16): obbligo di astensione.
 - **Fasi** (art. 17): **decisione di contrarre** → selezione → aggiudicazione (che diventa **efficace** dopo la verifica dei requisiti) → stipula.
 - **Stand still** (art. 18): il contratto **non** può essere stipulato prima di **35 giorni** dalla comunicazione dell'aggiudicazione; la stipula avviene **entro 30 giorni** dall'aggiudicazione efficace.

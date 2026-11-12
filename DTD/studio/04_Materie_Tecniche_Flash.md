@@ -39,7 +39,9 @@
   - **opportunità** → sfruttare, condividere, migliorare, accettare;
   - **registro dei rischi**; **esposizione = probabilità × impatto**.
 - **Stakeholder** (matrice potere/interesse): alto-alto → **gestire da vicino**; alto potere/basso interesse → mantenere soddisfatti; basso potere/alto interesse → tenere informati; basso-basso → monitorare.
-- **Change control**: ogni variazione dell'ambito passa dal **Change Control Board** → si evita lo **scope creep**.
+- **Change control e governance federata**: ogni variazione delle baseline passa dal **Change Control Board (CCB)** per evitare lo *scope creep*.
+  - **CCB di Progetto**: decide in autonomia le modifiche con **impatto locale** entro le soglie di tolleranza assegnate.
+  - **CCB di Programma**: gestisce le modifiche escalate (*gestione per eccezioni* PRINCE2/MSP) quando impattano su **interdipendenze** tra progetti, **budget di programma** o **mappa dei benefici** (benefici strategici/KPI PNRR).
 - **MoSCoW**: Must, Should, Could, Won't.
 
 ### Agile

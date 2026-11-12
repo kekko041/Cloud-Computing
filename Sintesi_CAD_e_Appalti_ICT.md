@@ -87,6 +87,15 @@ Il nuovo Codice degli Appalti (entrato in vigore nel 2023) introduce principi vo
 *   **Principio della Fiducia:** Si presume la legittimità e la correttezza dell'azione dei funzionari pubblici.
 *   **Principio dell'Accesso al mercato:** Favorire la concorrenza, la partecipazione delle PMI e l'innovazione.
 
+### Governance dell'Appalto: RUP e Responsabili di Fase (Art. 15 e All. I.2)
+*   **Da "Responsabile del Procedimento" a "Responsabile del Progetto"**: l'art. 15 del D.Lgs. 36/2023 ridefinisce il RUP come figura di sintesi e di **Project Management pubblico**, orientata al raggiungimento degli obiettivi di risultato (tempi, costi, qualità tecnica e conformità).
+*   **Unicità del RUP e articolazione organizzativa (art. 15, comma 4)**:
+    *   La regola cardine stabilisce che **il RUP resta unico**, garantendo la regia strategica e unitaria dell'intero ciclo di vita dell'intervento.
+    *   Tuttavia, nei modelli organizzativi delle stazioni appaltanti è espressamente consentita la nomina di **due distinti responsabili di procedimento per fase**:
+        1.  Un responsabile per le fasi di **programmazione, progettazione ed esecuzione** (figura tecnica di dominio, essenziale in ambito ICT per redigere il capitolato tecnico, definire requisiti di sicurezza/interoperabilità e curare collaudo e verifica di conformità);
+        2.  Un responsabile per la fase di **affidamento** (figura con competenze giuridico-amministrative, che presidia bando, piattaforma PAD, soccorso istruttorio e verifica dei requisiti).
+*   **Ripartizione delle responsabilità**: le responsabilità amministrative e gestionali sono separate per fase. Il responsabile di fase risponde direttamente e in via esclusiva degli atti della fase affidatagli, mentre il RUP generale mantiene le funzioni inderogabili di **supervisione, indirizzo e coordinamento complessivo** (senza incorrere in responsabilità oggettiva per i singoli atti delegati).
+
 ### Digitalizzazione del Ciclo di Vita dei Contratti Pubblici (Artt. 19-36)
 Questa è la vera novità del Codice 36/2023 per l'ICT:
 *   Tutto il ciclo (programmazione, progettazione, gara, esecuzione) deve essere nativamente digitale.
