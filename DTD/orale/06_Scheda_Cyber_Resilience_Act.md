@@ -111,7 +111,7 @@ Oltre alle sanzioni, le **autorità di vigilanza del mercato** possono imporre m
 | Norma | Che cosa regola | Rapporto con il CRA |
 |---|---|---|
 | **NIS2** (Dir. 2022/2555; d.lgs. 138/2024) | **soggetti** essenziali e importanti | Complementare: il CRA rende sicuri i **prodotti** che i soggetti NIS2 acquistano; scadenze di notifica 24h/72h analoghe |
-| **Cybersecurity Act** (Reg. 2019/881) | **certificazione volontaria** (EUCC) e mandato ENISA | La certificazione può diventare obbligatoria per i prodotti **critici** e vale come presunzione di conformità |
+| **Cybersecurity Act** (Reg. 2019/881) | **certificazione volontaria** (EUCC) e mandato ENISA | La certificazione può diventare obbligatoria per i prodotti **critici** e vale come presunzione di conformità. Dettagli e proposta **CSA2** in [`10`](10_Scheda_Cybersecurity_Act_CSA2.md) |
 | **AI Act** (Reg. 2024/1689) | sistemi di IA | Per i sistemi di IA **ad alto rischio** che sono anche prodotti CRA, la conformità al CRA soddisfa i requisiti di cybersicurezza dell'art. 15 dell'AI Act |
 | **RED** (Reg. delegato 2022/30) | sicurezza degli apparati radio | Il CRA la sostituirà per gli aspetti cyber |
 | **GDPR** | dati personali | Il CRA attua la *security by design* sul prodotto, collegata alla *privacy by design* (art. 25) e alla sicurezza del trattamento (art. 32) |
