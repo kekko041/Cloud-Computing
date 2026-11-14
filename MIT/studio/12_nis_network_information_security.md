@@ -61,6 +61,8 @@ flowchart LR
 
 > 📌 Proposta **CSA2** del 20/01/2026 (revisione del Cybersecurity Act): designazione UE dei **fornitori ad alto rischio** ed esclusione dai settori critici, più modifiche mirate alla NIS2 (small mid-cap, wallet digitali, cavi sottomarini, crittografia post-quantistica). Vedi [`DTD/orale/10`](../../DTD/orale/10_Scheda_Cybersecurity_Act_CSA2.md).
 
+> 📌 **Direttiva CER** (UE 2022/2557, D.Lgs. 134/2024): la gemella «fisica» della NIS2; un soggetto critico CER è anche soggetto essenziale NIS2. Vedi [`DTD/orale/11`](../../DTD/orale/11_Scheda_Direttiva_CER_Soggetti_Critici.md).
+
 ## 5. NIS2 e PSNC (Perimetro di Sicurezza Nazionale Cibernetica)
 
 * **PSNC** (D.L. 105/2019, conv. L. 133/2019): normativa italiana **preesistente e complementare** alla NIS2, riservata alle infrastrutture **iper-critiche** dello Stato (i cosiddetti "beni ICT" di rilevanza strategica per la sicurezza nazionale).

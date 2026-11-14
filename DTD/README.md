@@ -12,6 +12,7 @@
 > - [08 NIST CSF 2.0](orale/08_Scheda_NIST_CSF_2_0.md) — 6 funzioni e 22 categorie, novità rispetto alla 1.1, profili e tier, Framework nazionale 2025 e misure di base NIS (determinazione ACN 379907/2025)
 > - [09 Compiti del DTD, pagoPA e App IO](orale/09_Scheda_Compiti_DTD_PagoPA_IO.md) — tutte le competenze (norme, Unità di missione PNRR, uffici, piattaforme), architettura del Nodo pagoPA (attori, GPD, avviso e QR, modello unico, rendicontazione), App IO (backend, API per gli enti, Lollipop) e IT-Wallet
 > - [10 Cybersecurity Act e CSA2](orale/10_Scheda_Cybersecurity_Act_CSA2.md) — Reg. UE 2019/881 (ENISA, certificazione, EUCC, Reg. 2025/37), proposta CSA2 del 20/01/2026 (fornitori ad alto rischio, postura cyber, ENISA), raccordo con NIS2 e CRA
+> - [11 Direttiva CER](orale/11_Scheda_Direttiva_CER_Soggetti_Critici.md) — Dir. UE 2022/2557 e D.Lgs. 134/2024: 11 settori, governance in PCM (CIR, punto di contatto unico = Consigliere militare + Ufficio infrastrutture critiche, autorità settoriali), obblighi, Strategia nazionale di aprile 2026, confronto con NIS2, PSNC e DORA
 
 > Fonti: `DTD/Documenti/Bando PCM 130 AF1 DTD (1).pdf` (art. 7), `Istruzioni Candidato.pdf`, `Delibera n. 32 del 2026` (commissione A).
 

@@ -36,7 +36,7 @@
 | Dipartimento per il **coordinamento amministrativo** | **29** | attuazione amministrativa delle politiche; **supporto alla Commissione per l'accesso ai documenti amministrativi (L. 241/1990)**; raccordo con strutture di missione e **commissari straordinari** |
 | Dipartimento per l'informazione e l'editoria | 30 | |
 | **Ufficio controllo interno, trasparenza e integrità** | **31** | pianificazione strategica, **misurazione e valutazione della performance**, controllo di gestione, trasparenza; diretto da un **collegio di 3 membri** |
-| Ufficio del Segretario generale | 32 | progettazione delle politiche generali, protocollo informatico, Biblioteca Chigiana; ospita l'Ufficio **infrastrutture critiche** (punto di contatto unico, D.Lgs. 134/2024) |
+| Ufficio del Segretario generale | 32 | progettazione delle politiche generali, protocollo informatico, Biblioteca Chigiana; ospita l'Ufficio **infrastrutture critiche** (supporta il punto di contatto unico CER, che è il Consigliere militare: vedi [`11`](11_Scheda_Direttiva_CER_Soggetti_Critici.md)) |
 | Ufficio di segreteria del **Consiglio dei ministri** | 33 | |
 | Dipartimento per il **personale** | **34** | gestione giuridica ed economica del personale, **fabbisogni**, formazione |
 | Dipartimento per i **servizi strumentali** | 34-bis | acquisti, logistica, sistemi informativi della PCM |
