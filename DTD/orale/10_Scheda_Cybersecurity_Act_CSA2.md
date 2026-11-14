@@ -57,6 +57,113 @@ flowchart LR
   - **EU5G** (reti 5G): in preparazione.
 - **Reg. UE 2025/37**: modifica il CSA per rendere certificabili anche i **servizi di sicurezza gestiti** (risposta agli incidenti, penetration test, audit, consulenza). È legato al *Cyber Solidarity Act* e alla riserva europea di cybersicurezza.
 
+### 1.1 Come funziona la certificazione, passo per passo
+> In breve: l'UE scrive uno **schema** con le regole di valutazione. Un **laboratorio accreditato** testa il prodotto, un **organismo di certificazione** rilascia il certificato e l'**ACN** vigila. Il certificato **vale in tutta l'UE**, ma **non è definitivo**: va mantenuto, va gestito ogni volta che emerge una vulnerabilità e può essere revocato.
+
+```mermaid
+flowchart TB
+  subgraph A["Fase 1 – Creazione dello schema (livello UE)"]
+    COM["Commissione<br/>programma di lavoro UE (URWP)"] -->|richiesta| EN["ENISA<br/>gruppo di lavoro ad hoc"]
+    EN --> CAND["Schema candidato"]
+    ECCG["ECCG – Stati membri<br/>(parere)"] --> CAND
+    SCCG["SCCG – industria<br/>(consultazione)"] -.-> EN
+    CAND --> ACT["Commissione<br/>adotta con atto di esecuzione"]
+  end
+  subgraph B["Fase 2 – Certificazione del prodotto (livello nazionale)"]
+    P["Fabbricante<br/>presenta prodotto e 'target di sicurezza'"] --> LAB["Laboratorio di valutazione (ITSEF)<br/>prove e penetration test"]
+    LAB --> CB["Organismo di certificazione<br/>accreditato da ACCREDIA"]
+    CB --> CERT["Certificato europeo<br/>valido in tutta l'UE"]
+    NCCA["ACN – autorità nazionale<br/>vigilanza, reclami, sanzioni"] -.-> CB
+    CERT --> MON["Mantenimento:<br/>vulnerabilità, patch, sorveglianza,<br/>sospensione o revoca"]
+  end
+  ACT --> P
+```
+
+**Fase 1: chi scrive le regole**
+| Attore | Ruolo |
+|---|---|
+| **Commissione** | fissa le priorità nel **programma di lavoro UE** (*Union Rolling Work Programme*), chiede lo schema all'ENISA e lo **adotta con atto di esecuzione** |
+| **ENISA** | prepara lo **schema candidato** con un gruppo di esperti |
+| **ECCG** | gruppo degli **Stati membri** (per l'Italia l'ACN): dà il parere |
+| **SCCG** | industria, consumatori, università: viene consultato |
+
+**Cosa contiene uno schema (art. 54 CSA)**
+- oggetto e ambito, cioè quali prodotti copre;
+- **norme tecniche** di valutazione (ad esempio ISO/IEC 15408 *Common Criteria* e ISO/IEC 18045);
+- **livelli di affidabilità** previsti;
+- se è ammessa l'**autovalutazione**;
+- requisiti per laboratori e organismi;
+- **durata** del certificato e regole di **sorveglianza**;
+- come si gestiscono e si comunicano le **vulnerabilità**;
+- contenuto del certificato e dell'etichetta.
+
+**Fase 2: come si certifica un prodotto (esempio EUCC)**
+1. **Dossier del fabbricante**:
+   - il **target di sicurezza** (*Security Target*): che cosa promette il prodotto, contro quali minacce, in quale ambiente;
+   - la documentazione di progetto, le interfacce o il codice, i processi di sviluppo e consegna.
+2. **Valutazione del laboratorio** (ITSEF, *IT Security Evaluation Facility*):
+   - verifica che il prodotto faccia ciò che dichiara;
+   - analizza le **vulnerabilità** e fa **test di penetrazione**, più profondi al crescere del livello.
+3. **Rilascio del certificato** da parte dell'**organismo di certificazione**, che deve essere **accreditato** da **ACCREDIA** (Reg. CE 765/2008). Per il **livello elevato** serve in più l'**autorizzazione dell'ACN**.
+4. **Pubblicazione**: certificato e rapporto sono pubblicati e valgono in **tutti i 27 Stati**, senza ripetere i test.
+5. **Mantenimento nel tempo**:
+   - il titolare deve **monitorare e gestire le vulnerabilità** e comunicarle;
+   - le modifiche, come le patch, vanno valutate: possono richiedere un aggiornamento o una **ricertificazione**;
+   - per l'**EUCC** la validità massima è di **5 anni**, estendibile solo con l'autorizzazione dell'ACN (art. 12 Reg. 2024/482, modificato dal **Reg. di esecuzione 2025/2462**);
+   - in caso di problemi il certificato può essere **sospeso o revocato**.
+
+**Livelli e profondità dei test**
+| Livello CSA | Contro chi | Chi valuta | EUCC |
+|---|---|---|---|
+| **Base** | rischi noti, attacchi elementari | **autovalutazione** (dichiarazione UE di conformità), se lo schema la ammette | non previsto |
+| **Sostanziale** | attaccanti con capacità limitate | laboratorio e organismo accreditati | **AVA_VAN 1-2** |
+| **Elevato** | attacchi sofisticati con risorse significative | laboratorio e organismo accreditati, **autorizzati dall'ACN** | **AVA_VAN 3-5** |
+
+*AVA_VAN* è la componente dei Common Criteria che misura la **resistenza agli attacchi**: più alto è il valore, più potente è l'attaccante simulato.
+
+**Chi vigila: l'ACN**
+- È l'**autorità nazionale di certificazione** (art. 7 c.1 lett. e D.L. 82/2021).
+- Dal **2022** ha assorbito l'**OCSI**, l'organismo che dal 2003 gestiva lo schema nazionale *Common Criteria* presso il MIMIT (prima MISE). Il passaggio è avvenuto con il DPCM del 15/06/2022.
+- Con l'EUCC lo **schema nazionale non rilascia più nuovi certificati**.
+- Compiti: vigila su organismi e titolari, **gestisce i reclami**, **autorizza** gli organismi per il livello elevato, può **revocare** e **sanzionare**.
+- Le autorità nazionali si controllano a vicenda con la ***peer review*** (art. 59 CSA).
+- **Da non confondere**:
+  - il **CVCN**, che valuta le forniture ICT del Perimetro di sicurezza nazionale cibernetica;
+  - lo schema per le **informazioni classificate**, gestito dall'Autorità nazionale per la sicurezza.
+
+**Tipi diversi di «certificazione»**
+| Strumento | Che cosa certifica | Obbligatorio? | Esito |
+|---|---|---|---|
+| **CSA / EUCC** | un **prodotto** ICT rispetto al suo target di sicurezza | volontario, salvo che lo imponga una norma | certificato UE con livello di affidabilità |
+| **CRA**: valutazione di conformità | un **prodotto** rispetto ai requisiti essenziali | **obbligatoria** per il mercato UE | **marcatura CE**; per i prodotti critici può essere richiesta la certificazione CSA |
+| **ISO/IEC 27001** | il **sistema di gestione** dell'organizzazione | volontario (spesso richiesto nelle gare) | certificato triennale con audit annuali di sorveglianza |
+| **Postura cyber** (CSA2, proposta) | la sicurezza di un'**organizzazione** | volontario | possibile **presunzione di conformità NIS2** |
+| **Qualificazione cloud ACN** | servizi e infrastrutture **cloud per la PA** | **obbligatoria** per vendere cloud alle PA | iscrizione al catalogo ACN |
+| **CVCN** | forniture ICT per i soggetti del **Perimetro** | **obbligatorio** per quelle forniture | valutazione e prove, eventualmente con prescrizioni |
+
+**Compromessi**
+| Pro | Contro |
+|---|---|
+| **fiducia verificata da terzi**, non autodichiarata | **costosa e lenta** (mesi), poco adatta a software con rilasci frequenti |
+| **un certificato per 27 Stati** | è una **fotografia** di una versione in una configurazione: una nuova vulnerabilità o un errore di configurazione la superano |
+| permette di confrontare le offerte negli appalti | rischio di adempimento formale («certificato quindi sicuro») |
+| la gestione obbligatoria delle vulnerabilità rende la certificazione un processo continuo | il **target di sicurezza** può essere troppo ristretto: va sempre letto |
+
+**In una gara della PA:**
+1. chiedi il **livello adeguato al rischio** (ad esempio *sostanziale* per componenti di sicurezza critici);
+2. **leggi il target di sicurezza**, per verificare che copra l'uso reale;
+3. imponi nel contratto la **gestione delle vulnerabilità** e il mantenimento del certificato;
+4. ricorda che la certificazione **non sostituisce** hardening, monitoraggio e patching.
+
+#### 🎙️ Copione certificazione (30")
+> La certificazione del Cybersecurity Act funziona in due tempi.
+>
+> A livello europeo l'ENISA prepara uno schema, gli Stati danno il parere nel gruppo ECCG e la Commissione lo adotta.
+>
+> A livello nazionale un laboratorio accreditato valuta il prodotto, con test di penetrazione più profondi al crescere del livello di affidabilità, e un organismo accreditato da Accredia rilascia il certificato, valido in tutta l'Unione. L'ACN vigila e autorizza gli organismi per il livello elevato.
+>
+> Il certificato dura al massimo cinque anni, va mantenuto gestendo le vulnerabilità e può essere revocato. Per questo in una gara chiederei il livello adeguato, leggerei il perimetro certificato e imporrei la gestione delle vulnerabilità nel contratto.
+
 ## 2. La proposta CSA2 (20/01/2026)
 È presentata in un **pacchetto** insieme alle **modifiche mirate alla NIS2**. Se approvata, **abrogherebbe il Reg. 2019/881**.
 
@@ -151,6 +258,12 @@ flowchart LR
 | Perché l'EUCS è fermo? | requisiti di **sovranità e immunità** dalle leggi extra-UE |
 | Chi adotta gli schemi? | **Commissione** con atto di esecuzione, su schema candidato **ENISA** e parere **ECCG** |
 | Autorità di certificazione in Italia? | **ACN** |
+| Chi testa e chi certifica? | il **laboratorio (ITSEF)** valuta; l'**organismo di certificazione accreditato** (ACCREDIA) rilascia; l'**ACN** vigila |
+| Che cos'è il *Security Target*? | il documento in cui il fabbricante dichiara **funzioni di sicurezza, minacce e ambiente**: definisce il perimetro di ciò che viene certificato |
+| EUCC: livelli e AVA_VAN? | **sostanziale = AVA_VAN 1-2**, **elevato = AVA_VAN 3-5** (per l'elevato serve l'autorizzazione dell'ACN) |
+| Durata di un certificato EUCC? | **massimo 5 anni**, estendibile solo con l'autorizzazione dell'ACN; può essere sospeso o revocato |
+| Che fine ha fatto l'OCSI? | dal **2022** è confluito nell'**ACN**; con l'EUCC lo schema nazionale non rilascia più nuovi certificati |
+| Differenza tra EUCC e ISO 27001? | EUCC certifica un **prodotto**; ISO 27001 certifica il **sistema di gestione** di un'organizzazione |
 | Cosa aggiunge il Reg. 2025/37? | certificazione dei **servizi di sicurezza gestiti** |
 | Che cos'è il CSA2? | proposta del **20/01/2026** che **abroga** il 2019/881: catena di fornitura, certificazione più rapida, ENISA rafforzata |
 | Fornitori ad alto rischio: chi decide? | la **Commissione** con atti di esecuzione, dopo una valutazione coordinata del rischio con gli Stati |
@@ -178,4 +291,5 @@ flowchart LR
 ## 🎯 Da ricordare
 - **NIS2 = soggetti · CRA = prodotti · CSA = certificazione + ENISA · CSA2 = + catena di fornitura.**
 - **2019/881**, dal 27/06/2019; livelli **base / sostanziale / elevato**; **EUCC** dal 27/02/2025 (Reg. es. 2024/482); **2025/37** per i servizi di sicurezza gestiti; **ACN** autorità nazionale.
+- **Filiera della certificazione**: schema (Commissione, ENISA, ECCG) → **laboratorio ITSEF** → **organismo accreditato ACCREDIA** → certificato UE → **ACN** vigila. EUCC: sostanziale = AVA_VAN 1-2, elevato = 3-5; **max 5 anni**; vulnerabilità da gestire; OCSI confluito nell'ACN (2022).
 - **CSA2**: proposta del **20/01/2026**; fornitori ad alto rischio designati dalla Commissione; esclusione da appalti, fondi e certificazione; **7%**; schema candidato in **12 mesi**; **postura cyber**; ENISA **+75%** di budget; **non ancora in vigore**.
